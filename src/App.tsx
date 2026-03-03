@@ -42,7 +42,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <NavBar businessName={normalizedCatalog.businessName} logoUrl={normalizedCatalog.logoUrl} categories={normalizedCatalog.categories} />
         <Routes>
           <Route path="/" element={<Home catalog={normalizedCatalog} />} />
