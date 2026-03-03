@@ -1,5 +1,5 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { theme } from "./theme/theme";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -42,7 +42,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <HashRouter >
+      <BrowserRouter >
         <NavBar businessName={normalizedCatalog.businessName} logoUrl={normalizedCatalog.logoUrl} categories={normalizedCatalog.categories} />
         <Routes>
           <Route path="/" element={<Home catalog={normalizedCatalog} />} />
@@ -60,7 +60,7 @@ export default function App() {
         </Routes>
         <Footer businessName={catalog.businessName} serviceArea={catalog.serviceArea} phone={catalog.contact.phone} email={catalog.contact.email} address={catalog.contact.address} />
         <ChatWidget phone={catalog.contact.phone} email={catalog.contact.email} whatsappNumberE164={import.meta.env.VITE_WHATSAPP_E164} />
-      </HashRouter>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
