@@ -134,3 +134,7 @@ Settings → Secrets and variables → Actions → **Variables**
 - VITE_EMAILJS_SERVICE_ID
 - VITE_EMAILJS_TEMPLATE_ID
 - VITE_EMAILJS_PUBLIC_KEY
+
+## GitHub Pages note
+If you host under a repo path (e.g. `...github.io/jamien-flooring/`), Vite must use `base: "./"` in `vite.config.ts` so JS/CSS load correctly.
+Also GitHub Pages URLs are case-sensitive.
