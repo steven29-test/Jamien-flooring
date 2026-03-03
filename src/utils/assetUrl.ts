@@ -1,9 +1,10 @@
+/**
+ * Build-safe asset URLs for both local dev (/) and GitHub Pages (/<repo>/).
+ * Use with files placed under /public (e.g. public/images/...).
+ */
 export function assetUrl(path: string): string {
-  if (!path) return path;
-  // Keep external URLs as-is
-  if (/^https?:\/\//i.test(path)) return path;
-  // Normalize leading slash
-  const p = path.startsWith("/") ? path.slice(1) : path;
-  // import.meta.env.BASE_URL already includes trailing slash
-  return `${import.meta.env.BASE_URL}${p}`;
+  const base = import.meta.env.BASE_URL || "/";
+  const cleanBase = base.endsWith("/") ? base : base + "/";
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+  return cleanBase + cleanPath;
 }

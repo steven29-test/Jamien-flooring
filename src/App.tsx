@@ -19,7 +19,7 @@ import { loadCatalogOverride } from "./utils/storage";
 import { sortCategories } from "./utils/categoryOrder";
 import { useMemo, useState } from "react";
 import catalog from "./data/catalog.json";
-import { assetUrl } from "utils/assetUrl";
+import { assetUrl } from "./utils/assetUrl";
 
 const ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === "true";
 
