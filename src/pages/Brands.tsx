@@ -10,17 +10,18 @@ import {
 } from "@mui/material";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
 
 function pickImageForBrand(brand: string) {
   const map: Record<string, string> = {
-    "Quick-Step": "/images/laminate-2.jpg",
-    "Godfrey Hirst": "/images/hybrid-2.jpg",
-    "Preference Floors": "/images/engineered-1.jpg",
-    "Premium Oak Co.": "/images/engineered-3.jpg",
+    "Quick-Step": "images/laminate-2.jpg",
+    "Godfrey Hirst": "images/hybrid-2.jpg",
+    "Preference Floors": "images/engineered-1.jpg",
+    "Premium Oak Co.": "images/engineered-3.jpg",
   };
-  return map[brand] ?? "/images/hybrid-1.jpg";
+  return assetUrl(map[brand] ?? "images/hybrid-1.jpg");
 }
 
 export default function Brands({ catalog }: Props) {

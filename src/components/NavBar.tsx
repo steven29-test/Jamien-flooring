@@ -12,6 +12,7 @@ import { useMemo, useState } from "react";
 import type { FloorCategory } from "../types/catalog";
 import { isAdminAuthorized } from "../utils/adminGate";
 import { sortCategories } from "../utils/categoryOrder";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = { businessName: string; logoUrl?: string; categories: FloorCategory[] };
 

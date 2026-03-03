@@ -6,6 +6,7 @@ import TrustBar from "../components/TrustBar";
 import ReviewsSection from "../components/ReviewsSection";
 import type { CatalogData } from "../types/catalog";
 import { sortCategories } from "../utils/categoryOrder";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
 
@@ -48,7 +49,7 @@ export default function Home({ catalog }: Props) {
             <Grid item xs={12} md={6}>
               <Box sx={{ borderRadius: 4, overflow: "hidden", boxShadow: 2, bgcolor: "grey.100", aspectRatio: "16/10" }}>
                 {catalog.hero.heroImageUrl ? (
-                  <Box component="img" src={catalog.hero.heroImageUrl} alt="Jamien Flooring hero" sx={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <Box component="img" src={assetUrl(catalog.hero.heroImageUrl)} alt="Jamien Flooring hero" sx={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 ) : (
                   <Box sx={{ width: "100%", height: "100%", display: "grid", placeItems: "center" }}>
                     <Typography color="text.secondary">Add a hero image in Admin → Export JSON</Typography>
@@ -109,7 +110,7 @@ export default function Home({ catalog }: Props) {
             <Grid item xs={12} sm={6} md={3} key={c.id}>
               <Card sx={{ height: "100%", borderRadius: 4 }}>
                 <CardActionArea component={RouterLink} to={`/catalog?cat=${c.id}`}>
-                  {c.imageUrl ? <CardMedia component="img" height="150" image={c.imageUrl} alt={c.name} /> : <Box sx={{ height: 150, bgcolor: "grey.100" }} />}
+                  {c.imageUrl ? <CardMedia component="img" height="150" image={assetUrl(c.imageUrl)} alt={c.name} /> : <Box sx={{ height: 150, bgcolor: "grey.100" }} />}
                   <CardContent>
                     <Typography variant="h6" sx={{ fontWeight: 900 }}>
                       {c.name}
@@ -156,7 +157,7 @@ export default function Home({ catalog }: Props) {
   <Grid container spacing={2}>
     <Grid item xs={12} md={6}>
       <Card sx={{ borderRadius: 4, overflow: "hidden", height: "100%" }}>
-        <CardMedia component="img" height="240" image={"/images/engineered-2.jpg"} alt="Engineered timber project" />
+        <CardMedia component="img" height="240" image={assetUrl("images/engineered-2.jpg")} alt="Engineered timber project" />
         <CardContent>
           <Stack direction="row" spacing={1} sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
             <Chip label="Premium timber" />
@@ -174,7 +175,7 @@ export default function Home({ catalog }: Props) {
 
     <Grid item xs={12} md={6}>
       <Card sx={{ borderRadius: 4, overflow: "hidden", height: "100%" }}>
-        <CardMedia component="img" height="240" image={"/images/hybrid-3.jpg"} alt="Hybrid flooring project" />
+        <CardMedia component="img" height="240" image={assetUrl("images/hybrid-3.jpg")} alt="Hybrid flooring project" />
         <CardContent>
           <Stack direction="row" spacing={1} sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
             <Chip label="Great value" />

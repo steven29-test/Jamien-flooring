@@ -1,11 +1,11 @@
 {
   "businessName": "Jamien Flooring",
   "serviceArea": "Sydney, NSW",
-  "logoUrl": "/images/logo.png",
+  "logoUrl": "images/logo.png",
   "hero": {
     "headline": "Premium timber floors, installed beautifully.",
     "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney\u2019s North Shore. Clear pricing, honest advice, and a clean finish.",
-    "heroImageUrl": "/images/hybrid-1.jpg"
+    "heroImageUrl": "images/hybrid-1.jpg"
   },
   "about": {
     "title": "Why Sydney homeowners choose Jamien Flooring",
@@ -29,25 +29,25 @@
       "id": "engineered",
       "name": "Engineered Timber",
       "description": "Warm timber look with improved stability.",
-      "imageUrl": "/images/engineered-1.jpg"
+      "imageUrl": "images/engineered-1.jpg"
     },
     {
       "id": "hybrid",
       "name": "Hybrid Flooring",
       "description": "Water-resistant, durable and great value.",
-      "imageUrl": "/images/hybrid-1.jpg"
+      "imageUrl": "images/hybrid-1.jpg"
     },
     {
       "id": "laminate",
       "name": "Laminate",
       "description": "Affordable, scratch-resistant options.",
-      "imageUrl": "/images/laminate-1.jpg"
+      "imageUrl": "images/laminate-1.jpg"
     },
     {
       "id": "vinyl",
       "name": "Vinyl",
       "description": "Comfortable underfoot, easy maintenance.",
-      "imageUrl": "/images/vinyl-1.jpg"
+      "imageUrl": "images/vinyl-1.jpg"
     }
   ],
   "items": [
@@ -62,10 +62,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/hybrid-1.jpg",
+      "imageUrl": "images/hybrid-1.jpg",
       "featured": true,
       "images": [
-        "/images/hybrid-1.jpg"
+        "images/hybrid-1.jpg"
       ],
       "brand": "Quick-Step",
       "isDeal": false
@@ -81,10 +81,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/hybrid-2.jpg",
+      "imageUrl": "images/hybrid-2.jpg",
       "featured": false,
       "images": [
-        "/images/hybrid-2.jpg"
+        "images/hybrid-2.jpg"
       ],
       "brand": "Godfrey Hirst",
       "isDeal": true
@@ -100,10 +100,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/hybrid-3.jpg",
+      "imageUrl": "images/hybrid-3.jpg",
       "featured": false,
       "images": [
-        "/images/hybrid-3.jpg"
+        "images/hybrid-3.jpg"
       ],
       "brand": "Preference Floors",
       "isDeal": false
@@ -119,10 +119,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/hybrid-4.jpg",
+      "imageUrl": "images/hybrid-4.jpg",
       "featured": false,
       "images": [
-        "/images/hybrid-4.jpg"
+        "images/hybrid-4.jpg"
       ],
       "brand": "Premium Oak Co.",
       "isDeal": true
@@ -138,10 +138,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/hybrid-5.jpg",
+      "imageUrl": "images/hybrid-5.jpg",
       "featured": false,
       "images": [
-        "/images/hybrid-5.jpg"
+        "images/hybrid-5.jpg"
       ],
       "brand": "Quick-Step",
       "isDeal": false
@@ -157,10 +157,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/engineered-1.jpg",
+      "imageUrl": "images/engineered-1.jpg",
       "featured": true,
       "images": [
-        "/images/engineered-1.jpg"
+        "images/engineered-1.jpg"
       ],
       "brand": "Godfrey Hirst",
       "isDeal": false
@@ -176,10 +176,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/engineered-2.jpg",
+      "imageUrl": "images/engineered-2.jpg",
       "featured": false,
       "images": [
-        "/images/engineered-2.jpg"
+        "images/engineered-2.jpg"
       ],
       "brand": "Preference Floors",
       "isDeal": true
@@ -195,10 +195,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/engineered-3.jpg",
+      "imageUrl": "images/engineered-3.jpg",
       "featured": false,
       "images": [
-        "/images/engineered-3.jpg"
+        "images/engineered-3.jpg"
       ],
       "brand": "Premium Oak Co.",
       "isDeal": false
@@ -214,10 +214,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/engineered-4.jpg",
+      "imageUrl": "images/engineered-4.jpg",
       "featured": false,
       "images": [
-        "/images/engineered-4.jpg"
+        "images/engineered-4.jpg"
       ],
       "brand": "Quick-Step",
       "isDeal": false
@@ -233,10 +233,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/engineered-5.jpg",
+      "imageUrl": "images/engineered-5.jpg",
       "featured": false,
       "images": [
-        "/images/engineered-5.jpg"
+        "images/engineered-5.jpg"
       ],
       "brand": "Godfrey Hirst",
       "isDeal": true
@@ -252,10 +252,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/laminate-1.jpg",
+      "imageUrl": "images/laminate-1.jpg",
       "featured": true,
       "images": [
-        "/images/laminate-1.jpg"
+        "images/laminate-1.jpg"
       ],
       "brand": "Preference Floors",
       "isDeal": false
@@ -271,10 +271,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/laminate-2.jpg",
+      "imageUrl": "images/laminate-2.jpg",
       "featured": false,
       "images": [
-        "/images/laminate-2.jpg"
+        "images/laminate-2.jpg"
       ],
       "brand": "Premium Oak Co.",
       "isDeal": false
@@ -290,10 +290,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/laminate-3.jpg",
+      "imageUrl": "images/laminate-3.jpg",
       "featured": false,
       "images": [
-        "/images/laminate-3.jpg"
+        "images/laminate-3.jpg"
       ],
       "brand": "Quick-Step",
       "isDeal": false
@@ -309,10 +309,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/laminate-4.jpg",
+      "imageUrl": "images/laminate-4.jpg",
       "featured": false,
       "images": [
-        "/images/laminate-4.jpg"
+        "images/laminate-4.jpg"
       ],
       "brand": "Godfrey Hirst",
       "isDeal": false
@@ -328,10 +328,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/laminate-5.jpg",
+      "imageUrl": "images/laminate-5.jpg",
       "featured": false,
       "images": [
-        "/images/laminate-5.jpg"
+        "images/laminate-5.jpg"
       ],
       "brand": "Preference Floors",
       "isDeal": false
@@ -347,10 +347,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/vinyl-1.jpg",
+      "imageUrl": "images/vinyl-1.jpg",
       "featured": true,
       "images": [
-        "/images/vinyl-1.jpg"
+        "images/vinyl-1.jpg"
       ],
       "brand": "Premium Oak Co.",
       "isDeal": false
@@ -366,10 +366,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/vinyl-2.jpg",
+      "imageUrl": "images/vinyl-2.jpg",
       "featured": false,
       "images": [
-        "/images/vinyl-2.jpg"
+        "images/vinyl-2.jpg"
       ],
       "brand": "Quick-Step",
       "isDeal": false
@@ -385,10 +385,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/vinyl-3.jpg",
+      "imageUrl": "images/vinyl-3.jpg",
       "featured": false,
       "images": [
-        "/images/vinyl-3.jpg"
+        "images/vinyl-3.jpg"
       ],
       "brand": "Godfrey Hirst",
       "isDeal": false
@@ -404,10 +404,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/vinyl-4.jpg",
+      "imageUrl": "images/vinyl-4.jpg",
       "featured": false,
       "images": [
-        "/images/vinyl-4.jpg"
+        "images/vinyl-4.jpg"
       ],
       "brand": "Preference Floors",
       "isDeal": false
@@ -423,10 +423,10 @@
         "Free measure & quote (Sydney)",
         "Ask for colour range & stock"
       ],
-      "imageUrl": "/images/vinyl-5.jpg",
+      "imageUrl": "images/vinyl-5.jpg",
       "featured": false,
       "images": [
-        "/images/vinyl-5.jpg"
+        "images/vinyl-5.jpg"
       ],
       "brand": "Premium Oak Co.",
       "isDeal": false

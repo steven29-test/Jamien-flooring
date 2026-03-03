@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import type { CatalogData, FloorCategory, FloorItem } from "../types/catalog";
 import { clearCatalogOverride, saveCatalogOverride } from "../utils/storage";
 import { useMemo, useState } from "react";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = {
   baseCatalog: CatalogData;

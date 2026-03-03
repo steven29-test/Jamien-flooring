@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
 import { sortCategories } from "../utils/categoryOrder";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
 

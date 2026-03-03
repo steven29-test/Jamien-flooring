@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
 
