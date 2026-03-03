@@ -1,0 +1,469 @@
+{
+  "businessName": "Jamien Flooring",
+  "serviceArea": "Sydney, NSW",
+  "logoUrl": "/images/logo.png",
+  "hero": {
+    "headline": "Premium timber floors, installed beautifully.",
+    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney\u2019s North Shore. Clear pricing, honest advice, and a clean finish.",
+    "heroImageUrl": "/images/hybrid-1.jpg"
+  },
+  "about": {
+    "title": "Why Sydney homeowners choose Jamien Flooring",
+    "bullets": [
+      "Premium engineered timber craftsmanship (oak, modern boards, feature patterns)",
+      "Great-value hybrid, laminate and vinyl options \u2014 suited to families and rentals",
+      "Sydney North Shore service with reliable scheduling and tidy workmanship",
+      "Straightforward product advice and transparent quotes",
+      "Free measure & quote \u2014 send suburb + m\u00b2 (or floor plan) for a fast estimate"
+    ],
+    "note": "We help you choose the right floor for your style, budget and daily life \u2014 then install it properly."
+  },
+  "contact": {
+    "phone": "02 8000 0000",
+    "email": "info@jamienflooring.com.au",
+    "address": "Unit 1, 123 Pacific Hwy, Artarmon NSW 2064",
+    "hours": "Mon\u2013Sat 9:00am\u20135:30pm"
+  },
+  "categories": [
+    {
+      "id": "engineered",
+      "name": "Engineered Timber",
+      "description": "Warm timber look with improved stability.",
+      "imageUrl": "/images/engineered-1.jpg"
+    },
+    {
+      "id": "hybrid",
+      "name": "Hybrid Flooring",
+      "description": "Water-resistant, durable and great value.",
+      "imageUrl": "/images/hybrid-1.jpg"
+    },
+    {
+      "id": "laminate",
+      "name": "Laminate",
+      "description": "Affordable, scratch-resistant options.",
+      "imageUrl": "/images/laminate-1.jpg"
+    },
+    {
+      "id": "vinyl",
+      "name": "Vinyl",
+      "description": "Comfortable underfoot, easy maintenance.",
+      "imageUrl": "/images/vinyl-1.jpg"
+    }
+  ],
+  "items": [
+    {
+      "id": "hy1",
+      "categoryId": "hybrid",
+      "name": "Hybrid Flooring \u00b7 Option 1",
+      "subtitle": "Water-resistant",
+      "priceHint": "$45/m\u00b2 from",
+      "specs": [
+        "Water-resistant",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/hybrid-1.jpg",
+      "featured": true,
+      "images": [
+        "/images/hybrid-1.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "hy2",
+      "categoryId": "hybrid",
+      "name": "Hybrid Flooring \u00b7 Option 2",
+      "subtitle": "Family friendly",
+      "priceHint": "$49/m\u00b2 from",
+      "specs": [
+        "Family friendly",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/hybrid-2.jpg",
+      "featured": false,
+      "images": [
+        "/images/hybrid-2.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": true
+    },
+    {
+      "id": "hy3",
+      "categoryId": "hybrid",
+      "name": "Hybrid Flooring \u00b7 Option 3",
+      "subtitle": "Scratch resistant",
+      "priceHint": "$55/m\u00b2 from",
+      "specs": [
+        "Scratch resistant",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/hybrid-3.jpg",
+      "featured": false,
+      "images": [
+        "/images/hybrid-3.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "hy4",
+      "categoryId": "hybrid",
+      "name": "Hybrid Flooring \u00b7 Option 4",
+      "subtitle": "Easy maintenance",
+      "priceHint": "$45/m\u00b2 from",
+      "specs": [
+        "Easy maintenance",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/hybrid-4.jpg",
+      "featured": false,
+      "images": [
+        "/images/hybrid-4.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": true
+    },
+    {
+      "id": "hy5",
+      "categoryId": "hybrid",
+      "name": "Hybrid Flooring \u00b7 Option 5",
+      "subtitle": "Great value",
+      "priceHint": "$49/m\u00b2 from",
+      "specs": [
+        "Great value",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/hybrid-5.jpg",
+      "featured": false,
+      "images": [
+        "/images/hybrid-5.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "en1",
+      "categoryId": "engineered",
+      "name": "Engineered Timber \u00b7 Option 1",
+      "subtitle": "Natural timber feel",
+      "priceHint": "$119/m\u00b2 from",
+      "specs": [
+        "Natural timber feel",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/engineered-1.jpg",
+      "featured": true,
+      "images": [
+        "/images/engineered-1.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "en2",
+      "categoryId": "engineered",
+      "name": "Engineered Timber \u00b7 Option 2",
+      "subtitle": "Stable performance",
+      "priceHint": "$89/m\u00b2 from",
+      "specs": [
+        "Stable performance",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/engineered-2.jpg",
+      "featured": false,
+      "images": [
+        "/images/engineered-2.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": true
+    },
+    {
+      "id": "en3",
+      "categoryId": "engineered",
+      "name": "Engineered Timber \u00b7 Option 3",
+      "subtitle": "Premium look",
+      "priceHint": "$99/m\u00b2 from",
+      "specs": [
+        "Premium look",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/engineered-3.jpg",
+      "featured": false,
+      "images": [
+        "/images/engineered-3.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "en4",
+      "categoryId": "engineered",
+      "name": "Engineered Timber \u00b7 Option 4",
+      "subtitle": "Warm & timeless",
+      "priceHint": "$119/m\u00b2 from",
+      "specs": [
+        "Warm & timeless",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/engineered-4.jpg",
+      "featured": false,
+      "images": [
+        "/images/engineered-4.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "en5",
+      "categoryId": "engineered",
+      "name": "Engineered Timber \u00b7 Option 5",
+      "subtitle": "Multiple finishes",
+      "priceHint": "$89/m\u00b2 from",
+      "specs": [
+        "Multiple finishes",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/engineered-5.jpg",
+      "featured": false,
+      "images": [
+        "/images/engineered-5.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": true
+    },
+    {
+      "id": "la1",
+      "categoryId": "laminate",
+      "name": "Laminate \u00b7 Option 1",
+      "subtitle": "Budget friendly",
+      "priceHint": "$49/m\u00b2 from",
+      "specs": [
+        "Budget friendly",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/laminate-1.jpg",
+      "featured": true,
+      "images": [
+        "/images/laminate-1.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "la2",
+      "categoryId": "laminate",
+      "name": "Laminate \u00b7 Option 2",
+      "subtitle": "Tough wear layer",
+      "priceHint": "$55/m\u00b2 from",
+      "specs": [
+        "Tough wear layer",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/laminate-2.jpg",
+      "featured": false,
+      "images": [
+        "/images/laminate-2.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "la3",
+      "categoryId": "laminate",
+      "name": "Laminate \u00b7 Option 3",
+      "subtitle": "Modern styles",
+      "priceHint": "$45/m\u00b2 from",
+      "specs": [
+        "Modern styles",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/laminate-3.jpg",
+      "featured": false,
+      "images": [
+        "/images/laminate-3.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "la4",
+      "categoryId": "laminate",
+      "name": "Laminate \u00b7 Option 4",
+      "subtitle": "Quick installation",
+      "priceHint": "$49/m\u00b2 from",
+      "specs": [
+        "Quick installation",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/laminate-4.jpg",
+      "featured": false,
+      "images": [
+        "/images/laminate-4.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "la5",
+      "categoryId": "laminate",
+      "name": "Laminate \u00b7 Option 5",
+      "subtitle": "Easy care",
+      "priceHint": "$55/m\u00b2 from",
+      "specs": [
+        "Easy care",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/laminate-5.jpg",
+      "featured": false,
+      "images": [
+        "/images/laminate-5.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "vi1",
+      "categoryId": "vinyl",
+      "name": "Vinyl \u00b7 Option 1",
+      "subtitle": "Soft underfoot",
+      "priceHint": "$45/m\u00b2 from",
+      "specs": [
+        "Soft underfoot",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/vinyl-1.jpg",
+      "featured": true,
+      "images": [
+        "/images/vinyl-1.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "vi2",
+      "categoryId": "vinyl",
+      "name": "Vinyl \u00b7 Option 2",
+      "subtitle": "Quiet & comfy",
+      "priceHint": "$49/m\u00b2 from",
+      "specs": [
+        "Quiet & comfy",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/vinyl-2.jpg",
+      "featured": false,
+      "images": [
+        "/images/vinyl-2.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "vi3",
+      "categoryId": "vinyl",
+      "name": "Vinyl \u00b7 Option 3",
+      "subtitle": "Water-resistant",
+      "priceHint": "$55/m\u00b2 from",
+      "specs": [
+        "Water-resistant",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/vinyl-3.jpg",
+      "featured": false,
+      "images": [
+        "/images/vinyl-3.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "vi4",
+      "categoryId": "vinyl",
+      "name": "Vinyl \u00b7 Option 4",
+      "subtitle": "Easy cleaning",
+      "priceHint": "$45/m\u00b2 from",
+      "specs": [
+        "Easy cleaning",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/vinyl-4.jpg",
+      "featured": false,
+      "images": [
+        "/images/vinyl-4.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "vi5",
+      "categoryId": "vinyl",
+      "name": "Vinyl \u00b7 Option 5",
+      "subtitle": "Great for units",
+      "priceHint": "$49/m\u00b2 from",
+      "specs": [
+        "Great for units",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "/images/vinyl-5.jpg",
+      "featured": false,
+      "images": [
+        "/images/vinyl-5.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    }
+  ],
+  "reviews": [
+    {
+      "id": "r1",
+      "name": "David L.",
+      "suburb": "Mosman",
+      "rating": 5,
+      "type": "premium",
+      "text": "Installed engineered oak throughout our home. The finish and detailing were outstanding. Very professional and tidy workmanship."
+    },
+    {
+      "id": "r2",
+      "name": "Angela W.",
+      "suburb": "Chatswood",
+      "rating": 5,
+      "type": "premium",
+      "text": "Beautiful timber flooring installed exactly as promised. The colour and grain selection really elevated the space."
+    },
+    {
+      "id": "r3",
+      "name": "Sarah T.",
+      "suburb": "Epping",
+      "rating": 5,
+      "type": "value",
+      "text": "We replaced carpet with hybrid flooring. Great price and quick turnaround. Perfect for our kids and dog."
+    },
+    {
+      "id": "r4",
+      "name": "Michael K.",
+      "suburb": "Parramatta",
+      "rating": 5,
+      "type": "value",
+      "text": "Affordable laminate option for our investment property. Clean job and easy to deal with."
+    }
+  ]
+}
