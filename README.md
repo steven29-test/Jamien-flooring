@@ -138,3 +138,8 @@ Settings → Secrets and variables → Actions → **Variables**
 ## GitHub Pages note
 If you host under a repo path (e.g. `...github.io/jamien-flooring/`), Vite must use `base: "./"` in `vite.config.ts` so JS/CSS load correctly.
 Also GitHub Pages URLs are case-sensitive.
+
+## GitHub Pages Troubleshooting
+- In repo **Settings → Pages**, set **Source = GitHub Actions** (not 'Deploy from a branch').
+- Your project URL is case-sensitive: use `/jamien-flooring/` (lowercase).
+- Vite is configured with `base: "./"` so assets load correctly.
