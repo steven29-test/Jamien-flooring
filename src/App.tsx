@@ -50,7 +50,10 @@ export default function App() {
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <NavBar
           businessName={normalizedCatalog.businessName}
-          logoUrl={assetUrl(normalizedCatalog.logoUrl)}
+          // catalog.logoUrl is optional in the type (to allow no-logo setups),
+          // but our default catalog.json provides one. Provide a safe fallback
+          // so TypeScript builds (e.g., GitHub Actions) don't fail.
+          logoUrl={assetUrl(normalizedCatalog.logoUrl ?? "images/logo.png")}
           categories={normalizedCatalog.categories}
         />
         <Routes>
