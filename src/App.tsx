@@ -43,8 +43,16 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter >
-        <NavBar businessName={normalizedCatalog.businessName} logoUrl={normalizedCatalog.logoUrl} categories={normalizedCatalog.categories} />
+      {/*
+        GitHub Pages serves this site from a sub-path (e.g. /Jamien-flooring/).
+        Using BASE_URL keeps routing working locally (/) and on GitHub Pages.
+      */}
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <NavBar
+          businessName={normalizedCatalog.businessName}
+          logoUrl={assetUrl(normalizedCatalog.logoUrl)}
+          categories={normalizedCatalog.categories}
+        />
         <Routes>
           <Route path="/" element={<Home catalog={normalizedCatalog} />} />
           <Route path="/catalog" element={<Catalog catalog={normalizedCatalog} />} />
