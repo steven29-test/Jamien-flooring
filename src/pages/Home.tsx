@@ -71,7 +71,7 @@ export default function Home({ catalog }: Props) {
                     {catalog.about.bullets.map((b, idx) => (
                       <ListItem key={idx} disableGutters>
                         <ListItemIcon sx={{ minWidth: 36 }}>
-                          <CheckCircleIcon />
+                          <CheckCircleIcon sx={{ color: "#FBBC04" }} />
                         </ListItemIcon>
                         <ListItemText primary={b} />
                       </ListItem>
@@ -87,7 +87,7 @@ export default function Home({ catalog }: Props) {
                     Quick quote tips
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Send your suburb, estimated m² (or a floor plan), and a couple of photos. We’ll recommend the best options for your home, then provide clear pricing and a clean install plan.
+                    Send your suburb, estimated m² (or a floor plan), and a couple of photos. We'll recommend the best options for your home, then provide clear pricing and a clean install plan.
                   </Typography>
                   <Stack direction="row" spacing={1.2} sx={{ mt: 2 }}>
                     <Button component={RouterLink} to="/contact" variant="contained" disableElevation sx={{ fontWeight: 800 }}>
