@@ -1,4 +1,4 @@
-name: Deploy to Stage
+name: Stage Deployment
 
 on:
   push:
@@ -9,8 +9,11 @@ on:
       - Stage
 
 jobs:
-  test-and-deploy:
+  stage-build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: stage
+      url: https://steven29-test.github.io/Jamien-flooring/
 
     steps:
       - name: Checkout code
@@ -35,3 +38,12 @@ jobs:
           publish_dir: ./dist
           publish_branch: gh-pages-stage
           cname: false
+
+      - name: Stage Deployment Summary
+        if: github.ref == 'refs/heads/Stage' && github.event_name == 'push'
+        run: |
+          echo "✅ Stage Deployment Completed!"
+          echo "Environment: stage"
+          echo "Branch: gh-pages-stage"
+          echo "URL: https://steven29-test.github.io/Jamien-flooring/"
+          echo "Commit: ${{ github.sha }}"
