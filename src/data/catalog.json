@@ -4,25 +4,28 @@
   "logoUrl": "images/logo.png",
   "hero": {
     "headline": "Premium timber floors, installed beautifully.",
-    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney\u2019s North Shore. Clear pricing, honest advice, and a clean finish.",
+    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney’s North Shore. Clear pricing, honest advice, and a clean finish.",
     "heroImageUrl": "images/hybrid-1.jpg"
   },
   "about": {
     "title": "Why Sydney homeowners choose Jamien Flooring",
     "bullets": [
       "Premium engineered timber craftsmanship (oak, modern boards, feature patterns)",
-      "Great-value hybrid, laminate and vinyl options \u2014 suited to families and rentals",
+      "Great-value hybrid, laminate and vinyl options — suited to families and rentals",
       "Sydney North Shore service with reliable scheduling and tidy workmanship",
       "Straightforward product advice and transparent quotes",
-      "Free measure & quote \u2014 send suburb + m\u00b2 (or floor plan) for a fast estimate"
+      "Free measure & quote — send suburb + m² (or floor plan) for a fast estimate"
     ],
-    "note": "We help you choose the right floor for your style, budget and daily life \u2014 then install it properly."
+    "note": "We help you choose the right floor for your style, budget and daily life — then install it properly."
   },
   "contact": {
-    "phone": "02 8000 0000",
+    "phone": "0435 116 503",
     "email": "info@jamienflooring.com.au",
-    "address": "Unit 1, 123 Pacific Hwy, Artarmon NSW 2064",
-    "hours": "Mon\u2013Sat 9:00am\u20135:30pm"
+    "address": "Chaplin Drive Lane Cove, NSW 2066",
+    "hours": "Mon–Sat 9:00am–5:30pm",
+    "callUs": "0435 116 503",
+    "smsTxt": "0433 116 503",
+    "whatsapp": "0433 116 503"
   },
   "categories": [
     {
@@ -54,9 +57,9 @@
     {
       "id": "hy1",
       "categoryId": "hybrid",
-      "name": "Hybrid Flooring \u00b7 Option 1",
+      "name": "Hybrid Flooring · Option 1",
       "subtitle": "Water-resistant",
-      "priceHint": "$45/m\u00b2 from",
+      "priceHint": "$45/m² from",
       "specs": [
         "Water-resistant",
         "Free measure & quote (Sydney)",
@@ -73,9 +76,9 @@
     {
       "id": "hy2",
       "categoryId": "hybrid",
-      "name": "Hybrid Flooring \u00b7 Option 2",
+      "name": "Hybrid Flooring · Option 2",
       "subtitle": "Family friendly",
-      "priceHint": "$49/m\u00b2 from",
+      "priceHint": "$49/m² from",
       "specs": [
         "Family friendly",
         "Free measure & quote (Sydney)",
@@ -92,9 +95,9 @@
     {
       "id": "hy3",
       "categoryId": "hybrid",
-      "name": "Hybrid Flooring \u00b7 Option 3",
+      "name": "Hybrid Flooring · Option 3",
       "subtitle": "Scratch resistant",
-      "priceHint": "$55/m\u00b2 from",
+      "priceHint": "$55/m² from",
       "specs": [
         "Scratch resistant",
         "Free measure & quote (Sydney)",
@@ -111,9 +114,9 @@
     {
       "id": "hy4",
       "categoryId": "hybrid",
-      "name": "Hybrid Flooring \u00b7 Option 4",
+      "name": "Hybrid Flooring · Option 4",
       "subtitle": "Easy maintenance",
-      "priceHint": "$45/m\u00b2 from",
+      "priceHint": "$45/m² from",
       "specs": [
         "Easy maintenance",
         "Free measure & quote (Sydney)",
@@ -130,9 +133,9 @@
     {
       "id": "hy5",
       "categoryId": "hybrid",
-      "name": "Hybrid Flooring \u00b7 Option 5",
+      "name": "Hybrid Flooring · Option 5",
       "subtitle": "Great value",
-      "priceHint": "$49/m\u00b2 from",
+      "priceHint": "$49/m² from",
       "specs": [
         "Great value",
         "Free measure & quote (Sydney)",
@@ -149,9 +152,9 @@
     {
       "id": "en1",
       "categoryId": "engineered",
-      "name": "Engineered Timber \u00b7 Option 1",
+      "name": "Engineered Timber · Option 1",
       "subtitle": "Natural timber feel",
-      "priceHint": "$119/m\u00b2 from",
+      "priceHint": "$119/m² from",
       "specs": [
         "Natural timber feel",
         "Free measure & quote (Sydney)",
@@ -168,9 +171,9 @@
     {
       "id": "en2",
       "categoryId": "engineered",
-      "name": "Engineered Timber \u00b7 Option 2",
+      "name": "Engineered Timber · Option 2",
       "subtitle": "Stable performance",
-      "priceHint": "$89/m\u00b2 from",
+      "priceHint": "$89/m² from",
       "specs": [
         "Stable performance",
         "Free measure & quote (Sydney)",
@@ -187,9 +190,9 @@
     {
       "id": "en3",
       "categoryId": "engineered",
-      "name": "Engineered Timber \u00b7 Option 3",
+      "name": "Engineered Timber · Option 3",
       "subtitle": "Premium look",
-      "priceHint": "$99/m\u00b2 from",
+      "priceHint": "$99/m² from",
       "specs": [
         "Premium look",
         "Free measure & quote (Sydney)",
@@ -206,9 +209,9 @@
     {
       "id": "en4",
       "categoryId": "engineered",
-      "name": "Engineered Timber \u00b7 Option 4",
+      "name": "Engineered Timber · Option 4",
       "subtitle": "Warm & timeless",
-      "priceHint": "$119/m\u00b2 from",
+      "priceHint": "$119/m² from",
       "specs": [
         "Warm & timeless",
         "Free measure & quote (Sydney)",
@@ -225,9 +228,9 @@
     {
       "id": "en5",
       "categoryId": "engineered",
-      "name": "Engineered Timber \u00b7 Option 5",
+      "name": "Engineered Timber · Option 5",
       "subtitle": "Multiple finishes",
-      "priceHint": "$89/m\u00b2 from",
+      "priceHint": "$89/m² from",
       "specs": [
         "Multiple finishes",
         "Free measure & quote (Sydney)",
@@ -244,9 +247,9 @@
     {
       "id": "la1",
       "categoryId": "laminate",
-      "name": "Laminate \u00b7 Option 1",
+      "name": "Laminate · Option 1",
       "subtitle": "Budget friendly",
-      "priceHint": "$49/m\u00b2 from",
+      "priceHint": "$49/m² from",
       "specs": [
         "Budget friendly",
         "Free measure & quote (Sydney)",
@@ -263,9 +266,9 @@
     {
       "id": "la2",
       "categoryId": "laminate",
-      "name": "Laminate \u00b7 Option 2",
+      "name": "Laminate · Option 2",
       "subtitle": "Tough wear layer",
-      "priceHint": "$55/m\u00b2 from",
+      "priceHint": "$55/m² from",
       "specs": [
         "Tough wear layer",
         "Free measure & quote (Sydney)",
@@ -282,9 +285,9 @@
     {
       "id": "la3",
       "categoryId": "laminate",
-      "name": "Laminate \u00b7 Option 3",
+      "name": "Laminate · Option 3",
       "subtitle": "Modern styles",
-      "priceHint": "$45/m\u00b2 from",
+      "priceHint": "$45/m² from",
       "specs": [
         "Modern styles",
         "Free measure & quote (Sydney)",
@@ -301,9 +304,9 @@
     {
       "id": "la4",
       "categoryId": "laminate",
-      "name": "Laminate \u00b7 Option 4",
+      "name": "Laminate · Option 4",
       "subtitle": "Quick installation",
-      "priceHint": "$49/m\u00b2 from",
+      "priceHint": "$49/m² from",
       "specs": [
         "Quick installation",
         "Free measure & quote (Sydney)",
@@ -320,9 +323,9 @@
     {
       "id": "la5",
       "categoryId": "laminate",
-      "name": "Laminate \u00b7 Option 5",
+      "name": "Laminate · Option 5",
       "subtitle": "Easy care",
-      "priceHint": "$55/m\u00b2 from",
+      "priceHint": "$55/m² from",
       "specs": [
         "Easy care",
         "Free measure & quote (Sydney)",
@@ -339,9 +342,9 @@
     {
       "id": "vi1",
       "categoryId": "vinyl",
-      "name": "Vinyl \u00b7 Option 1",
+      "name": "Vinyl · Option 1",
       "subtitle": "Soft underfoot",
-      "priceHint": "$45/m\u00b2 from",
+      "priceHint": "$45/m² from",
       "specs": [
         "Soft underfoot",
         "Free measure & quote (Sydney)",
@@ -358,9 +361,9 @@
     {
       "id": "vi2",
       "categoryId": "vinyl",
-      "name": "Vinyl \u00b7 Option 2",
+      "name": "Vinyl · Option 2",
       "subtitle": "Quiet & comfy",
-      "priceHint": "$49/m\u00b2 from",
+      "priceHint": "$49/m² from",
       "specs": [
         "Quiet & comfy",
         "Free measure & quote (Sydney)",
@@ -377,9 +380,9 @@
     {
       "id": "vi3",
       "categoryId": "vinyl",
-      "name": "Vinyl \u00b7 Option 3",
+      "name": "Vinyl · Option 3",
       "subtitle": "Water-resistant",
-      "priceHint": "$55/m\u00b2 from",
+      "priceHint": "$55/m² from",
       "specs": [
         "Water-resistant",
         "Free measure & quote (Sydney)",
@@ -396,9 +399,9 @@
     {
       "id": "vi4",
       "categoryId": "vinyl",
-      "name": "Vinyl \u00b7 Option 4",
+      "name": "Vinyl · Option 4",
       "subtitle": "Easy cleaning",
-      "priceHint": "$45/m\u00b2 from",
+      "priceHint": "$45/m² from",
       "specs": [
         "Easy cleaning",
         "Free measure & quote (Sydney)",
@@ -415,9 +418,9 @@
     {
       "id": "vi5",
       "categoryId": "vinyl",
-      "name": "Vinyl \u00b7 Option 5",
+      "name": "Vinyl · Option 5",
       "subtitle": "Great for units",
-      "priceHint": "$49/m\u00b2 from",
+      "priceHint": "$49/m² from",
       "specs": [
         "Great for units",
         "Free measure & quote (Sydney)",

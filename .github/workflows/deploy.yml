@@ -1,0 +1,36 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+      - Stage
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci && npm run build
+
+      - name: Deploy Stage to Vercel
+        if: github.ref == 'refs/heads/Stage'
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_STAGE }}
+
+      - name: Deploy Production to Vercel
+        if: github.ref == 'refs/heads/main'
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_PROD }}
+          vercel-args: '--prod'
