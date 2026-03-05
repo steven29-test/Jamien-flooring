@@ -8,12 +8,11 @@ export type ContactPayload = {
   message: string;
 };
 
-function requiredEnv(key: string): string {
+function requiredEnv(key: string): string | null {
   const v = (import.meta.env as any)[key];
   if (!v || String(v).trim() === "") {
-    throw new Error(
-      `Missing ${key}. Please set it in .env.local (and GitHub Actions variables for production).`
-    );
+    console.warn(`Missing environment variable: ${key}`);
+    return null;
   }
   return String(v).trim();
 }
@@ -31,11 +30,18 @@ function nowLocalString(): string {
 
 export async function sendContact(payload: ContactPayload): Promise<void> {
   const serviceId = requiredEnv("VITE_EMAILJS_SERVICE_ID");
+  const publicKey = requiredEnv("VITE_EMAILJS_PUBLIC_KEY");
+
+  // If EmailJS is not configured, fail gracefully
+  if (!serviceId || !publicKey) {
+    console.error("EmailJS is not configured. Contact form is disabled.");
+    throw new Error("Email service is temporarily unavailable. Please call or visit us directly.");
+  }
+
   // Your template ID is fixed to match the EmailJS template you created.
   const templateId =
     (import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined)?.trim() ||
     "template_mlklq0g";
-  const publicKey = requiredEnv("VITE_EMAILJS_PUBLIC_KEY");
 
   // These fields MUST match your EmailJS template variables:
   // {{title}} {{name}} {{email}} {{time}} {{message}}
