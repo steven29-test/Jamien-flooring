@@ -1,155 +1,152 @@
-# Vercel Migration Setup Guide
+# Single Repository + Vercel Deployment
 
-## CRITICAL: Action Items for YOU
+## MUCH SIMPLER APPROACH ✅
 
-You must complete these steps manually on GitHub and Vercel to finish the migration.
+You can deploy **both Stage and Production from the SAME repository** on Vercel. Here's how:
 
 ---
 
-## STEP 1: Create Vercel Projects
+## STEP 1: Create ONE Vercel Project
 
 1. **Go to https://vercel.com/dashboard**
-2. **Create TWO projects:**
-   - **Project 1: Stage Deployment**
-     - Import from GitHub: `steven29-test/Jamien-flooring` → `Stage` branch
-     - Project Name: `jamien-flooring-stage` (or similar)
-     - Framework Preset: Vite
-     - Root Directory: `./` (default)
-     - Build Command: `npm run build`
-     - Output Directory: `dist`
-     - **DO NOT deploy yet** — just create it and copy the Project ID
-   
-   - **Project 2: Production Deployment**
-     - Import from GitHub: `steven29-test/Jamien-flooring` → `main` branch
-     - Project Name: `jamien-flooring-prod` (or similar)
-     - Framework Preset: Vite
-     - Root Directory: `./` (default)
-     - Build Command: `npm run build`
-     - Output Directory: `dist`
-     - **DO NOT deploy yet** — just create it and copy the Project ID
+2. **Import your repository once:**
+   - GitHub: `steven29-test/Jamien-flooring`
+   - Project Name: `jamien-flooring` (or similar)
+   - Framework: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - **Production branch:** `main`
+
+3. **After project is created, add the Stage environment:**
+   - Go to Project Settings → Deployments
+   - Add Preview deployment for `Stage` branch
+   - OR: Vercel automatically creates preview deployments for all non-main branches
 
 ---
 
-## STEP 2: Get Your Vercel Credentials
+## STEP 2: Get Vercel Credentials
 
-From Vercel account settings (https://vercel.com/account/tokens):
-- **VERCEL_TOKEN:** Your personal access token
-- **VERCEL_ORG_ID:** Your organization/team ID
+You only need **3 secrets** now (not 4):
 
-From each Vercel project (Project Settings → General):
-- **VERCEL_PROJECT_ID_STAGE:** Project ID from Stage deployment project
-- **VERCEL_PROJECT_ID_PROD:** Project ID from Production deployment project
+| Secret Name | Where to get it |
+|-------------|-----------------|
+| `VERCEL_TOKEN` | Vercel: Account Settings → Tokens |
+| `VERCEL_ORG_ID` | Vercel: Team Settings or account page |
+| `VERCEL_PROJECT_ID` | Vercel: Project Settings → General → Project ID |
 
 ---
 
-## STEP 3: Add GitHub Repository Secrets
+## STEP 3: Add GitHub Secrets
 
 1. **Go to:** https://github.com/steven29-test/Jamien-flooring/settings/secrets/actions
-2. **Add these 4 secrets:**
-
-   | Secret Name | Where to get it |
-   |-------------|-----------------|
-   | `VERCEL_TOKEN` | From Vercel: Account Settings → Tokens |
-   | `VERCEL_ORG_ID` | From Vercel: Team Settings or account page |
-   | `VERCEL_PROJECT_ID_STAGE` | From Vercel: Stage project → Settings → General → Project ID |
-   | `VERCEL_PROJECT_ID_PROD` | From Vercel: Production project → Settings → General → Project ID |
+2. **Add these 3 secrets:**
+   - `VERCEL_TOKEN`
+   - `VERCEL_ORG_ID`
+   - `VERCEL_PROJECT_ID`
 
 ---
 
-## STEP 4: Configure Production Domain
+## STEP 4: How Deployments Work
 
-1. **For Production project on Vercel:**
-   - Go to Project Settings → Domains
+### Production Deployment:
+- Push to `main` branch
+- Vercel automatically deploys to **production**
+- URL: `https://www.jamienflooring.com.au` (once domain is configured)
+
+### Stage Deployment:
+- Push to `Stage` branch
+- Vercel automatically creates a **preview deployment**
+- URL: `https://jamien-flooring-<random-id>.vercel.app` (or custom Stage domain if configured)
+
+Both deployments happen **automatically** — no extra workflow needed beyond basic push notification!
+
+---
+
+## STEP 5: Configure Production Domain
+
+1. **In Vercel Production project:**
+   - Go to Settings → Domains
    - Add domain: `www.jamienflooring.com.au`
-   - Update your domain registrar DNS to point to Vercel
-   - (Vercel will provide DNS instructions during setup)
+   - Configure DNS at your domain registrar
+   - Vercel will provide specific DNS instructions
 
-2. **Remove old GitHub Pages setup:**
-   - Go to https://github.com/steven29-test/Jamien-flooring/settings/pages
+2. **Remove GitHub Pages:**
+   - Go to GitHub: Settings → Pages
    - Disable GitHub Pages
-   - Delete old CNAME file from repository (if still present)
 
 ---
 
-## STEP 5: Test Deployments
+## STEP 6: (Optional) Configure Stage Domain
 
-Once secrets are configured:
+If you want a custom domain for Stage instead of the preview URL:
 
-### Test Stage Deployment:
-1. Make a small commit to the `Stage` branch and push
-2. Watch the workflow at: https://github.com/steven29-test/Jamien-flooring/actions
-3. Verify deployment completes
-4. **VERIFY STAGE URL** shows:
-   - ✅ Contact address: "Chaplin Drive Lane Cove, NSW 2066"
-   - ✅ File upload feature visible in Contact form
-   - ✅ All Stage-specific updates present
+1. **In Vercel project:**
+   - Go to Settings → Domains
+   - Add domain: `stage.jamienflooring.com.au` (or similar)
+   - Add to preview environment (not production)
 
-### Test Production Deployment:
-1. Make a small commit to the `main` branch and push
-2. Watch the workflow at: https://github.com/steven29-test/Jamien-flooring/actions
-3. Verify deployment completes
-4. **VERIFY PRODUCTION URL** (https://www.jamienflooring.com.au) shows:
-   - ✅ Contact address shows original content
-   - ✅ NO file upload feature (only original form)
-   - ✅ All production content unchanged
+2. **Update domain registrar DNS**
 
 ---
 
-## STEP 6: Merge Stage → Main (ONLY after Step 5 passes)
+## Workflow Configuration
 
-Once Stage is fully tested and verified:
-1. Create Pull Request: `Stage` → `main`
-2. Review changes (should only be workflow files)
-3. Merge PR
-4. Verify Production deployment succeeds and content matches Stage
+**Single workflow file** that handles both branches:
 
----
-
-## After Migration Complete
-
-- ✅ Delete unused repos: `jamien-flooring-stage` and `jamien-flooring-prod` (when you have admin access)
-- ✅ Monitor GitHub Actions for any workflow failures
-- ✅ Test both sites regularly to ensure deployments work
+- `.github/workflows/deploy-stage.yml` — Triggers on push to `main` or `Stage`
+- Vercel action automatically detects the branch
+- `--prod` flag ensures all deployments are production builds (not preview)
 
 ---
 
-## Quick Reference: Workflow Architecture
+## Advantages of Single-Repo Approach
 
-**Stage Branch:** 
-- Triggers: Push to `Stage` branch
-- Deploys to: Vercel Stage project
-- URL: (Check Vercel project settings for deployment URL)
+✅ **Simpler:** One Vercel project instead of two
+✅ **Fewer secrets:** 3 instead of 4
+✅ **Automatic:** Push to branch = instant deployment
+✅ **Cleaner:** No separate deployment repos needed
+✅ **Better staging:** Preview deployments built-in
+✅ **Less maintenance:** Fewer resources to manage
 
-**Main Branch:**
-- Triggers: Push to `main` branch
-- Deploys to: Vercel Production project
-- URL: https://www.jamienflooring.com.au
+---
 
-**Separation:** Each workflow uses separate Vercel project IDs, ensuring zero conflicts between Stage and Production.
+## What Stays the Same
+
+✅ **Stage branch** has updated contact info (Chaplin Drive) + file upload feature
+✅ **Main branch** is production with original content
+✅ **Complete separation:** Different URLs, different deployments, no conflicts
+
+---
+
+## Quick Checklist
+
+- [ ] Create **ONE** Vercel project (import `steven29-test/Jamien-flooring`)
+- [ ] Copy Project ID from Vercel
+- [ ] Add **3 GitHub secrets:** `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+- [ ] Verify `main` branch deploys to production
+- [ ] Verify `Stage` branch deploys to preview
+- [ ] Configure production domain (`www.jamienflooring.com.au`)
+- [ ] (Optional) Configure stage domain
+- [ ] Merge `Stage` → `main` after testing
 
 ---
 
 ## Troubleshooting
 
-If workflows fail:
-1. Check GitHub Actions tab for error messages
-2. Verify all 4 secrets are added correctly (no typos, exact names)
-3. Verify Vercel Project IDs are correct (copy from Vercel project settings)
-4. Check Vercel project settings:
-   - Stage project linked to `Stage` branch
-   - Production project linked to `main` branch
-5. Ensure build settings match (npm run build, output: dist)
+**Deployments not triggering?**
+- Check GitHub secrets are named correctly
+- Check Project ID matches Vercel project
+- Check GitHub Actions tab for errors
+
+**Wrong branch deploying?**
+- Vercel automatically routes main → production, others → preview
+- Check Vercel project settings
+
+**Production domain not working?**
+- Verify DNS is updated at domain registrar
+- Allow 24-48 hours for DNS propagation
+- Check Vercel domain verification
 
 ---
 
-## Workflows Updated
-
-Updated `.github/workflows/deploy-stage.yml` and `.github/workflows/deploy-prod.yml` to use Vercel deployment.
-
-Both workflows:
-- Install dependencies: `npm ci`
-- Build: `npm run build`
-- Deploy to Vercel with `--prod` flag (production deployment)
-- Use environment secrets for authentication
-
-**Workflows are ready to use once you add the GitHub secrets!**
+**Updated workflow is ready! Much simpler now.** 🎉
