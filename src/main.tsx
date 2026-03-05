@@ -14,8 +14,18 @@ if (redirectPath) {
   }
 }
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  throw new Error("Root element not found");
+}
+
+try {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+} catch (error) {
+  console.error("Failed to render React app:", error);
+  rootElement.innerHTML = `<div style="padding: 20px; font-family: Arial; color: red;"><h1>Error Loading Application</h1><p>${error instanceof Error ? error.message : String(error)}</p></div>`;
+}
