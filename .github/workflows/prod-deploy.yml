@@ -12,6 +12,11 @@ jobs:
       name: production
       url: https://www.jamienflooring.com.au/
 
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,6 +32,9 @@ jobs:
       - name: Build the app
         run: npm run build
 
+      - name: Add CNAME for production
+        run: echo "www.jamienflooring.com.au" > dist/CNAME
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
@@ -39,6 +47,5 @@ jobs:
       - name: Production Deployment Summary
         run: |
           echo "✅ Production Deployment Completed!"
-          echo "Environment: production"
           echo "URL: https://www.jamienflooring.com.au/"
           echo "Commit: ${{ github.sha }}"
