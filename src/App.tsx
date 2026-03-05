@@ -23,6 +23,17 @@ import { assetUrl } from "./utils/assetUrl";
 
 const ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === "true";
 
+// Determine basename: use "/" for production domains, handle relative paths for GitHub Pages subfolders
+function getBasename(): string {
+  const base = import.meta.env.BASE_URL;
+  // If BASE_URL is "./" (relative), use "/" for root-level domains like jamienflooring.com.au
+  // This fixes routing on custom domains while maintaining GitHub Pages subpath support
+  if (base === "./") {
+    return "/";
+  }
+  return base;
+}
+
 export default function App() {
   const baseCatalog = baseCatalogJson as CatalogData;
 
@@ -43,16 +54,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/*
-        GitHub Pages serves this site from a sub-path (e.g. /Jamien-flooring/).
-        Using BASE_URL keeps routing working locally (/) and on GitHub Pages.
-      */}
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter basename={getBasename()}>
         <NavBar
           businessName={normalizedCatalog.businessName}
-          // catalog.logoUrl is optional in the type (to allow no-logo setups),
-          // but our default catalog.json provides one. Provide a safe fallback
-          // so TypeScript builds (e.g., GitHub Actions) don't fail.
           logoUrl={assetUrl(normalizedCatalog.logoUrl ?? "images/logo.png")}
           categories={normalizedCatalog.categories}
         />
