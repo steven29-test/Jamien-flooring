@@ -6,6 +6,7 @@ export type ContactPayload = {
   phone?: string;
   suburb?: string;
   message: string;
+  attachments?: File[];
 };
 
 function requiredEnv(key: string): string {
@@ -31,14 +32,11 @@ function nowLocalString(): string {
 
 export async function sendContact(payload: ContactPayload): Promise<void> {
   const serviceId = requiredEnv("VITE_EMAILJS_SERVICE_ID");
-  // Your template ID is fixed to match the EmailJS template you created.
+  const publicKey = requiredEnv("VITE_EMAILJS_PUBLIC_KEY");
   const templateId =
     (import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined)?.trim() ||
     "template_mlklq0g";
-  const publicKey = requiredEnv("VITE_EMAILJS_PUBLIC_KEY");
 
-  // These fields MUST match your EmailJS template variables:
-  // {{title}} {{name}} {{email}} {{time}} {{message}}
   const composedMessage = [
     payload.message,
     "",
@@ -48,13 +46,39 @@ export async function sendContact(payload: ContactPayload): Promise<void> {
     .filter(Boolean)
     .join("\n");
 
-  const templateParams = {
+  const templateParams: any = {
     title: "Jamien Flooring Website Enquiry",
     name: payload.name,
     email: payload.email,
     time: nowLocalString(),
     message: composedMessage,
   };
+
+  // Handle file attachments if provided
+  if (payload.attachments && payload.attachments.length > 0) {
+    const attachmentPromises = payload.attachments.map(async (file) => {
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64 = (reader.result as string).split(",")[1];
+          resolve(base64);
+        };
+        reader.onerror = () => reject(new Error(`Failed to read file: ${file.name}`));
+        reader.readAsDataURL(file);
+      });
+    });
+
+    const attachmentBase64s = await Promise.all(attachmentPromises);
+    const attachmentNames = payload.attachments.map((f) => f.name).join(", ");
+    
+    // Add attachments to template params (EmailJS Pro feature)
+    attachmentBase64s.forEach((base64, index) => {
+      templateParams[`attachment_${index + 1}`] = base64;
+    });
+    
+    templateParams.attachmentNames = attachmentNames;
+    templateParams.message = composedMessage + `\n\nAttachments: ${attachmentNames}`;
+  }
 
   await emailjs.send(serviceId, templateId, templateParams, { publicKey });
 }
