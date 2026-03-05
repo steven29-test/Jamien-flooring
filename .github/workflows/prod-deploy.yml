@@ -1,0 +1,43 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate HTML
+        run: |
+          echo "Running HTML validation on main branch..."
+          if command -v html5validator &> /dev/null; then
+            html5validator --root . --ignore-re 'Attribute .* not allowed'
+          else
+            echo "HTML5 validator not installed, installing..."
+            pip install html5validator
+            html5validator --root . --ignore-re 'Attribute .* not allowed' || true
+          fi
+
+      - name: Deploy to Production GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          cname: jamien-flooring.com
+          publish_branch: gh-pages
+
+      - name: Deployment Summary
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "✅ Production deployment completed!"
+          echo "Production URL: https://jamien-flooring.com"

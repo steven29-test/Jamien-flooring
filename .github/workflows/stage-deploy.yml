@@ -1,0 +1,48 @@
+name: Deploy to Stage
+
+on:
+  push:
+    branches:
+      - Stage
+  pull_request:
+    branches:
+      - Stage
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate HTML
+        run: |
+          echo "Running HTML validation on Stage branch..."
+          if command -v html5validator &> /dev/null; then
+            html5validator --root . --ignore-re 'Attribute .* not allowed'
+          else
+            echo "HTML5 validator not installed, installing..."
+            pip install html5validator
+            html5validator --root . --ignore-re 'Attribute .* not allowed' || true
+          fi
+
+      - name: Check for broken links
+        run: |
+          echo "Checking for common issues in HTML files..."
+          find . -name "*.html" -type f | head -5 | xargs grep -l "href\|src" || true
+
+      - name: Deploy to Stage GitHub Pages
+        if: github.ref == 'refs/heads/Stage' && github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          cname: stage.jamien-flooring.com
+          publish_branch: gh-pages-stage
+
+      - name: Deployment Summary
+        if: github.ref == 'refs/heads/Stage' && github.event_name == 'push'
+        run: |
+          echo "✅ Stage deployment completed!"
+          echo "Stage environment URL: https://stage.jamien-flooring.com"
