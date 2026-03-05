@@ -6,6 +6,7 @@ export type ContactPayload = {
   phone?: string;
   suburb?: string;
   message: string;
+  attachments?: File[];
 };
 
 function requiredEnv(key: string): string | null {
