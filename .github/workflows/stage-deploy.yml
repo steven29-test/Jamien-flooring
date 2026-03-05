@@ -1,16 +1,16 @@
-name: Production Deployment
+name: Stage Deployment
 
 on:
   push:
     branches:
-      - main
+      - Stage
 
 jobs:
-  production-build-and-deploy:
+  stage-build-and-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: production
-      url: https://www.jamienflooring.com.au/
+      name: stage
+      url: https://steven29-test.github.io/Jamien-flooring/
 
     steps:
       - name: Checkout code
@@ -36,9 +36,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
 
-      - name: Production Deployment Summary
+      - name: Stage Deployment Summary
         run: |
-          echo "✅ Production Deployment Completed!"
-          echo "Environment: production"
-          echo "URL: https://www.jamienflooring.com.au/"
+          echo "✅ Stage Deployment Completed!"
+          echo "Environment: stage"
+          echo "URL: https://steven29-test.github.io/Jamien-flooring/"
           echo "Commit: ${{ github.sha }}"
