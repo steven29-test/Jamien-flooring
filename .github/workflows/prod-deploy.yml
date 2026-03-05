@@ -34,9 +34,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
-
-      - name: Deployment Summary
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: |
-          echo "✅ Production deployment completed!"
-          echo "Production URL: https://jamien-flooring.com"

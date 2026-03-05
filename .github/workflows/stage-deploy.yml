@@ -34,9 +34,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages-stage
-
-      - name: Deployment Summary
-        if: github.ref == 'refs/heads/Stage' && github.event_name == 'push'
-        run: |
-          echo "✅ Stage deployment completed!"
-          echo "Stage environment URL: https://steven29-test.github.io/Jamien-flooring/"
+          cname: false
