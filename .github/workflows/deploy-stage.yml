@@ -1,0 +1,43 @@
+name: Deploy Stage
+
+on:
+  push:
+    branches:
+      - Stage
+
+jobs:
+  deploy-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install and build
+        run: npm ci && npm run build
+
+      - name: Push to Jamien-flooring-stage repo
+        env:
+          DEPLOY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd /tmp
+          git clone https://steven29-test:${DEPLOY_TOKEN}@github.com/steven29-test/Jamien-flooring-stage.git deploy-stage 2>&1 || mkdir deploy-stage
+          cd deploy-stage
+          git init || true
+          git remote remove origin 2>/dev/null || true
+          git remote add origin https://steven29-test:${DEPLOY_TOKEN}@github.com/steven29-test/Jamien-flooring-stage.git
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+          git config http.postBuffer 524288000
+          rm -rf * .github .gitignore
+          cp -r $GITHUB_WORKSPACE/dist/* .
+          git add .
+          git commit -m "Deploy Stage build from ${{ github.sha }}" || echo "No changes"
+          git push -u origin master:gh-pages --force
+
+      - name: Deployment Complete
+        run: echo "✅ Stage deployed to https://steven29-test.github.io/Jamien-flooring-stage/"
