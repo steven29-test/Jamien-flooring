@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - Stage
-  pull_request:
-    branches:
-      - Stage
 
 jobs:
   stage-build-and-deploy:
@@ -14,6 +11,11 @@ jobs:
     environment:
       name: stage
       url: https://steven29-test.github.io/Jamien-flooring/
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -30,20 +32,20 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Deploy to Stage GitHub Pages
-        if: github.ref == 'refs/heads/Stage' && github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Remove CNAME for stage (no custom domain)
+        run: rm -f dist/CNAME
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages-stage
-          cname: false
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
 
       - name: Stage Deployment Summary
-        if: github.ref == 'refs/heads/Stage' && github.event_name == 'push'
         run: |
           echo "✅ Stage Deployment Completed!"
-          echo "Environment: stage"
-          echo "Branch: gh-pages-stage"
           echo "URL: https://steven29-test.github.io/Jamien-flooring/"
           echo "Commit: ${{ github.sha }}"
