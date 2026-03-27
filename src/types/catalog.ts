@@ -1,13 +1,21 @@
+export type FloorSubcategory = {
+  id: string;
+  name: string;
+  description?: string;
+};
+
 export type FloorCategory = {
   id: string;
   name: string;
   description?: string;
   imageUrl?: string;
+  subcategories?: FloorSubcategory[];
 };
 
 export type FloorItem = {
   id: string;
   categoryId: string;
+  subcategoryId?: string;
   name: string;
   subtitle?: string;
   priceHint?: string;
