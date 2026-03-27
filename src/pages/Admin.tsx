@@ -84,6 +84,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
       categoryId: defaultCat,
       name: "New Floor Item",
       subtitle: "",
+      description: "",
       priceHint: "",
       specs: [],
       imageUrl: "",
@@ -337,6 +338,18 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
 
                         <Grid item xs={12} md={4}>
                           <TextField fullWidth label="Price hint" value={i.priceHint ?? ""} onChange={(e) => updateItem(i.id, { priceHint: e.target.value })} />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="Description"
+                            value={i.description ?? ""}
+                            onChange={(e) => updateItem(i.id, { description: e.target.value })}
+                            placeholder="Product description shown on detail page"
+                            multiline
+                            minRows={3}
+                          />
                         </Grid>
                         <Grid item xs={12} md={4}>
   <TextField
