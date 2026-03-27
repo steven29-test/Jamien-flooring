@@ -10,6 +10,10 @@ import {
   TextField,
   Typography,
   IconButton,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -77,11 +81,10 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
     });
   }
 
-  function addItem() {
-    const defaultCat = catalog.categories[0]?.id ?? "uncategorized";
+  function addItemToCategory(categoryId: string) {
     const next: FloorItem = {
       id: uid("item"),
-      categoryId: defaultCat,
+      categoryId: categoryId,
       name: "New Floor Item",
       subtitle: "",
       priceHint: "",
@@ -116,6 +119,15 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
     onUrl(url);
   }
 
+  // Group items by category
+  const itemsByCategory = useMemo(() => {
+    const grouped: Record<string, FloorItem[]> = {};
+    catalog.categories.forEach((c) => {
+      grouped[c.id] = catalog.items.filter((i) => i.categoryId === c.id);
+    });
+    return grouped;
+  }, [catalog]);
+
   return (
     <Box sx={{ py: 4 }}>
       <Box sx={{ maxWidth: 1100, mx: "auto", px: 2 }}>
@@ -125,8 +137,8 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
           </Typography>
 
           <Alert severity="warning">
-            GitHub Pages is static — this editor saves to <b>this browser</b> only. For real production updates:
-            copy the export JSON into <b>src/data/catalog.json</b> and redeploy.
+            This editor saves to <b>browser storage</b>. For real updates:
+            copy the export JSON into <b>src/data/catalog.json</b> and push to GitHub.
           </Alert>
 
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
@@ -302,135 +314,120 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
 
           <Divider />
 
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" sx={{ fontWeight: 900 }}>
-              Items
-            </Typography>
-            <Button startIcon={<AddIcon />} variant="contained" disableElevation onClick={addItem} sx={{ fontWeight: 900 }}>
-              Add item
-            </Button>
-          </Stack>
+          <Typography variant="h6" sx={{ fontWeight: 900 }}>
+            Products by Category
+          </Typography>
 
-          <Grid container spacing={2}>
-            {catalog.items.map((i) => (
-              <Grid item xs={12} key={i.id}>
-                <Card sx={{ borderRadius: 4 }}>
-                  <CardContent>
-                    <Stack spacing={1.5}>
-                      <Stack direction="row" justifyContent="space-between" alignItems="center">
-                        <Typography sx={{ fontWeight: 900 }}>{i.name}</Typography>
-                        <IconButton color="error" onClick={() => deleteItem(i.id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
+          {catalog.categories.map((category) => (
+            <Box key={category.id}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+                <Typography variant="h6" sx={{ fontWeight: 900 }}>
+                  {category.name}
+                </Typography>
+                <Button startIcon={<AddIcon />} variant="contained" disableElevation onClick={() => addItemToCategory(category.id)} sx={{ fontWeight: 900 }}>
+                  Add product
+                </Button>
+              </Stack>
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} md={4}>
-                          <TextField fullWidth label="Name" value={i.name} onChange={(e) => updateItem(i.id, { name: e.target.value })} />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                          <TextField fullWidth label="Subtitle" value={i.subtitle ?? ""} onChange={(e) => updateItem(i.id, { subtitle: e.target.value })} />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                          <TextField fullWidth label="Category ID" value={i.categoryId} onChange={(e) => updateItem(i.id, { categoryId: e.target.value })} />
-                        </Grid>
+              <Grid container spacing={2} sx={{ mb: 3 }}>
+                {(itemsByCategory[category.id] || []).map((i) => (
+                  <Grid item xs={12} key={i.id}>
+                    <Card sx={{ borderRadius: 4 }}>
+                      <CardContent>
+                        <Stack spacing={1.5}>
+                          <Stack direction="row" justifyContent="space-between" alignItems="center">
+                            <Typography sx={{ fontWeight: 900 }}>{i.name}</Typography>
+                            <IconButton color="error" onClick={() => deleteItem(i.id)}>
+                              <DeleteIcon />
+                            </IconButton>
+                          </Stack>
 
-                        <Grid item xs={12} md={4}>
-                          <TextField fullWidth label="Price hint" value={i.priceHint ?? ""} onChange={(e) => updateItem(i.id, { priceHint: e.target.value })} />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-  <TextField
-    fullWidth
-    label="Primary image (optional)"
-    value={i.imageUrl ?? ""}
-    onChange={(e) => updateItem(i.id, { imageUrl: e.target.value })}
-    placeholder="/images/xxx.jpg or https://..."
-    helperText="Used only if Images list is empty."
-  />
-</Grid>
+                          <Grid container spacing={2}>
+                            <Grid item xs={12} md={4}>
+                              <TextField fullWidth label="Name" value={i.name} onChange={(e) => updateItem(i.id, { name: e.target.value })} />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                              <TextField fullWidth label="Subtitle" value={i.subtitle ?? ""} onChange={(e) => updateItem(i.id, { subtitle: e.target.value })} />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                              <TextField fullWidth label="Price hint" value={i.priceHint ?? ""} onChange={(e) => updateItem(i.id, { priceHint: e.target.value })} />
+                            </Grid>
 
-<Grid item xs={12} md={8}>
-  <TextField
-    fullWidth
-    label="Images (one per line)"
-    value={(i.images ?? []).join('\n')}
-    onChange={(e) =>
-      updateItem(i.id, {
-        images: e.target.value
-          .split('\n')
-          .map((x) => x.trim())
-          .filter(Boolean),
-      })
-    }
-    placeholder={"/images/hybrid-1.jpg\nhttps://...\n(data url...)"}
-    multiline
-    minRows={3}
-    helperText="First image becomes the thumbnail. You can paste URLs or use Upload to add images."
-  />
-</Grid>
+                            <Grid item xs={12} md={8}>
+                              <TextField
+                                fullWidth
+                                label="Images (one per line)"
+                                value={(i.images ?? []).join('\n')}
+                                onChange={(e) =>
+                                  updateItem(i.id, {
+                                    images: e.target.value
+                                      .split('\n')
+                                      .map((x) => x.trim())
+                                      .filter(Boolean),
+                                  })
+                                }
+                                placeholder={"/images/hybrid-1.jpg\nhttps://...\n(data url...)"}
+                                multiline
+                                minRows={3}
+                                helperText="First image becomes the thumbnail."
+                              />
+                            </Grid>
 
-<Grid item xs={12} md={4}>
-  <Button
-    fullWidth
-    component="label"
-    variant="outlined"
-    sx={{ fontWeight: 900, height: 56 }}
-  >
-    Upload 1+ images (local preview)
-    <input
-      hidden
-      type="file"
-      accept="image/*"
-      multiple
-      onChange={async (e) => {
-        const files = Array.from(e.target.files ?? []);
-        if (files.length === 0) return;
-        const urls = await Promise.all(files.map((f) => fileToDataUrl(f)));
-        updateItem(i.id, { images: [...(i.images ?? []), ...urls] });
-      }}
-    />
-  </Button>
-</Grid>
+                            <Grid item xs={12} md={4}>
+                              <Button
+                                fullWidth
+                                component="label"
+                                variant="outlined"
+                                sx={{ fontWeight: 900, height: 56 }}
+                              >
+                                Upload images
+                                <input
+                                  hidden
+                                  type="file"
+                                  accept="image/*"
+                                  multiple
+                                  onChange={async (e) => {
+                                    const files = Array.from(e.target.files ?? []);
+                                    if (files.length === 0) return;
+                                    const urls = await Promise.all(files.map((f) => fileToDataUrl(f)));
+                                    updateItem(i.id, { images: [...(i.images ?? []), ...urls] });
+                                  }}
+                                />
+                              </Button>
+                            </Grid>
 
-<Grid item xs={12} md={8}>
-  <Button
-    variant="outlined"
-    onClick={() => updateItem(i.id, { images: [] })}
-    sx={{ fontWeight: 900 }}
-  >
-    Clear images list
-  </Button>
-</Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Specs (one per line)"
+                                value={(i.specs ?? []).join('\n')}
+                                onChange={(e) => updateItem(i.id, { specs: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })}
+                                multiline
+                                minRows={3}
+                              />
+                            </Grid>
 
-
-                        <Grid item xs={12}>
-                          <TextField
-                            fullWidth
-                            label="Specs (one per line)"
-                            value={(i.specs ?? []).join('\n')}
-                            onChange={(e) => updateItem(i.id, { specs: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })}
-                            multiline
-                            minRows={3}
-                          />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                          <Button
-                            variant={i.featured ? "contained" : "outlined"}
-                            disableElevation
-                            onClick={() => updateItem(i.id, { featured: !i.featured })}
-                            sx={{ fontWeight: 900 }}
-                          >
-                            {i.featured ? "Featured: ON" : "Featured: OFF"}
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Stack>
-                  </CardContent>
-                </Card>
+                            <Grid item xs={12}>
+                              <Button
+                                variant={i.featured ? "contained" : "outlined"}
+                                disableElevation
+                                onClick={() => updateItem(i.id, { featured: !i.featured })}
+                                sx={{ fontWeight: 900 }}
+                              >
+                                {i.featured ? "Featured: ON" : "Featured: OFF"}
+                              </Button>
+                            </Grid>
+                          </Grid>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+
+              <Divider sx={{ my: 3 }} />
+            </Box>
+          ))}
 
           <Divider />
 
