@@ -1,7 +1,14 @@
+export type FloorSubSubcategory = {
+  id: string;
+  name: string;
+  description?: string;
+};
+
 export type FloorSubcategory = {
   id: string;
   name: string;
   description?: string;
+  subsubcategories?: FloorSubSubcategory[];
 };
 
 export type FloorCategory = {
@@ -16,20 +23,17 @@ export type FloorItem = {
   id: string;
   categoryId: string;
   subcategoryId?: string;
+  subsubcategoryId?: string;
   name: string;
   subtitle?: string;
   priceHint?: string;
   specs?: string[];
-  // Primary image (kept for backward compatibility)
   imageUrl?: string;
-  // Gallery images (preferred). First image is used as card thumbnail.
   images?: string[];
-  // Optional merchandising fields
   brand?: string;
   isDeal?: boolean;
   featured?: boolean;
 };
-
 
 export type Review = {
   id: string;
