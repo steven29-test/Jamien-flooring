@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack, Toolbar, Typography, FormControl, InputLabel, Select, Divider } from "@mui/material";
+import { AppBar, Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack, Toolbar, Typography, Divider, Collapse, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -7,6 +7,8 @@ import LayersIcon from "@mui/icons-material/Layers";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import GridOnIcon from "@mui/icons-material/GridOn";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Link as RouterLink, useLocation, useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import type { FloorCategory } from "../types/catalog";
@@ -31,15 +33,10 @@ function categoryIcon(name: string) {
 export default function NavBar({ businessName, logoUrl, categories }: Props) {
   const { pathname } = useLocation();
   const [params, setParams] = useSearchParams();
-  const urlCat = params.get("category") ?? params.get("cat") ?? "all";
-  const urlSubcat = params.get("subcategory") ?? "all";
-  const urlSubsubcat = params.get("subsubcategory") ?? "all";
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [categoryId, setCategoryId] = useState<string>(urlCat);
-  const [subcategoryId, setSubcategoryId] = useState<string>(urlSubcat);
-  const [subsubcategoryId, setSubsubcategoryId] = useState<string>(urlSubsubcat);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [expandedType, setExpandedType] = useState<string | null>(null);
 
   const linkSx = (active: boolean) => ({
     fontWeight: 800,
@@ -48,23 +45,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
 
   const catItems = useMemo(() => sortCategories(categories ?? []), [categories]);
 
-  const subcategories = useMemo(() => {
-    if (categoryId === "all") return [];
-    const cat = categories.find((c) => c.id === categoryId);
-    return cat?.subcategories ?? [];
-  }, [categories, categoryId]);
-
-  const subsubcategories = useMemo(() => {
-    if (subcategoryId === "all" || !subcategoryId) return [];
-    const cat = categories.find((c) => c.id === categoryId);
-    const subcat = cat?.subcategories?.find((s) => s.id === subcategoryId);
-    return subcat?.subsubcategories ?? [];
-  }, [categories, categoryId, subcategoryId]);
-
   const handleCategoryClick = (catId: string) => {
-    setCategoryId(catId);
-    setSubcategoryId("all");
-    setSubsubcategoryId("all");
     const nextParams = new URLSearchParams(params);
     nextParams.delete("cat");
     nextParams.delete("subcategory");
@@ -72,24 +53,25 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
     if (catId === "all") nextParams.delete("category");
     else nextParams.set("category", catId);
     setParams(nextParams, { replace: true });
+    setAnchorEl(null);
   };
 
-  const handleTypeChange = (typeId: string) => {
-    setSubcategoryId(typeId);
-    setSubsubcategoryId("all");
+  const handleTypeClick = (catId: string, typeId: string) => {
     const nextParams = new URLSearchParams(params);
+    nextParams.set("category", catId);
+    nextParams.set("subcategory", typeId);
     nextParams.delete("subsubcategory");
-    if (typeId === "all") nextParams.delete("subcategory");
-    else nextParams.set("subcategory", typeId);
     setParams(nextParams, { replace: true });
+    setAnchorEl(null);
   };
 
-  const handleVariantChange = (variantId: string) => {
-    setSubsubcategoryId(variantId);
+  const handleVariantClick = (catId: string, typeId: string, variantId: string) => {
     const nextParams = new URLSearchParams(params);
-    if (variantId === "all") nextParams.delete("subsubcategory");
-    else nextParams.set("subsubcategory", variantId);
+    nextParams.set("category", catId);
+    nextParams.set("subcategory", typeId);
+    nextParams.set("subsubcategory", variantId);
     setParams(nextParams, { replace: true });
+    setAnchorEl(null);
   };
 
   return (
@@ -134,85 +116,85 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
               onClose={() => setAnchorEl(null)}
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
-              PaperProps={{ sx: { borderRadius: 3, minWidth: 380 } }}
+              PaperProps={{ sx: { borderRadius: 3, minWidth: 500, maxHeight: 500 } }}
             >
-              {/* Categories List */}
-              <Box sx={{ px: 1, py: 1 }}>
-                <Typography variant="caption" sx={{ fontWeight: 900, color: "text.secondary", display: "block", mb: 1 }}>
-                  📁 CATEGORIES
-                </Typography>
-                {catItems.map((c) => (
+              {/* Categories with nested Types and Variants */}
+              {catItems.map((category) => (
+                <Box key={category.id}>
+                  {/* Category Header */}
                   <MenuItem
-                    key={c.id}
                     onClick={() => {
-                      handleCategoryClick(c.id);
-                      setAnchorEl(null);
+                      handleCategoryClick(category.id);
                     }}
-                    sx={{ backgroundColor: categoryId === c.id ? "#E3F2FD" : "transparent" }}
+                    sx={{
+                      backgroundColor: "#E3F2FD",
+                      fontWeight: 700,
+                      "&:hover": { backgroundColor: "#BBDEFB" }
+                    }}
                   >
-                    <ListItemIcon sx={{ minWidth: 34 }}>{categoryIcon(c.name)}</ListItemIcon>
-                    <Typography variant="body2" sx={{ fontWeight: categoryId === c.id ? 700 : 500 }}>
-                      {c.name}
+                    <ListItemIcon sx={{ minWidth: 34 }}>{categoryIcon(category.name)}</ListItemIcon>
+                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                      🔵 {category.name}
                     </Typography>
                   </MenuItem>
-                ))}
-              </Box>
 
-              {/* Types Dropdown */}
-              {subcategories.length > 0 && (
-                <>
-                  <Divider sx={{ my: 1 }} />
-                  <Box sx={{ px: 2, py: 1 }}>
-                    <Typography variant="caption" sx={{ fontWeight: 900, color: "text.secondary", display: "block", mb: 1 }}>
-                      🟢 TYPES
-                    </Typography>
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="nav-type-label">Select Type</InputLabel>
-                      <Select
-                        labelId="nav-type-label"
-                        value={subcategoryId}
-                        label="Select Type"
-                        onChange={(e) => handleTypeChange(e.target.value)}
-                      >
-                        <MenuItem value="all">All types</MenuItem>
-                        {subcategories.map((s) => (
-                          <MenuItem key={s.id} value={s.id}>
-                            {s.name}
+                  {/* Types under Category */}
+                  {(category.subcategories ?? []).length > 0 && (
+                    <Box sx={{ pl: 4 }}>
+                      {(category.subcategories ?? []).map((type) => (
+                        <Box key={type.id}>
+                          {/* Type Header with expand/collapse */}
+                          <MenuItem
+                            onClick={() => {
+                              setExpandedType(expandedType === type.id ? null : type.id);
+                            }}
+                            sx={{
+                              backgroundColor: "#E8F5E9",
+                              py: 0.8,
+                              "&:hover": { backgroundColor: "#C8E6C9" }
+                            }}
+                          >
+                            <ListItemIcon sx={{ minWidth: 24 }}>
+                              {expandedType === type.id ? (
+                                <ExpandLessIcon fontSize="small" />
+                              ) : (
+                                <ExpandMoreIcon fontSize="small" />
+                              )}
+                            </ListItemIcon>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                              🟢 {type.name}
+                            </Typography>
                           </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </>
-              )}
 
-              {/* Variants Dropdown */}
-              {subsubcategories.length > 0 && (
-                <>
-                  <Divider sx={{ my: 1 }} />
-                  <Box sx={{ px: 2, py: 1 }}>
-                    <Typography variant="caption" sx={{ fontWeight: 900, color: "text.secondary", display: "block", mb: 1 }}>
-                      🟠 VARIANTS
-                    </Typography>
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="nav-variant-label">Select Variant</InputLabel>
-                      <Select
-                        labelId="nav-variant-label"
-                        value={subsubcategoryId}
-                        label="Select Variant"
-                        onChange={(e) => handleVariantChange(e.target.value)}
-                      >
-                        <MenuItem value="all">All variants</MenuItem>
-                        {subsubcategories.map((ss) => (
-                          <MenuItem key={ss.id} value={ss.id}>
-                            {ss.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </>
-              )}
+                          {/* Variants under Type */}
+                          {expandedType === type.id && (type.subsubcategories ?? []).length > 0 && (
+                            <Box sx={{ pl: 4 }}>
+                              {(type.subsubcategories ?? []).map((variant) => (
+                                <MenuItem
+                                  key={variant.id}
+                                  onClick={() => {
+                                    handleVariantClick(category.id, type.id, variant.id);
+                                  }}
+                                  sx={{
+                                    backgroundColor: "#FFF3E0",
+                                    py: 0.6,
+                                    fontSize: "0.9rem",
+                                    "&:hover": { backgroundColor: "#FFE0B2" }
+                                  }}
+                                >
+                                  <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                                    🟠 {variant.name}
+                                  </Typography>
+                                </MenuItem>
+                              ))}
+                            </Box>
+                          )}
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </Box>
+              ))}
 
               <Divider sx={{ my: 1 }} />
 
