@@ -1,53 +1,22 @@
 import {
-  Box, Card, CardContent, CardMedia, Chip, Divider, FormControl, InputLabel, MenuItem, Select,
-  Stack, TextField, Typography, Grid,
+  Box, Card, CardContent, CardMedia, Chip, Divider, 
+  Stack, Typography, Grid, Container
 } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
 import { sortCategories } from "../utils/categoryOrder";
-import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
 
 export default function Catalog({ catalog }: Props) {
-  const [params, setParams] = useSearchParams();
-  const urlCat = params.get("category") ?? params.get("cat") ?? "all";
-  const urlSubcat = params.get("subcategory") ?? "all";
-  const urlSubsubcat = params.get("subsubcategory") ?? "all";
-
-  const [categoryId, setCategoryId] = useState<string>(urlCat);
-  const [subcategoryId, setSubcategoryId] = useState<string>(urlSubcat);
-  const [subsubcategoryId, setSubsubcategoryId] = useState<string>(urlSubsubcat);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    setCategoryId(urlCat);
-    setSubcategoryId(urlSubcat);
-    setSubsubcategoryId(urlSubsubcat);
-  }, [urlCat, urlSubcat, urlSubsubcat]);
-
-  const categories = useMemo(
-    () => [{ id: "all", name: "All categories" }, ...sortCategories(catalog.categories)],
-    [catalog.categories]
-  );
-
-  const subcategories = useMemo(() => {
-    if (categoryId === "all") return [];
-    const cat = catalog.categories.find((c) => c.id === categoryId);
-    return cat?.subcategories ?? [];
-  }, [catalog.categories, categoryId]);
-
-  const subsubcategories = useMemo(() => {
-    if (subcategoryId === "all" || !subcategoryId) return [];
-    const cat = catalog.categories.find((c) => c.id === categoryId);
-    const subcat = cat?.subcategories?.find((s) => s.id === subcategoryId);
-    return subcat?.subsubcategories ?? [];
-  }, [catalog.categories, categoryId, subcategoryId]);
+  const [params] = useSearchParams();
+  const categoryId = params.get("category") ?? "all";
+  const subcategoryId = params.get("subcategory") ?? "all";
+  const subsubcategoryId = params.get("subsubcategory") ?? "all";
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return catalog.items
       .filter((i) => (categoryId === "all" ? true : i.categoryId === categoryId))
       .filter((i) => {
@@ -57,47 +26,8 @@ export default function Catalog({ catalog }: Props) {
       .filter((i) => {
         if (subsubcategoryId === "all" || !subsubcategoryId) return true;
         return i.subsubcategoryId === subsubcategoryId;
-      })
-      .filter((i) => {
-        if (!q) return true;
-        return (
-          i.name.toLowerCase().includes(q) ||
-          (i.subtitle ?? "").toLowerCase().includes(q) ||
-          (i.specs ?? []).join(" ").toLowerCase().includes(q)
-        );
       });
-  }, [catalog.items, categoryId, subcategoryId, subsubcategoryId, query]);
-
-  function onCategoryChange(next: string) {
-    setCategoryId(next);
-    setSubcategoryId("all");
-    setSubsubcategoryId("all");
-    const nextParams = new URLSearchParams(params);
-    nextParams.delete("cat");
-    nextParams.delete("subcategory");
-    nextParams.delete("subsubcategory");
-    if (next === "all") nextParams.delete("category");
-    else nextParams.set("category", next);
-    setParams(nextParams, { replace: true });
-  }
-
-  function onSubcategoryChange(next: string) {
-    setSubcategoryId(next);
-    setSubsubcategoryId("all");
-    const nextParams = new URLSearchParams(params);
-    nextParams.delete("subsubcategory");
-    if (next === "all") nextParams.delete("subcategory");
-    else nextParams.set("subcategory", next);
-    setParams(nextParams, { replace: true });
-  }
-
-  function onSubsubcategoryChange(next: string) {
-    setSubsubcategoryId(next);
-    const nextParams = new URLSearchParams(params);
-    if (next === "all") nextParams.delete("subsubcategory");
-    else nextParams.set("subsubcategory", next);
-    setParams(nextParams, { replace: true });
-  }
+  }, [catalog.items, categoryId, subcategoryId, subsubcategoryId]);
 
   const catName = (id: string) => catalog.categories.find((c) => c.id === id)?.name ?? id;
   const subcatName = (id: string) => {
@@ -110,82 +40,216 @@ export default function Catalog({ catalog }: Props) {
     return subcat?.subsubcategories?.find((ss) => ss.id === id)?.name ?? id;
   };
 
+  // Breadcrumb navigation
+  const breadcrumb = (
+    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 3, flexWrap: "wrap", gap: 0.5 }}>
+      <Typography variant="body2" sx={{ fontWeight: 500, color: "#1976D2" }}>
+        All Products
+      </Typography>
+      {categoryId !== "all" && (
+        <>
+          <Typography variant="body2" sx={{ color: "#999" }}>/</Typography>
+          <Typography variant="body2" sx={{ fontWeight: 500, color: "#333" }}>
+            {catName(categoryId)}
+          </Typography>
+        </>
+      )}
+      {subcategoryId !== "all" && subcategoryId && (
+        <>
+          <Typography variant="body2" sx={{ color: "#999" }}>/</Typography>
+          <Typography variant="body2" sx={{ fontWeight: 500, color: "#333" }}>
+            {subcatName(subcategoryId)}
+          </Typography>
+        </>
+      )}
+      {subsubcategoryId !== "all" && subsubcategoryId && (
+        <>
+          <Typography variant="body2" sx={{ color: "#999" }}>/</Typography>
+          <Typography variant="body2" sx={{ fontWeight: 500, color: "#333" }}>
+            {subsubcatName(subsubcategoryId)}
+          </Typography>
+        </>
+      )}
+    </Stack>
+  );
+
   return (
     <Section title="Floors" subtitle={`Browse our range in ${catalog.serviceArea}.`}>
-      <Stack spacing={2}>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-          <FormControl fullWidth>
-            <InputLabel id="cat">Category</InputLabel>
-            <Select labelId="cat" label="Category" value={categoryId} onChange={(e) => onCategoryChange(e.target.value)}>
-              {categories.map((c) => (
-                <MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>
+      <Container maxWidth="lg" disableGutters>
+        <Box>
+          {/* Breadcrumb */}
+          {breadcrumb}
+
+          {/* Product Count */}
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              fontWeight: 600, 
+              color: "#555", 
+              mb: 4,
+              fontSize: "0.95rem"
+            }}
+          >
+            Showing {filtered.length} product{filtered.length !== 1 ? 's' : ''}
+          </Typography>
+
+          {/* Products Grid */}
+          {filtered.length > 0 ? (
+            <Grid container spacing={3}>
+              {filtered.map((item) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                  <Card 
+                    sx={{ 
+                      height: "100%",
+                      borderRadius: 2,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                      transition: "all 0.3s ease",
+                      border: "1px solid #f0f0f0",
+                      "&:hover": {
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                        transform: "translateY(-4px)"
+                      },
+                      display: "flex",
+                      flexDirection: "column"
+                    }}
+                  >
+                    {/* Image */}
+                    {(item.images?.[0] ?? item.imageUrl) ? (
+                      <CardMedia 
+                        component="img" 
+                        height="240" 
+                        image={(item.images?.[0] ?? item.imageUrl) as string} 
+                        alt={item.name}
+                        sx={{
+                          objectFit: "cover",
+                          backgroundColor: "#f5f5f5"
+                        }}
+                      />
+                    ) : (
+                      <Box sx={{ height: 240, bgcolor: "#f5f5f5" }} />
+                    )}
+
+                    {/* Content */}
+                    <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column", p: 2.5 }}>
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          fontWeight: 700,
+                          fontSize: "1rem",
+                          mb: 0.5,
+                          color: "#333",
+                          lineHeight: 1.3
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+
+                      {item.subtitle && (
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            color: "#999",
+                            fontSize: "0.85rem",
+                            mb: 1.5
+                          }}
+                        >
+                          {item.subtitle}
+                        </Typography>
+                      )}
+
+                      {/* Specs */}
+                      {(item.specs?.length ?? 0) > 0 && (
+                        <Stack spacing={0.5} sx={{ mb: 2 }}>
+                          {item.specs!.slice(0, 2).map((s, idx) => (
+                            <Typography 
+                              key={idx} 
+                              variant="caption" 
+                              sx={{ 
+                                color: "#666",
+                                fontSize: "0.8rem",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 0.5
+                              }}
+                            >
+                              <span style={{ color: "#1976D2", fontWeight: 600 }}>•</span> {s}
+                            </Typography>
+                          ))}
+                        </Stack>
+                      )}
+
+                      {/* Price */}
+                      {item.priceHint && (
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            fontWeight: 700,
+                            color: "#1976D2",
+                            fontSize: "0.95rem",
+                            mb: 1.5
+                          }}
+                        >
+                          {item.priceHint}
+                        </Typography>
+                      )}
+
+                      {/* Tags */}
+                      <Stack direction="row" spacing={0.5} sx={{ flexWrap: "wrap", gap: 0.5, mt: "auto" }}>
+                        {item.brand && (
+                          <Chip 
+                            label={item.brand} 
+                            size="small" 
+                            variant="outlined"
+                            sx={{
+                              height: 24,
+                              fontSize: "0.75rem",
+                              fontWeight: 500,
+                              borderColor: "#d0d0d0",
+                              color: "#666"
+                            }}
+                          />
+                        )}
+                        {item.featured && (
+                          <Chip 
+                            label="Featured" 
+                            size="small" 
+                            sx={{
+                              height: 24,
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                              backgroundColor: "#fff3e0",
+                              color: "#E65100"
+                            }}
+                          />
+                        )}
+                        {item.isDeal && (
+                          <Chip 
+                            label="Deal" 
+                            size="small" 
+                            sx={{
+                              height: 24,
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                              backgroundColor: "#fce4ec",
+                              color: "#C2185B"
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </CardContent>
+                  </Card>
+                </Grid>
               ))}
-            </Select>
-          </FormControl>
-
-          {subcategories.length > 0 && (
-            <FormControl fullWidth>
-              <InputLabel id="subcat">Type</InputLabel>
-              <Select labelId="subcat" label="Type" value={subcategoryId} onChange={(e) => onSubcategoryChange(e.target.value)}>
-                <MenuItem value="all">All types</MenuItem>
-                {subcategories.map((s) => (
-                  <MenuItem key={s.id} value={s.id}>{s.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-
-          {subsubcategories.length > 0 && (
-            <FormControl fullWidth>
-              <InputLabel id="subsubcat">Variant</InputLabel>
-              <Select labelId="subsubcat" label="Variant" value={subsubcategoryId} onChange={(e) => onSubsubcategoryChange(e.target.value)}>
-                <MenuItem value="all">All variants</MenuItem>
-                {subsubcategories.map((ss) => (
-                  <MenuItem key={ss.id} value={ss.id}>{ss.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-
-          <TextField fullWidth label="Search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. oak, water resistant..." />
-        </Stack>
-
-        <Divider />
-
-        <Typography variant="body2" color="text.secondary">
-          Showing <b>{filtered.length}</b> item(s){categoryId !== "all" ? <> in <b>{catName(categoryId)}</b>{subcategoryId !== "all" && subcategoryId ? <> → <b>{subcatName(subcategoryId)}</b>{subsubcategoryId !== "all" && subsubcategoryId ? <> → <b>{subsubcatName(subsubcategoryId)}</b></> : null}</> : null}</> : null}
-        </Typography>
-
-        <Grid container spacing={2}>
-          {filtered.map((i) => (
-            <Grid item xs={12} sm={6} md={4} key={i.id}>
-              <Card sx={{ height: "100%", borderRadius: 4 }}>
-                {(i.images?.[0] ?? i.imageUrl) ? <CardMedia component="img" height="180" image={(i.images?.[0] ?? i.imageUrl) as string} alt={i.name} /> : <Box sx={{ height: 180, bgcolor: "grey.100" }} />}
-                <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: 900 }}>{i.name}</Typography>
-                  {i.subtitle && <Typography variant="body2" color="text.secondary">{i.subtitle}</Typography>}
-
-                  <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: "wrap", gap: 1 }}>
-                    <Chip size="small" label={catName(i.categoryId)} />
-                    {i.subcategoryId && <Chip size="small" label={subcatName(i.subcategoryId)} variant="outlined" />}
-                    {i.subsubcategoryId && <Chip size="small" label={subsubcatName(i.subsubcategoryId)} variant="outlined" />}
-                    {i.priceHint && <Chip size="small" label={i.priceHint} />}
-                    {i.featured && <Chip size="small" label="Featured" />}
-                  </Stack>
-
-                  {(i.specs?.length ?? 0) > 0 && (
-                    <Stack spacing={0.5} sx={{ mt: 1 }}>
-                      {i.specs!.slice(0, 3).map((s, idx) => (
-                        <Typography key={idx} variant="body2" color="text.secondary">• {s}</Typography>
-                      ))}
-                    </Stack>
-                  )}
-                </CardContent>
-              </Card>
             </Grid>
-          ))}
-        </Grid>
-      </Stack>
+          ) : (
+            <Box sx={{ textAlign: "center", py: 8 }}>
+              <Typography variant="body2" color="text.secondary">
+                No products found
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </Container>
     </Section>
   );
 }

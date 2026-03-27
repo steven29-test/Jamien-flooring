@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import type { FloorCategory } from "../types/catalog";
@@ -227,31 +228,37 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
   // Mobile Drawer Menu
   const mobileMenu = (
     <Drawer
-      anchor="top"
+      anchor="right"
       open={mobileDrawerOpen}
       onClose={() => setMobileDrawerOpen(false)}
       PaperProps={{
         sx: {
-          maxHeight: "100vh",
-          overflow: "auto",
+          width: "100%",
+          maxWidth: "100vw",
           backgroundColor: "#fff"
         }
       }}
     >
       <Box sx={{ 
-        p: 2,
+        p: 3,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        borderBottom: "1px solid #e5e5e5"
+        borderBottom: "2px solid #f0f0f0",
+        backgroundColor: "#fff"
       }}>
-        <Typography variant="h6" sx={{ fontWeight: 700 }}>Menu</Typography>
-        <IconButton onClick={() => setMobileDrawerOpen(false)}>
-          <CloseIcon />
+        <Typography variant="h6" sx={{ fontWeight: 700, fontSize: "1.1rem", color: "#333" }}>
+          Menu
+        </Typography>
+        <IconButton 
+          onClick={() => setMobileDrawerOpen(false)}
+          sx={{ color: "#555", p: 0.5 }}
+        >
+          <CloseIcon sx={{ fontSize: "1.5rem" }} />
         </IconButton>
       </Box>
 
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: 0, overflow: "auto", maxHeight: "calc(100vh - 80px)" }}>
         <Stack spacing={0}>
           {/* Home Link */}
           <Button
@@ -262,13 +269,17 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
             sx={{
               textAlign: "left",
               justifyContent: "flex-start",
-              py: 1.5,
-              px: 2,
+              py: 2.5,
+              px: 3,
               color: "#333",
               textTransform: "none",
-              fontSize: "0.95rem",
+              fontSize: "1rem",
               fontWeight: 500,
-              borderBottom: "1px solid #e5e5e5"
+              borderBottom: "1px solid #f0f0f0",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "#f9f9f9"
+              }
             }}
           >
             Home
@@ -289,28 +300,31 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                 sx={{
                   textAlign: "left",
                   justifyContent: "space-between",
-                  py: 1.5,
-                  px: 2,
+                  py: 2.5,
+                  px: 3,
                   color: "#333",
                   textTransform: "none",
-                  fontSize: "0.95rem",
-                  fontWeight: 500,
-                  backgroundColor: expandedMobileCategory === category.id ? "#f5f5f5" : "transparent",
-                  borderBottom: "1px solid #e5e5e5",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  backgroundColor: expandedMobileCategory === category.id ? "#f0f7ff" : "transparent",
+                  borderBottom: "1px solid #f0f0f0",
+                  transition: "all 0.2s ease",
                   "&:hover": {
-                    backgroundColor: "#f5f5f5"
+                    backgroundColor: "#f0f7ff"
                   }
                 }}
               >
                 <span>{category.name}</span>
                 {(category.subcategories ?? []).length > 0 && (
-                  expandedMobileCategory === category.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />
+                  <Box sx={{ display: "flex", color: "#1976D2" }}>
+                    {expandedMobileCategory === category.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </Box>
                 )}
               </Button>
 
               {/* Types */}
               <Collapse in={expandedMobileCategory === category.id} timeout="auto" unmountOnExit>
-                <Box sx={{ backgroundColor: "#fafafa", borderBottom: "1px solid #e5e5e5" }}>
+                <Box sx={{ backgroundColor: "#fafafa" }}>
                   {(category.subcategories ?? []).map((type) => (
                     <Box key={type.id}>
                       <Button
@@ -325,22 +339,25 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                         sx={{
                           textAlign: "left",
                           justifyContent: "space-between",
-                          py: 1.5,
-                          px: 4,
+                          py: 2,
+                          px: 5,
                           color: "#555",
                           textTransform: "none",
-                          fontSize: "0.9rem",
+                          fontSize: "0.95rem",
                           fontWeight: 500,
-                          backgroundColor: expandedMobileType === type.id ? "#eeeeee" : "transparent",
-                          borderBottom: "1px solid #e5e5e5",
+                          backgroundColor: expandedMobileType === type.id ? "#e3f2fd" : "transparent",
+                          borderBottom: "1px solid #eeeeee",
+                          transition: "all 0.2s ease",
                           "&:hover": {
-                            backgroundColor: "#eeeeee"
+                            backgroundColor: "#e3f2fd"
                           }
                         }}
                       >
                         <span>{type.name}</span>
                         {(type.subsubcategories ?? []).length > 0 && (
-                          expandedMobileType === type.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />
+                          <Box sx={{ display: "flex", color: "#1976D2", fontSize: "1.2rem" }}>
+                            {expandedMobileType === type.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
+                          </Box>
                         )}
                       </Button>
 
@@ -354,16 +371,19 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                               onClick={() => handleVariantClick(category.id, type.id, variant.id)}
                               sx={{
                                 textAlign: "left",
-                                justifyContent: "flex-start",
-                                py: 1.2,
-                                px: 6,
+                                justifyContent: "space-between",
+                                py: 1.8,
+                                px: 7,
                                 color: "#666",
                                 textTransform: "none",
-                                fontSize: "0.85rem",
+                                fontSize: "0.9rem",
                                 fontWeight: 400,
-                                borderBottom: "1px solid #e5e5e5",
+                                borderBottom: "1px solid #f5f5f5",
+                                transition: "all 0.2s ease",
                                 "&:hover": {
-                                  backgroundColor: "#f9f9f9"
+                                  backgroundColor: "#f9f9f9",
+                                  color: "#1976D2",
+                                  fontWeight: 500
                                 }
                               }}
                             >
@@ -379,6 +399,9 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
             </Box>
           ))}
 
+          {/* Divider */}
+          <Divider sx={{ my: 1 }} />
+
           {/* Contact Link */}
           <Button
             component={RouterLink}
@@ -388,13 +411,17 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
             sx={{
               textAlign: "left",
               justifyContent: "flex-start",
-              py: 1.5,
-              px: 2,
+              py: 2.5,
+              px: 3,
               color: "#333",
               textTransform: "none",
-              fontSize: "0.95rem",
+              fontSize: "1rem",
               fontWeight: 500,
-              borderBottom: "1px solid #e5e5e5"
+              borderBottom: "1px solid #f0f0f0",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "#f9f9f9"
+              }
             }}
           >
             Contact
@@ -410,13 +437,18 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
               sx={{
                 textAlign: "left",
                 justifyContent: "flex-start",
-                py: 1.5,
-                px: 2,
+                py: 2.5,
+                px: 3,
                 color: "#1976D2",
                 textTransform: "none",
-                fontSize: "0.95rem",
+                fontSize: "1rem",
                 fontWeight: 600,
-                borderBottom: "1px solid #e5e5e5"
+                backgroundColor: "#f0f7ff",
+                borderBottom: "1px solid #f0f0f0",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: "#e3f2fd"
+                }
               }}
             >
               Admin
@@ -552,9 +584,9 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
             <IconButton
               color="inherit"
               onClick={() => setMobileDrawerOpen(true)}
-              sx={{ ml: 1, color: "#555" }}
+              sx={{ ml: 1, color: "#555", p: 0.5 }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ fontSize: "1.5rem" }} />
             </IconButton>
           )}
         </Toolbar>
