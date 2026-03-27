@@ -194,13 +194,42 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
     });
   }
 
-  function addItemToSubsubcategory(categoryId: string, subcatId: string, subsubcatId: string) {
+  function addItemToCategory(categoryId: string) {
+    const next: FloorItem = {
+      id: uid("item"),
+      categoryId: categoryId,
+      name: "New Product",
+      subtitle: "",
+      priceHint: "",
+      specs: [],
+      imageUrl: "",
+      featured: false,
+    };
+    setCatalog({ ...catalog, items: [next, ...catalog.items] });
+  }
+
+  function addItemToType(categoryId: string, subcatId: string) {
+    const next: FloorItem = {
+      id: uid("item"),
+      categoryId: categoryId,
+      subcategoryId: subcatId,
+      name: "New Product",
+      subtitle: "",
+      priceHint: "",
+      specs: [],
+      imageUrl: "",
+      featured: false,
+    };
+    setCatalog({ ...catalog, items: [next, ...catalog.items] });
+  }
+
+  function addItemToVariant(categoryId: string, subcatId: string, subsubcatId: string) {
     const next: FloorItem = {
       id: uid("item"),
       categoryId: categoryId,
       subcategoryId: subcatId,
       subsubcategoryId: subsubcatId,
-      name: "New Floor Item",
+      name: "New Product",
       subtitle: "",
       priceHint: "",
       specs: [],
@@ -234,15 +263,125 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
     onUrl(url);
   }
 
-  const itemsBySubsubcategory = useMemo(() => {
+  const itemsByCategory = useMemo(() => {
     const grouped: Record<string, FloorItem[]> = {};
     catalog.items.forEach((i) => {
-      const key = `${i.categoryId}|${i.subcategoryId || ""}|${i.subsubcategoryId || ""}`;
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(i);
+      if (!i.subcategoryId && !i.subsubcategoryId) {
+        if (!grouped[i.categoryId]) grouped[i.categoryId] = [];
+        grouped[i.categoryId].push(i);
+      }
     });
     return grouped;
   }, [catalog.items]);
+
+  const itemsByType = useMemo(() => {
+    const grouped: Record<string, FloorItem[]> = {};
+    catalog.items.forEach((i) => {
+      if (i.subcategoryId && !i.subsubcategoryId) {
+        const key = `${i.categoryId}|${i.subcategoryId}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(i);
+      }
+    });
+    return grouped;
+  }, [catalog.items]);
+
+  const itemsByVariant = useMemo(() => {
+    const grouped: Record<string, FloorItem[]> = {};
+    catalog.items.forEach((i) => {
+      if (i.subsubcategoryId) {
+        const key = `${i.categoryId}|${i.subcategoryId}|${i.subsubcategoryId}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(i);
+      }
+    });
+    return grouped;
+  }, [catalog.items]);
+
+  const ProductCard = ({ item, onUpdate, onDelete }: { item: FloorItem; onUpdate: (partial: Partial<FloorItem>) => void; onDelete: () => void }) => (
+    <Card variant="outlined" sx={{ p: 1.5, mb: 1 }}>
+      <Stack spacing={1}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Typography sx={{ fontWeight: 700, fontSize: 14 }}>{item.name}</Typography>
+          <IconButton size="small" color="error" onClick={onDelete}>
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </Stack>
+
+        <Grid container spacing={1}>
+          <Grid item xs={12} md={3}>
+            <TextField size="small" fullWidth label="Name" value={item.name} onChange={(e) => onUpdate({ name: e.target.value })} />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField size="small" fullWidth label="Subtitle" value={item.subtitle ?? ""} onChange={(e) => onUpdate({ subtitle: e.target.value })} />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField size="small" fullWidth label="Price" value={item.priceHint ?? ""} onChange={(e) => onUpdate({ priceHint: e.target.value })} />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Button
+              fullWidth
+              size="small"
+              variant={item.featured ? "contained" : "outlined"}
+              onClick={() => onUpdate({ featured: !item.featured })}
+              sx={{ fontWeight: 900, height: 40 }}
+            >
+              {item.featured ? "Featured" : "Not featured"}
+            </Button>
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <TextField
+              size="small"
+              fullWidth
+              label="Images (one per line)"
+              value={(item.images ?? []).join('\n')}
+              onChange={(e) => onUpdate({ images: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })}
+              placeholder="/images/xxx.jpg"
+              multiline
+              minRows={2}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Button
+              fullWidth
+              size="small"
+              component="label"
+              variant="outlined"
+              sx={{ fontWeight: 900, height: 40 }}
+            >
+              Upload images
+              <input
+                hidden
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={async (e) => {
+                  const files = Array.from(e.target.files ?? []);
+                  if (files.length === 0) return;
+                  const urls = await Promise.all(files.map((f) => fileToDataUrl(f)));
+                  onUpdate({ images: [...(item.images ?? []), ...urls] });
+                }}
+              />
+            </Button>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              size="small"
+              fullWidth
+              label="Specs (one per line)"
+              value={(item.specs ?? []).join('\n')}
+              onChange={(e) => onUpdate({ specs: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })}
+              multiline
+              minRows={2}
+            />
+          </Grid>
+        </Grid>
+      </Stack>
+    </Card>
+  );
 
   return (
     <Box sx={{ py: 4 }}>
@@ -291,10 +430,10 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                   </Stack>
 
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6}>
                       <TextField fullWidth label="ID" value={category.id} onChange={(e) => updateCategory(category.id, { id: e.target.value })} />
                     </Grid>
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12} md={6}>
                       <TextField fullWidth label="Name" value={category.name} onChange={(e) => updateCategory(category.id, { name: e.target.value })} />
                     </Grid>
                     <Grid item xs={12}>
@@ -304,57 +443,85 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
 
                   <Divider />
 
-                  {(category.subcategories ?? []).map((subcat) => (
-                    <Box key={subcat.id}>
-                      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2, p: 2, bgcolor: "grey.100", borderRadius: 1 }}>
-                        <Typography sx={{ fontWeight: 900 }}>{subcat.name}</Typography>
-                        <Stack direction="row" spacing={1}>
-                          <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addSubsubcategory(category.id, subcat.id)} sx={{ fontWeight: 900 }}>
-                            Add variant
-                          </Button>
-                          <IconButton size="small" color="error" onClick={() => deleteSubcategory(category.id, subcat.id)}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography sx={{ fontWeight: 900, fontSize: 16 }}>Products (Category Level)</Typography>
+                    <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addItemToCategory(category.id)} sx={{ fontWeight: 900 }}>
+                      Add product
+                    </Button>
+                  </Stack>
+
+                  {(itemsByCategory[category.id] || []).map((item) => (
+                    <ProductCard
+                      key={item.id}
+                      item={item}
+                      onUpdate={(partial) => updateItem(item.id, partial)}
+                      onDelete={() => deleteItem(item.id)}
+                    />
+                  ))}
+
+                  <Divider />
+
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography sx={{ fontWeight: 900 }}>Types</Typography>
+                    <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addSubcategory(category.id)} sx={{ fontWeight: 900 }}>
+                      Add type
+                    </Button>
+                  </Stack>
+
+                  {(category.subcategories ?? []).map((type) => (
+                    <Card key={type.id} variant="outlined" sx={{ p: 2, mb: 2 }}>
+                      <Stack spacing={1.5}>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Typography sx={{ fontWeight: 900, fontSize: 16 }}>{type.name}</Typography>
+                          <IconButton size="small" color="error" onClick={() => deleteSubcategory(category.id, type.id)}>
                             <DeleteIcon />
                           </IconButton>
                         </Stack>
-                      </Stack>
 
-                      <Grid container spacing={2} sx={{ mb: 2, ml: 1 }}>
-                        <Grid item xs={12} md={6}>
-                          <TextField
-                            size="small"
-                            fullWidth
-                            label="Type ID"
-                            value={subcat.id}
-                            onChange={(e) => updateSubcategory(category.id, subcat.id, { id: e.target.value })}
-                          />
+                        <Grid container spacing={1}>
+                          <Grid item xs={12} md={6}>
+                            <TextField size="small" fullWidth label="Type ID" value={type.id} onChange={(e) => updateSubcategory(category.id, type.id, { id: e.target.value })} />
+                          </Grid>
+                          <Grid item xs={12} md={6}>
+                            <TextField size="small" fullWidth label="Type Name" value={type.name} onChange={(e) => updateSubcategory(category.id, type.id, { name: e.target.value })} />
+                          </Grid>
                         </Grid>
-                        <Grid item xs={12} md={6}>
-                          <TextField
-                            size="small"
-                            fullWidth
-                            label="Type Name"
-                            value={subcat.name}
-                            onChange={(e) => updateSubcategory(category.id, subcat.id, { name: e.target.value })}
-                          />
-                        </Grid>
-                      </Grid>
 
-                      {(subcat.subsubcategories ?? []).map((subsubcat) => {
-                        const key = `${category.id}|${subcat.id}|${subsubcat.id}`;
-                        const items = itemsBySubsubcategory[key] || [];
-                        return (
-                          <Card key={subsubcat.id} variant="outlined" sx={{ mb: 2, ml: 2, p: 2 }}>
-                            <Stack spacing={1.5}>
+                        <Divider />
+
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Typography sx={{ fontWeight: 700, fontSize: 14 }}>Products (Type Level)</Typography>
+                          <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addItemToType(category.id, type.id)} sx={{ fontWeight: 900 }}>
+                            Add product
+                          </Button>
+                        </Stack>
+
+                        {(itemsByType[`${category.id}|${type.id}`] || []).map((item) => (
+                          <ProductCard
+                            key={item.id}
+                            item={item}
+                            onUpdate={(partial) => updateItem(item.id, partial)}
+                            onDelete={() => deleteItem(item.id)}
+                          />
+                        ))}
+
+                        <Divider />
+
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Typography sx={{ fontWeight: 700 }}>Variants</Typography>
+                          <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addSubsubcategory(category.id, type.id)} sx={{ fontWeight: 900 }}>
+                            Add variant
+                          </Button>
+                        </Stack>
+
+                        {(type.subsubcategories ?? []).map((variant) => (
+                          <Card key={variant.id} variant="outlined" sx={{ p: 1.5, mb: 1.5 }}>
+                            <Stack spacing={1}>
                               <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                <Typography sx={{ fontWeight: 700 }}>{subsubcat.name}</Typography>
-                                <Stack direction="row" spacing={1}>
-                                  <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addItemToSubsubcategory(category.id, subcat.id, subsubcat.id)} sx={{ fontWeight: 900 }}>
-                                    Add product
-                                  </Button>
-                                  <IconButton size="small" color="error" onClick={() => deleteSubsubcategory(category.id, subcat.id, subsubcat.id)}>
-                                    <DeleteIcon />
-                                  </IconButton>
-                                </Stack>
+                                <Typography sx={{ fontWeight: 700, fontSize: 14 }}>{variant.name}</Typography>
+                                <IconButton size="small" color="error" onClick={() => deleteSubsubcategory(category.id, type.id, variant.id)}>
+                                  <DeleteIcon fontSize="small" />
+                                </IconButton>
                               </Stack>
 
                               <Grid container spacing={1}>
@@ -363,8 +530,8 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                                     size="small"
                                     fullWidth
                                     label="Variant ID"
-                                    value={subsubcat.id}
-                                    onChange={(e) => updateSubsubcategory(category.id, subcat.id, subsubcat.id, { id: e.target.value })}
+                                    value={variant.id}
+                                    onChange={(e) => updateSubsubcategory(category.id, type.id, variant.id, { id: e.target.value })}
                                   />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
@@ -372,112 +539,32 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                                     size="small"
                                     fullWidth
                                     label="Variant Name"
-                                    value={subsubcat.name}
-                                    onChange={(e) => updateSubsubcategory(category.id, subcat.id, subsubcat.id, { name: e.target.value })}
+                                    value={variant.name}
+                                    onChange={(e) => updateSubsubcategory(category.id, type.id, variant.id, { name: e.target.value })}
                                   />
                                 </Grid>
                               </Grid>
 
-                              <Divider sx={{ my: 1 }} />
+                              <Stack direction="row" justifyContent="flex-end">
+                                <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addItemToVariant(category.id, type.id, variant.id)} sx={{ fontWeight: 900 }}>
+                                  Add product
+                                </Button>
+                              </Stack>
 
-                              {items.map((item) => (
-                                <Card key={item.id} variant="outlined" sx={{ p: 1.5 }}>
-                                  <Stack spacing={1}>
-                                    <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                      <Typography sx={{ fontWeight: 700, fontSize: 14 }}>{item.name}</Typography>
-                                      <IconButton size="small" color="error" onClick={() => deleteItem(item.id)}>
-                                        <DeleteIcon fontSize="small" />
-                                      </IconButton>
-                                    </Stack>
-
-                                    <Grid container spacing={1}>
-                                      <Grid item xs={12} md={3}>
-                                        <TextField size="small" fullWidth label="Name" value={item.name} onChange={(e) => updateItem(item.id, { name: e.target.value })} />
-                                      </Grid>
-                                      <Grid item xs={12} md={3}>
-                                        <TextField size="small" fullWidth label="Subtitle" value={item.subtitle ?? ""} onChange={(e) => updateItem(item.id, { subtitle: e.target.value })} />
-                                      </Grid>
-                                      <Grid item xs={12} md={3}>
-                                        <TextField size="small" fullWidth label="Price" value={item.priceHint ?? ""} onChange={(e) => updateItem(item.id, { priceHint: e.target.value })} />
-                                      </Grid>
-                                      <Grid item xs={12} md={3}>
-                                        <Button
-                                          fullWidth
-                                          size="small"
-                                          variant={item.featured ? "contained" : "outlined"}
-                                          onClick={() => updateItem(item.id, { featured: !item.featured })}
-                                          sx={{ fontWeight: 900, height: 40 }}
-                                        >
-                                          {item.featured ? "Featured" : "Not featured"}
-                                        </Button>
-                                      </Grid>
-
-                                      <Grid item xs={12} md={8}>
-                                        <TextField
-                                          size="small"
-                                          fullWidth
-                                          label="Images (one per line)"
-                                          value={(item.images ?? []).join('\n')}
-                                          onChange={(e) => updateItem(item.id, { images: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })}
-                                          placeholder="/images/xxx.jpg"
-                                          multiline
-                                          minRows={2}
-                                        />
-                                      </Grid>
-
-                                      <Grid item xs={12} md={4}>
-                                        <Button
-                                          fullWidth
-                                          size="small"
-                                          component="label"
-                                          variant="outlined"
-                                          sx={{ fontWeight: 900, height: 40 }}
-                                        >
-                                          Upload images
-                                          <input
-                                            hidden
-                                            type="file"
-                                            accept="image/*"
-                                            multiple
-                                            onChange={async (e) => {
-                                              const files = Array.from(e.target.files ?? []);
-                                              if (files.length === 0) return;
-                                              const urls = await Promise.all(files.map((f) => fileToDataUrl(f)));
-                                              updateItem(item.id, { images: [...(item.images ?? []), ...urls] });
-                                            }}
-                                          />
-                                        </Button>
-                                      </Grid>
-
-                                      <Grid item xs={12}>
-                                        <TextField
-                                          size="small"
-                                          fullWidth
-                                          label="Specs (one per line)"
-                                          value={(item.specs ?? []).join('\n')}
-                                          onChange={(e) => updateItem(item.id, { specs: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })}
-                                          multiline
-                                          minRows={2}
-                                        />
-                                      </Grid>
-                                    </Grid>
-                                  </Stack>
-                                </Card>
+                              {(itemsByVariant[`${category.id}|${type.id}|${variant.id}`] || []).map((item) => (
+                                <ProductCard
+                                  key={item.id}
+                                  item={item}
+                                  onUpdate={(partial) => updateItem(item.id, partial)}
+                                  onDelete={() => deleteItem(item.id)}
+                                />
                               ))}
                             </Stack>
                           </Card>
-                        );
-                      })}
-
-                      <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addSubsubcategory(category.id, subcat.id)} sx={{ fontWeight: 900, mt: 1, ml: 2 }}>
-                        Add variant
-                      </Button>
-                    </Box>
+                        ))}
+                      </Stack>
+                    </Card>
                   ))}
-
-                  <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addSubcategory(category.id)} sx={{ fontWeight: 900 }}>
-                    Add type
-                  </Button>
                 </Stack>
               </CardContent>
             </Card>
