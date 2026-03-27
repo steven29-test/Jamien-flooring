@@ -4,7 +4,7 @@
   "logoUrl": "images/logo.png",
   "hero": {
     "headline": "Premium timber floors, installed beautifully.",
-    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney’s North Shore. Clear pricing, honest advice, and a clean finish.",
+    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney's North Shore. Clear pricing, honest advice, and a clean finish.",
     "heroImageUrl": "images/hybrid-1.jpg"
   },
   "about": {
@@ -32,19 +32,93 @@
       "id": "engineered",
       "name": "Engineered Timber",
       "description": "Warm timber look with improved stability.",
-      "imageUrl": "images/engineered-1.jpg"
+      "imageUrl": "images/engineered-1.jpg",
+      "subcategories": [
+        {
+          "id": "eng_premium",
+          "name": "Premium",
+          "description": "High-end engineered timber",
+          "subsubcategories": [
+            {
+              "id": "eng_prem_oak",
+              "name": "Oak",
+              "description": "Classic oak finishes"
+            },
+            {
+              "id": "eng_prem_blackbutt",
+              "name": "Blackbutt",
+              "description": "Warm blackbutt tones"
+            },
+            {
+              "id": "eng_prem_walnut",
+              "name": "Walnut",
+              "description": "Rich walnut finishes"
+            }
+          ]
+        },
+        {
+          "id": "eng_standard",
+          "name": "Standard",
+          "description": "Mid-range engineered timber",
+          "subsubcategories": [
+            {
+              "id": "eng_std_oak",
+              "name": "Oak",
+              "description": "Affordable oak options"
+            },
+            {
+              "id": "eng_std_maple",
+              "name": "Maple",
+              "description": "Light maple finishes"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "hybrid",
       "name": "Hybrid Flooring",
       "description": "Water-resistant, durable and great value.",
-      "imageUrl": "images/hybrid-1.jpg"
+      "imageUrl": "images/hybrid-1.jpg",
+      "subcategories": [
+        {
+          "id": "hyb_standard",
+          "name": "Standard",
+          "description": "Durable hybrid options",
+          "subsubcategories": [
+            {
+              "id": "hyb_std_light",
+              "name": "Light",
+              "description": "Light-colored hybrids"
+            },
+            {
+              "id": "hyb_std_dark",
+              "name": "Dark",
+              "description": "Dark-colored hybrids"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "laminate",
       "name": "Laminate",
       "description": "Affordable, scratch-resistant options.",
-      "imageUrl": "images/laminate-1.jpg"
+      "imageUrl": "images/laminate-1.jpg",
+      "subcategories": [
+        {
+          "id": "lam_budget",
+          "name": "Budget",
+          "description": "Budget-friendly laminate",
+          "subsubcategories": [
+            {
+              "id": "lam_bud_oak",
+              "name": "Oak",
+              "description": "Budget oak laminate"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "vinyl",
@@ -54,6 +128,160 @@
     }
   ],
   "items": [
+    {
+      "id": "eng_prem_oak_1",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_premium",
+      "subsubcategoryId": "eng_prem_oak",
+      "name": "Premium Oak · Honey Tone",
+      "subtitle": "Natural timber feel",
+      "priceHint": "$149/m² from",
+      "specs": [
+        "Solid top layer oak",
+        "Plywood backing for stability",
+        "Pre-finished",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/engineered-1.jpg",
+      "featured": true,
+      "images": [
+        "images/engineered-1.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "eng_prem_oak_2",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_premium",
+      "subsubcategoryId": "eng_prem_oak",
+      "name": "Premium Oak · Caramel",
+      "subtitle": "Warm caramel finish",
+      "priceHint": "$149/m² from",
+      "specs": [
+        "Solid top layer oak",
+        "Plywood backing",
+        "Hand-scraped texture",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/engineered-2.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-2.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "eng_prem_blackbutt_1",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_premium",
+      "subsubcategoryId": "eng_prem_blackbutt",
+      "name": "Premium Blackbutt · Natural",
+      "subtitle": "Warm blackbutt tone",
+      "priceHint": "$139/m² from",
+      "specs": [
+        "Australian blackbutt",
+        "Plywood backing",
+        "Pre-finished",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/engineered-3.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-3.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "eng_std_oak_1",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_standard",
+      "subsubcategoryId": "eng_std_oak",
+      "name": "Standard Oak · Light",
+      "subtitle": "Budget-friendly oak",
+      "priceHint": "$89/m² from",
+      "specs": [
+        "Oak veneer",
+        "Plywood backing",
+        "Pre-finished",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/engineered-4.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-4.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": true
+    },
+    {
+      "id": "hyb_std_light_1",
+      "categoryId": "hybrid",
+      "subcategoryId": "hyb_standard",
+      "subsubcategoryId": "hyb_std_light",
+      "name": "Light Hybrid · Ash",
+      "subtitle": "Water-resistant ash tone",
+      "priceHint": "$45/m² from",
+      "specs": [
+        "Water-resistant core",
+        "Ash color finish",
+        "Easy to clean",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/hybrid-1.jpg",
+      "featured": true,
+      "images": [
+        "images/hybrid-1.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "hyb_std_dark_1",
+      "categoryId": "hybrid",
+      "subcategoryId": "hyb_standard",
+      "subsubcategoryId": "hyb_std_dark",
+      "name": "Dark Hybrid · Walnut",
+      "subtitle": "Rich dark walnut",
+      "priceHint": "$49/m² from",
+      "specs": [
+        "Water-resistant core",
+        "Walnut color finish",
+        "Durable surface",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/hybrid-2.jpg",
+      "featured": false,
+      "images": [
+        "images/hybrid-2.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": true
+    },
+    {
+      "id": "lam_bud_oak_1",
+      "categoryId": "laminate",
+      "subcategoryId": "lam_budget",
+      "subsubcategoryId": "lam_bud_oak",
+      "name": "Budget Oak Laminate",
+      "subtitle": "Affordable oak look",
+      "priceHint": "$45/m² from",
+      "specs": [
+        "Laminate construction",
+        "Oak-look finish",
+        "Scratch-resistant",
+        "Free measure & quote (Sydney)"
+      ],
+      "imageUrl": "images/laminate-1.jpg",
+      "featured": true,
+      "images": [
+        "images/laminate-1.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
     {
       "id": "hy1",
       "categoryId": "hybrid",
@@ -66,7 +294,7 @@
         "Ask for colour range & stock"
       ],
       "imageUrl": "images/hybrid-1.jpg",
-      "featured": true,
+      "featured": false,
       "images": [
         "images/hybrid-1.jpg"
       ],
@@ -161,7 +389,7 @@
         "Ask for colour range & stock"
       ],
       "imageUrl": "images/engineered-1.jpg",
-      "featured": true,
+      "featured": false,
       "images": [
         "images/engineered-1.jpg"
       ],
@@ -256,7 +484,7 @@
         "Ask for colour range & stock"
       ],
       "imageUrl": "images/laminate-1.jpg",
-      "featured": true,
+      "featured": false,
       "images": [
         "images/laminate-1.jpg"
       ],
