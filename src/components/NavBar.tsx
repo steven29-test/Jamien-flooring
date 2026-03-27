@@ -30,7 +30,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { Link as RouterLink, useLocation, useSearchParams } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import type { FloorCategory } from "../types/catalog";
 import { isAdminAuthorized } from "../utils/adminGate";
@@ -52,7 +52,7 @@ function categoryIcon(name: string) {
 
 export default function NavBar({ businessName, logoUrl, categories }: Props) {
   const { pathname } = useLocation();
-  const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -72,33 +72,19 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
   const catItems = useMemo(() => sortCategories(categories ?? []), [categories]);
 
   const handleCategoryClick = (catId: string) => {
-    const nextParams = new URLSearchParams(params);
-    nextParams.delete("cat");
-    nextParams.delete("subcategory");
-    nextParams.delete("subsubcategory");
-    if (catId === "all") nextParams.delete("category");
-    else nextParams.set("category", catId);
-    setParams(nextParams, { replace: true });
+    navigate(`/catalog?category=${encodeURIComponent(catId)}`);
     setAnchorEl(null);
     setMobileDrawerOpen(false);
   };
 
   const handleTypeClick = (catId: string, typeId: string) => {
-    const nextParams = new URLSearchParams(params);
-    nextParams.set("category", catId);
-    nextParams.set("subcategory", typeId);
-    nextParams.delete("subsubcategory");
-    setParams(nextParams, { replace: true });
+    navigate(`/catalog?category=${encodeURIComponent(catId)}&subcategory=${encodeURIComponent(typeId)}`);
     setAnchorEl(null);
     setMobileDrawerOpen(false);
   };
 
   const handleVariantClick = (catId: string, typeId: string, variantId: string) => {
-    const nextParams = new URLSearchParams(params);
-    nextParams.set("category", catId);
-    nextParams.set("subcategory", typeId);
-    nextParams.set("subsubcategory", variantId);
-    setParams(nextParams, { replace: true });
+    navigate(`/catalog?category=${encodeURIComponent(catId)}&subcategory=${encodeURIComponent(typeId)}&subsubcategory=${encodeURIComponent(variantId)}`);
     setAnchorEl(null);
     setMobileDrawerOpen(false);
   };
