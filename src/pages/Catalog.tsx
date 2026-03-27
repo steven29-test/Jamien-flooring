@@ -1,12 +1,13 @@
 import {
-  Box, Card, CardContent, CardMedia, Chip, Divider, FormControl, InputLabel, MenuItem, Select,
-  Stack, TextField, Typography, Grid,
+  Box, Card, CardContent, CardMedia, Chip, Divider, 
+  Stack, Typography, Grid, Container, Button, Menu, MenuItem
 } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
 import { sortCategories } from "../utils/categoryOrder";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
@@ -14,110 +15,263 @@ type Props = { catalog: CatalogData };
 export default function Catalog({ catalog }: Props) {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
-  const urlCat = params.get("category") ?? params.get("cat") ?? "all";
+  const categoryId = params.get("category") ?? "all";
 
-  const [categoryId, setCategoryId] = useState<string>(urlCat);
-  const [query, setQuery] = useState("");
+  const [catAnchor, setCatAnchor] = useState<null | HTMLElement>(null);
 
-  useEffect(() => {
-    // Sync UI when user navigates via the top Products menu or browser back/forward
-    setCategoryId(urlCat);
-  }, [urlCat]);
-
+  const catItems = useMemo(() => sortCategories(catalog.categories ?? []), [catalog.categories]);
 
   const categories = useMemo(
-    () => [{ id: "all", name: "All categories" }, ...catalog.categories],
-    [catalog.categories]
+    () => [{ id: "all", name: "All Categories" }, ...catItems],
+    [catItems]
   );
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return catalog.items
-      .filter((i) => (categoryId === "all" ? true : i.categoryId === categoryId))
-      .filter((i) => {
-        if (!q) return true;
-        return (
-          i.name.toLowerCase().includes(q) ||
-          (i.subtitle ?? "").toLowerCase().includes(q) ||
-          (i.specs ?? []).join(" ").toLowerCase().includes(q)
-        );
-      });
-  }, [catalog.items, categoryId, query]);
-
-  function onCategoryChange(next: string) {
-  setCategoryId(next);
-  const nextParams = new URLSearchParams(params);
-  // keep URL consistent: use ?category=
-  nextParams.delete("cat");
-  if (next === "all") nextParams.delete("category");
-  else nextParams.set("category", next);
-  setParams(nextParams, { replace: true });
-}
+      .filter((i) => (categoryId === "all" ? true : i.categoryId === categoryId));
+  }, [catalog.items, categoryId]);
 
   const catName = (id: string) => catalog.categories.find((c) => c.id === id)?.name ?? id;
 
+  const handleCategoryChange = (newCatId: string) => {
+    const nextParams = new URLSearchParams(params);
+    if (newCatId === "all") nextParams.delete("category");
+    else nextParams.set("category", newCatId);
+    setParams(nextParams, { replace: true });
+    setCatAnchor(null);
+  };
+
   return (
     <Section title="Floors" subtitle={`Browse our range in ${catalog.serviceArea}.`}>
-      <Stack spacing={2}>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-          <FormControl fullWidth>
-            <InputLabel id="cat">Category</InputLabel>
-            <Select labelId="cat" label="Category" value={categoryId} onChange={(e) => onCategoryChange(e.target.value)}>
-              {categories.map((c) => (
-                <MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <TextField fullWidth label="Search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. oak, water resistant..." />
-        </Stack>
-
-        <Divider />
-
-        <Typography variant="body2" color="text.secondary">
-          Showing <b>{filtered.length}</b> item(s){categoryId !== "all" ? <> in <b>{catName(categoryId)}</b></> : null}
-        </Typography>
-
-        <Grid container spacing={2}>
-          {filtered.map((i) => (
-            <Grid item xs={12} sm={6} md={4} key={i.id}>
-              <Card
-                onClick={() => navigate(`/product/${i.id}`)}
+      <Container maxWidth="lg" disableGutters>
+        <Box>
+          {/* Filter Bar */}
+          <Stack 
+            direction={{ xs: "column", sm: "row" }} 
+            spacing={2}
+            sx={{ 
+              mb: 4,
+              p: 2.5,
+              backgroundColor: "#f9f9f9",
+              borderRadius: 2,
+              border: "1px solid #e5e5e5"
+            }}
+          >
+            {/* Category Filter */}
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="caption" sx={{ fontWeight: 700, color: "#999", textTransform: "uppercase", fontSize: "0.7rem", display: "block", mb: 0.8 }}>
+                Category
+              </Typography>
+              <Button
+                onClick={(e) => setCatAnchor(e.currentTarget)}
+                endIcon={<KeyboardArrowDownIcon />}
                 sx={{
-                  height: "100%",
-                  borderRadius: 4,
-                  cursor: "pointer",
-                  transition: "all 0.2s",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  textTransform: "none",
+                  fontSize: "0.9rem",
+                  fontWeight: 500,
+                  color: "#333",
+                  backgroundColor: "#fff",
+                  border: "1px solid #e0e0e0",
+                  borderRadius: 1,
+                  px: 2,
+                  py: 1,
+                  transition: "all 0.2s ease",
                   "&:hover": {
-                    boxShadow: 4,
-                    transform: "translateY(-4px)",
-                  },
+                    backgroundColor: "#fff",
+                    borderColor: "#1976D2"
+                  }
                 }}
               >
-                {(i.images?.[0] ?? i.imageUrl) ? <CardMedia component="img" height="180" image={assetUrl((i.images?.[0] ?? i.imageUrl) || "")} alt={i.name} /> : <Box sx={{ height: 180, bgcolor: "grey.100" }} />}
-                <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: 900 }}>{i.name}</Typography>
-                  {i.subtitle && <Typography variant="body2" color="text.secondary">{i.subtitle}</Typography>}
+                {categoryId === "all" ? "All Categories" : catName(categoryId)}
+              </Button>
+              <Menu anchorEl={catAnchor} open={Boolean(catAnchor)} onClose={() => setCatAnchor(null)}>
+                {categories.map((cat) => (
+                  <MenuItem 
+                    key={cat.id} 
+                    onClick={() => handleCategoryChange(cat.id)}
+                    selected={cat.id === categoryId}
+                  >
+                    {cat.name}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Stack>
 
-                  <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: "wrap", gap: 1 }}>
-                    <Chip size="small" label={catName(i.categoryId)} />
-                    {i.priceHint && <Chip size="small" label={i.priceHint} />}
-                    {i.featured && <Chip size="small" label="Featured" />}
-                  </Stack>
+          {/* Product Count */}
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              fontWeight: 600, 
+              color: "#555", 
+              mb: 3,
+              fontSize: "0.95rem"
+            }}
+          >
+            Showing {filtered.length} product{filtered.length !== 1 ? 's' : ''}
+          </Typography>
 
-                  {(i.specs?.length ?? 0) > 0 && (
-                    <Stack spacing={0.5} sx={{ mt: 1 }}>
-                      {i.specs!.slice(0, 3).map((s, idx) => (
-                        <Typography key={idx} variant="body2" color="text.secondary">• {s}</Typography>
-                      ))}
-                    </Stack>
-                  )}
-                </CardContent>
-              </Card>
+          {/* Products Grid */}
+          {filtered.length > 0 ? (
+            <Grid container spacing={3}>
+              {filtered.map((item) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                  <Card 
+                    onClick={() => navigate(`/product/${item.id}`)}
+                    sx={{ 
+                      height: "100%",
+                      borderRadius: 0.5,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                      transition: "all 0.3s ease",
+                      border: "1px solid #f0f0f0",
+                      cursor: "pointer",
+                      "&:hover": {
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                        transform: "translateY(-4px)"
+                      },
+                      display: "flex",
+                      flexDirection: "column"
+                    }}
+                  >
+                    {/* Image */}
+                    {(item.images?.[0] ?? item.imageUrl) ? (
+                      <CardMedia 
+                        component="img" 
+                        height="240" 
+                        image={assetUrl((item.images?.[0] ?? item.imageUrl) || "")} 
+                        alt={item.name}
+                        sx={{
+                          objectFit: "cover",
+                          backgroundColor: "#f5f5f5"
+                        }}
+                      />
+                    ) : (
+                      <Box sx={{ height: 240, bgcolor: "#f5f5f5" }} />
+                    )}
+
+                    {/* Content */}
+                    <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column", p: 2.5 }}>
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          fontWeight: 700,
+                          fontSize: "1rem",
+                          mb: 0.5,
+                          color: "#333",
+                          lineHeight: 1.3
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+
+                      {item.subtitle && (
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            color: "#999",
+                            fontSize: "0.85rem",
+                            mb: 1.5
+                          }}
+                        >
+                          {item.subtitle}
+                        </Typography>
+                      )}
+
+                      {/* Specs */}
+                      {(item.specs?.length ?? 0) > 0 && (
+                        <Stack spacing={0.5} sx={{ mb: 2 }}>
+                          {item.specs!.slice(0, 2).map((s, idx) => (
+                            <Typography 
+                              key={idx} 
+                              variant="caption" 
+                              sx={{ 
+                                color: "#666",
+                                fontSize: "0.8rem",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 0.5
+                              }}
+                            >
+                              <span style={{ color: "#1976D2", fontWeight: 600 }}>•</span> {s}
+                            </Typography>
+                          ))}
+                        </Stack>
+                      )}
+
+                      {/* Price */}
+                      {item.priceHint && (
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            fontWeight: 700,
+                            color: "#1976D2",
+                            fontSize: "0.95rem",
+                            mb: 1.5
+                          }}
+                        >
+                          {item.priceHint}
+                        </Typography>
+                      )}
+
+                      {/* Tags */}
+                      <Stack direction="row" spacing={0.5} sx={{ flexWrap: "wrap", gap: 0.5, mt: "auto" }}>
+                        {item.brand && (
+                          <Chip 
+                            label={item.brand} 
+                            size="small" 
+                            variant="outlined"
+                            sx={{
+                              height: 24,
+                              fontSize: "0.75rem",
+                              fontWeight: 500,
+                              borderColor: "#d0d0d0",
+                              color: "#666"
+                            }}
+                          />
+                        )}
+                        {item.featured && (
+                          <Chip 
+                            label="Featured" 
+                            size="small" 
+                            sx={{
+                              height: 24,
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                              backgroundColor: "#fff3e0",
+                              color: "#E65100"
+                            }}
+                          />
+                        )}
+                        {item.isDeal && (
+                          <Chip 
+                            label="Deal" 
+                            size="small" 
+                            sx={{
+                              height: 24,
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
+                              backgroundColor: "#fce4ec",
+                              color: "#C2185B"
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Stack>
+          ) : (
+            <Box sx={{ textAlign: "center", py: 8 }}>
+              <Typography variant="body2" color="text.secondary">
+                No products found
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </Container>
     </Section>
   );
 }
