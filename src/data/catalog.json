@@ -4,7 +4,7 @@
   "logoUrl": "images/logo.png",
   "hero": {
     "headline": "Premium timber floors, installed beautifully.",
-    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney’s North Shore. Clear pricing, honest advice, and a clean finish.",
+    "subheadline": "Jamien Flooring supplies and installs engineered timber, hybrid, laminate and vinyl across Sydney's North Shore. Clear pricing, honest advice, and a clean finish.",
     "heroImageUrl": "images/hybrid-1.jpg"
   },
   "about": {
@@ -59,6 +59,7 @@
       "categoryId": "hybrid",
       "name": "Hybrid Flooring · Option 1",
       "subtitle": "Water-resistant",
+      "description": "Premium water-resistant hybrid flooring perfect for kitchens and moisture-prone areas. Advanced locking system ensures easy installation with superior stability and durability for active households.",
       "priceHint": "$45/m² from",
       "specs": [
         "Water-resistant",
@@ -78,6 +79,7 @@
       "categoryId": "hybrid",
       "name": "Hybrid Flooring · Option 2",
       "subtitle": "Family friendly",
+      "description": "Designed for busy households with kids and pets. Combines durability with comfort underfoot, featuring scratch-resistant wear layer and easy maintenance. Forgiving to spills and everyday wear.",
       "priceHint": "$49/m² from",
       "specs": [
         "Family friendly",
@@ -97,6 +99,7 @@
       "categoryId": "hybrid",
       "name": "Hybrid Flooring · Option 3",
       "subtitle": "Scratch resistant",
+      "description": "Heavy-duty scratch-resistant hybrid engineered for high-traffic areas. Superior wear protection keeps your floors looking fresh for years. Maintains authentic wood appearance while providing superior protection.",
       "priceHint": "$55/m² from",
       "specs": [
         "Scratch resistant",
@@ -116,6 +119,7 @@
       "categoryId": "hybrid",
       "name": "Hybrid Flooring · Option 4",
       "subtitle": "Easy maintenance",
+      "description": "Low-maintenance hybrid flooring requiring only regular vacuuming and occasional damp mopping. Quick-dry surface means no puddles or water damage concerns. Perfect for busy homeowners wanting effortless floors.",
       "priceHint": "$45/m² from",
       "specs": [
         "Easy maintenance",
@@ -135,6 +139,7 @@
       "categoryId": "hybrid",
       "name": "Hybrid Flooring · Option 5",
       "subtitle": "Great value",
+      "description": "Excellent value hybrid flooring delivering premium look and performance at an accessible price. Combines authentic timber aesthetic with modern durability, ideal for budget-conscious homeowners without compromising quality.",
       "priceHint": "$49/m² from",
       "specs": [
         "Great value",
@@ -154,6 +159,7 @@
       "categoryId": "engineered",
       "name": "Engineered Timber · Option 1",
       "subtitle": "Natural timber feel",
+      "description": "Premium engineered oak timber with authentic natural grain and warm tone. Features real timber veneer with stable core, perfect for climate-conscious Sydney homes. Delivers the elegance of solid hardwood with superior durability.",
       "priceHint": "$119/m² from",
       "specs": [
         "Natural timber feel",
@@ -173,6 +179,7 @@
       "categoryId": "engineered",
       "name": "Engineered Timber · Option 2",
       "subtitle": "Stable performance",
+      "description": "Engineered timber with exceptional dimensional stability, designed to resist warping and movement in Sydney's variable climate. Multi-ply core construction ensures consistent performance across temperature and humidity changes.",
       "priceHint": "$89/m² from",
       "specs": [
         "Stable performance",
@@ -192,6 +199,7 @@
       "categoryId": "engineered",
       "name": "Engineered Timber · Option 3",
       "subtitle": "Premium look",
+      "description": "High-end engineered timber with elegant European oak finish and hand-scraped details. Creates sophisticated, designer appearance with rich colour variation and character markings throughout.",
       "priceHint": "$99/m² from",
       "specs": [
         "Premium look",
@@ -211,6 +219,7 @@
       "categoryId": "engineered",
       "name": "Engineered Timber · Option 4",
       "subtitle": "Warm & timeless",
+      "description": "Classic engineered timber with warm honey-toned finish that complements any décor style. Timeless appeal ensures lasting beauty, while engineered construction provides modern performance and reliability.",
       "priceHint": "$119/m² from",
       "specs": [
         "Warm & timeless",
@@ -230,6 +239,7 @@
       "categoryId": "engineered",
       "name": "Engineered Timber · Option 5",
       "subtitle": "Multiple finishes",
+      "description": "Versatile engineered timber available in matte, satin and gloss finishes to match your style. Choose from contemporary minimalist to rustic character looks. Engineered stability across all finish options ensures consistent performance.",
       "priceHint": "$89/m² from",
       "specs": [
         "Multiple finishes",
@@ -249,6 +259,7 @@
       "categoryId": "laminate",
       "name": "Laminate · Option 1",
       "subtitle": "Budget friendly",
+      "description": "Affordable laminate flooring delivering great looks at exceptional value. Perfect for rental properties and investment homes. Budget-conscious option without sacrificing appearance or basic durability requirements.",
       "priceHint": "$49/m² from",
       "specs": [
         "Budget friendly",
@@ -268,6 +279,7 @@
       "categoryId": "laminate",
       "name": "Laminate · Option 2",
       "subtitle": "Tough wear layer",
+      "description": "Commercial-grade laminate with reinforced wear layer resisting scratches and stains from heavy foot traffic. Engineered for durability in high-use environments while maintaining attractive timber-look appearance.",
       "priceHint": "$55/m² from",
       "specs": [
         "Tough wear layer",
@@ -287,6 +299,7 @@
       "categoryId": "laminate",
       "name": "Laminate · Option 3",
       "subtitle": "Modern styles",
+      "description": "Contemporary laminate flooring in sleek modern tones and patterns. Perfect for contemporary homes seeking trendy aesthetic. Wide range of finishes from matte to embossed textures for modern interior design.",
       "priceHint": "$45/m² from",
       "specs": [
         "Modern styles",
@@ -306,6 +319,7 @@
       "categoryId": "laminate",
       "name": "Laminate · Option 4",
       "subtitle": "Quick installation",
+      "description": "Laminate with click-together locking system enabling fast installation without glue or nails. Reduces labour costs and installation time. Ideal for quick renovations and fast-track projects across Sydney.",
       "priceHint": "$49/m² from",
       "specs": [
         "Quick installation",
@@ -325,6 +339,7 @@
       "categoryId": "laminate",
       "name": "Laminate · Option 5",
       "subtitle": "Easy care",
+      "description": "No-fuss laminate requiring simple vacuuming and occasional light damp mopping. Naturally resistant to staining and fading. Ideal for busy families wanting beautiful floors with minimal maintenance effort.",
       "priceHint": "$55/m² from",
       "specs": [
         "Easy care",
@@ -344,6 +359,7 @@
       "categoryId": "vinyl",
       "name": "Vinyl · Option 1",
       "subtitle": "Soft underfoot",
+      "description": "Cushioned vinyl flooring offering exceptional comfort underfoot with warm, forgiving surface. Reduces fatigue in kitchens and high-traffic areas. Warm, soft feel combines comfort with practical water-resistance.",
       "priceHint": "$45/m² from",
       "specs": [
         "Soft underfoot",
@@ -363,6 +379,7 @@
       "categoryId": "vinyl",
       "name": "Vinyl · Option 2",
       "subtitle": "Quiet & comfy",
+      "description": "Thick vinyl with acoustic underlay dampens sound and impacts for quiet, peaceful homes. Combines comfort of plush feel with superior noise reduction. Perfect for apartments and lower-floor living spaces.",
       "priceHint": "$49/m² from",
       "specs": [
         "Quiet & comfy",
@@ -382,6 +399,7 @@
       "categoryId": "vinyl",
       "name": "Vinyl · Option 3",
       "subtitle": "Water-resistant",
+      "description": "Fully water-resistant vinyl ideal for bathrooms, laundries and wet areas. Waterproof core prevents water penetration and swelling. Practical choice for moisture-prone spaces requiring durable, easy-clean flooring.",
       "priceHint": "$55/m² from",
       "specs": [
         "Water-resistant",
@@ -401,6 +419,7 @@
       "categoryId": "vinyl",
       "name": "Vinyl · Option 4",
       "subtitle": "Easy cleaning",
+      "description": "Zero-maintenance vinyl flooring with sealed surface resisting dirt, stains and spills. Wipe clean with damp cloth for spotless results. Perfect for busy households seeking maximum convenience.",
       "priceHint": "$45/m² from",
       "specs": [
         "Easy cleaning",
@@ -420,6 +439,7 @@
       "categoryId": "vinyl",
       "name": "Vinyl · Option 5",
       "subtitle": "Great for units",
+      "description": "Ideal vinyl for unit and apartment living. Click-together installation reduces disturbance to neighbours. Quiet underfoot, easy to maintain, and stain-resistant for apartment durability requirements.",
       "priceHint": "$49/m² from",
       "specs": [
         "Great for units",
