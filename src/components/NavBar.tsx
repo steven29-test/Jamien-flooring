@@ -77,12 +77,11 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
       PaperProps={{
         sx: {
           borderRadius: 0,
-          minWidth: "100vw",
-          maxWidth: 1000,
+          width: 900,
+          maxWidth: "calc(100vw - 32px)",
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-          mt: 0,
+          mt: 0.5,
           overflow: "visible",
-          left: "0 !important",
           border: "1px solid #e5e5e5"
         }
       }}
