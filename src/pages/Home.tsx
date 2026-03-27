@@ -15,7 +15,7 @@ export default function Home({ catalog }: Props) {
 
   return (
     <>
-      <Box sx={{ background: `radial-gradient(1200px 420px at 10% 0%, rgba(249,171,0,0.18) 0%, transparent 55%), radial-gradient(1100px 520px at 90% 10%, rgba(11,31,58,0.16) 0%, transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,248,250,1))` }}>
+      <Box sx={{ background: `radial-gradient(1200px 420px at 10% 0%, rgba(200,157,92,0.12) 0%, transparent 55%), radial-gradient(1100px 520px at 90% 10%, rgba(44,95,125,0.08) 0%, transparent 60%), linear-gradient(180deg, rgba(255,251,245,0.95), rgba(255,251,245,1))` }}>
         <Section>
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
@@ -47,7 +47,7 @@ export default function Home({ catalog }: Props) {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              <Box sx={{ borderRadius: 4, overflow: "hidden", boxShadow: 2, bgcolor: "grey.100", aspectRatio: "16/10" }}>
+              <Box sx={{ borderRadius: 2, overflow: "hidden", boxShadow: 2, bgcolor: "grey.100", aspectRatio: "16/10" }}>
                 {catalog.hero.heroImageUrl ? (
                   <Box component="img" src={assetUrl(catalog.hero.heroImageUrl)} alt="Jamien Flooring hero" sx={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 ) : (
@@ -65,7 +65,7 @@ export default function Home({ catalog }: Props) {
         <Section title={catalog.about.title} subtitle={catalog.about.note}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={7}>
-              <Card sx={{ borderRadius: 4 }}>
+              <Card sx={{ borderRadius: 2 }}>
                 <CardContent>
                   <List>
                     {catalog.about.bullets.map((b, idx) => (
@@ -81,7 +81,7 @@ export default function Home({ catalog }: Props) {
               </Card>
             </Grid>
             <Grid item xs={12} md={5}>
-              <Card sx={{ borderRadius: 4, height: "100%" }}>
+              <Card sx={{ borderRadius: 2, height: "100%" }}>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 900, mb: 1 }}>
                     Quick quote tips
@@ -108,8 +108,8 @@ export default function Home({ catalog }: Props) {
         <Grid container spacing={2}>
           {sortCategories(catalog.categories).map((c) => (
             <Grid item xs={12} sm={6} md={3} key={c.id}>
-              <Card sx={{ height: "100%", borderRadius: 4 }}>
-                <CardActionArea component={RouterLink} to={`/catalog?cat=${c.id}`}>
+              <Card sx={{ height: "100%", borderRadius: 2, overflow: "hidden" }}>
+                <CardActionArea component={RouterLink} to={`/catalog?category=${c.id}`}>
                   {c.imageUrl ? <CardMedia component="img" height="150" image={assetUrl(c.imageUrl)} alt={c.name} /> : <Box sx={{ height: 150, bgcolor: "grey.100" }} />}
                   <CardContent>
                     <Typography variant="h6" sx={{ fontWeight: 900 }}>
@@ -132,8 +132,8 @@ export default function Home({ catalog }: Props) {
         <Grid container spacing={2}>
           {featured.map((item) => (
             <Grid item xs={12} sm={6} md={4} key={item.id}>
-              <Card sx={{ height: "100%", borderRadius: 4 }}>
-                {(item.images?.[0] ?? item.imageUrl) ? <CardMedia component="img" height="180" image={(item.images?.[0] ?? item.imageUrl) as string} alt={item.name} /> : <Box sx={{ height: 180, bgcolor: "grey.100" }} />}
+              <Card sx={{ height: "100%", borderRadius: 2, overflow: "hidden" }}>
+                {(item.images?.[0] ?? item.imageUrl) ? <CardMedia component="img" height="180" image={assetUrl((item.images?.[0] ?? item.imageUrl) || "")} alt={item.name} /> : <Box sx={{ height: 180, bgcolor: "grey.100" }} />}
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 900 }}>
                     {item.name}
@@ -153,50 +153,50 @@ export default function Home({ catalog }: Props) {
           ))}
         </Grid>
       </Section>
-<Section title="Project spotlight" subtitle="Premium timber craftsmanship + value options for every budget.">
-  <Grid container spacing={2}>
-    <Grid item xs={12} md={6}>
-      <Card sx={{ borderRadius: 4, overflow: "hidden", height: "100%" }}>
-        <CardMedia component="img" height="240" image={assetUrl("images/engineered-2.jpg")} alt="Engineered timber project" />
-        <CardContent>
-          <Stack direction="row" spacing={1} sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
-            <Chip label="Premium timber" />
-            <Chip variant="outlined" label="Design-led finish" />
-          </Stack>
-          <Typography variant="h6" sx={{ fontWeight: 900 }}>
-            Engineered timber — elegant, stable, timeless
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            Perfect for renovations where you want the natural timber look with reliable performance.
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
 
-    <Grid item xs={12} md={6}>
-      <Card sx={{ borderRadius: 4, overflow: "hidden", height: "100%" }}>
-        <CardMedia component="img" height="240" image={assetUrl("images/hybrid-3.jpg")} alt="Hybrid flooring project" />
-        <CardContent>
-          <Stack direction="row" spacing={1} sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
-            <Chip label="Great value" />
-            <Chip variant="outlined" label="Family & pets" />
-          </Stack>
-          <Typography variant="h6" sx={{ fontWeight: 900 }}>
-            Hybrid flooring — tough, water-resistant, easy care
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            Ideal for busy homes and investment properties. Great looks without the stress.
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
-  </Grid>
-</Section>
+      <Section title="Project spotlight" subtitle="Premium timber craftsmanship + value options for every budget.">
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Card sx={{ borderRadius: 2, overflow: "hidden", height: "100%" }}>
+              <CardMedia component="img" height="240" image={assetUrl("images/engineered-2.jpg")} alt="Engineered timber project" />
+              <CardContent>
+                <Stack direction="row" spacing={1} sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
+                  <Chip label="Premium timber" />
+                  <Chip variant="outlined" label="Design-led finish" />
+                </Stack>
+                <Typography variant="h6" sx={{ fontWeight: 900 }}>
+                  Engineered timber — elegant, stable, timeless
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  Perfect for renovations where you want the natural timber look with reliable performance.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-<Section>
-  <ReviewsSection reviews={catalog.reviews ?? []} />
-</Section>
+          <Grid item xs={12} md={6}>
+            <Card sx={{ borderRadius: 2, overflow: "hidden", height: "100%" }}>
+              <CardMedia component="img" height="240" image={assetUrl("images/hybrid-3.jpg")} alt="Hybrid flooring project" />
+              <CardContent>
+                <Stack direction="row" spacing={1} sx={{ mb: 1, flexWrap: "wrap", gap: 1 }}>
+                  <Chip label="Great value" />
+                  <Chip variant="outlined" label="Family & pets" />
+                </Stack>
+                <Typography variant="h6" sx={{ fontWeight: 900 }}>
+                  Hybrid flooring — tough, water-resistant, easy care
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  Ideal for busy homes and investment properties. Great looks without the stress.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Section>
 
-</>
+      <Section>
+        <ReviewsSection reviews={catalog.reviews ?? []} />
+      </Section>
+    </>
   );
 }

@@ -3,15 +3,17 @@ import {
   Stack, Typography, Grid, Container, Button, Menu, MenuItem
 } from "@mui/material";
 import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
 import { sortCategories } from "../utils/categoryOrder";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { assetUrl } from "../utils/assetUrl";
 
 type Props = { catalog: CatalogData };
 
 export default function Catalog({ catalog }: Props) {
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const categoryId = params.get("category") ?? "all";
   const subcategoryId = params.get("subcategory") ?? "all";
@@ -258,12 +260,14 @@ export default function Catalog({ catalog }: Props) {
               {filtered.map((item) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
                   <Card 
+                    onClick={() => navigate(`/product/${item.id}?${params.toString()}`)}
                     sx={{ 
                       height: "100%",
-                      borderRadius: 2,
+                      borderRadius: 0.5,
                       boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                       transition: "all 0.3s ease",
                       border: "1px solid #f0f0f0",
+                      cursor: "pointer",
                       "&:hover": {
                         boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                         transform: "translateY(-4px)"
@@ -277,7 +281,7 @@ export default function Catalog({ catalog }: Props) {
                       <CardMedia 
                         component="img" 
                         height="240" 
-                        image={(item.images?.[0] ?? item.imageUrl) as string} 
+                        image={assetUrl((item.images?.[0] ?? item.imageUrl) || "")} 
                         alt={item.name}
                         sx={{
                           objectFit: "cover",

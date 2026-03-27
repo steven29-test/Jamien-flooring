@@ -16,27 +16,28 @@ function TrustPill({
   icon: React.ReactNode;
   title: string;
   subtitle: string;
-  tone: "navy" | "amber" | "emerald";
+  tone: "blue" | "gold" | "teal";
 }) {
-  const theme = useTheme();
-
   const toneStyles =
-    tone === "amber"
+    tone === "gold"
       ? {
-          tint: alpha(theme.palette.secondary.main, 0.14),
-          border: alpha(theme.palette.secondary.main, 0.28),
-          iconBg: alpha(theme.palette.secondary.main, 0.18),
+          tint: "rgba(200, 157, 92, 0.12)",
+          border: "rgba(200, 157, 92, 0.28)",
+          iconBg: "rgba(200, 157, 92, 0.16)",
+          iconColor: "#8B6F47",
         }
-      : tone === "emerald"
+      : tone === "teal"
         ? {
-            tint: "rgba(16, 185, 129, 0.12)",
-            border: "rgba(16, 185, 129, 0.22)",
-            iconBg: "rgba(16, 185, 129, 0.16)",
+            tint: "rgba(100, 180, 160, 0.12)",
+            border: "rgba(100, 180, 160, 0.28)",
+            iconBg: "rgba(100, 180, 160, 0.16)",
+            iconColor: "#4A9B7F",
           }
         : {
-            tint: alpha(theme.palette.primary.main, 0.08),
-            border: alpha(theme.palette.primary.main, 0.18),
-            iconBg: alpha(theme.palette.primary.main, 0.12),
+            tint: "rgba(44, 95, 125, 0.10)",
+            border: "rgba(44, 95, 125, 0.20)",
+            iconBg: "rgba(44, 95, 125, 0.14)",
+            iconColor: "#2C5F7D",
           };
 
   return (
@@ -46,34 +47,39 @@ function TrustPill({
       alignItems="center"
       sx={{
         p: 1.6,
-        borderRadius: 999,
-        border: "1px solid",
+        borderRadius: 3,
+        border: "1.5px solid",
         borderColor: toneStyles.border,
         bgcolor: toneStyles.tint,
-        boxShadow: "0 10px 30px rgba(11, 31, 58, 0.08)",
-        backdropFilter: "blur(6px)",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.06)",
+        transition: "all 0.3s ease",
+        "&:hover": {
+          boxShadow: "0 8px 20px rgba(0, 0, 0, 0.10)",
+          transform: "translateY(-2px)",
+        },
       }}
     >
       <Box
         sx={{
-          width: 40,
-          height: 40,
-          borderRadius: 999,
+          width: 44,
+          height: 44,
+          borderRadius: "12px",
           display: "grid",
           placeItems: "center",
           bgcolor: toneStyles.iconBg,
-          color: "text.primary",
+          color: toneStyles.iconColor,
           flexShrink: 0,
+          fontWeight: 700,
         }}
       >
         {icon}
       </Box>
 
       <Box sx={{ minWidth: 0 }}>
-        <Typography sx={{ fontWeight: 950, lineHeight: 1.1 }} noWrap>
+        <Typography sx={{ fontWeight: 700, lineHeight: 1.2, color: "#1A2332", fontSize: "0.95rem" }} noWrap>
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.2 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.3, fontSize: "0.8rem", color: "#4A5568" }}>
           {subtitle}
         </Typography>
       </Box>
@@ -82,64 +88,82 @@ function TrustPill({
 }
 
 export default function TrustBar({ serviceArea }: Props) {
-  const theme = useTheme();
-
   return (
     <Box
       sx={{
-        mt: 2,
-        borderRadius: 4,
-        p: { xs: 1.5, md: 2 },
+        mt: 3,
+        borderRadius: 3,
+        p: { xs: 2.5, md: 3 },
         border: "1px solid",
-        borderColor: alpha(theme.palette.primary.main, 0.10),
+        borderColor: "rgba(44, 95, 125, 0.12)",
         background:
-          `radial-gradient(900px 220px at 15% 0%, ${alpha(theme.palette.secondary.main, 0.18)} 0%, transparent 55%),` +
-          `radial-gradient(900px 260px at 85% 10%, ${alpha(theme.palette.primary.main, 0.16)} 0%, transparent 60%),` +
-          `linear-gradient(180deg, ${alpha("#ffffff", 0.70)}, ${alpha("#ffffff", 0.90)})`,
+          "linear-gradient(135deg, rgba(255, 251, 245, 0.8) 0%, rgba(255, 251, 245, 0.95) 100%)",
+        backdropFilter: "blur(4px)",
       }}
     >
-      <Grid container spacing={1.5}>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <TrustPill
-            tone="navy"
-            icon={<WorkspacePremiumIcon fontSize="small" />}
+            tone="blue"
+            icon={<WorkspacePremiumIcon sx={{ fontSize: "1.3rem" }} />}
             title="Premium timber finish"
             subtitle="Detail-focused installation"
           />
         </Grid>
         <Grid item xs={12} md={4}>
           <TrustPill
-            tone="amber"
-            icon={<PriceCheckIcon fontSize="small" />}
+            tone="gold"
+            icon={<PriceCheckIcon sx={{ fontSize: "1.3rem" }} />}
             title="Great value options"
             subtitle="Hybrid & laminate from budget to high-end"
           />
         </Grid>
         <Grid item xs={12} md={4}>
           <TrustPill
-            tone="emerald"
-            icon={<LocationOnIcon fontSize="small" />}
+            tone="teal"
+            icon={<LocationOnIcon sx={{ fontSize: "1.3rem" }} />}
             title={serviceArea}
             subtitle="Sydney-wide supply & install"
           />
         </Grid>
       </Grid>
 
-      <Stack direction="row" spacing={1} sx={{ mt: 2, flexWrap: "wrap", gap: 1 }}>
+      <Stack direction="row" spacing={1.2} sx={{ mt: 2.5, flexWrap: "wrap", gap: 1 }}>
         <Chip
           label="Free measure & quote"
           variant="outlined"
-          sx={{ borderColor: alpha(theme.palette.primary.main, 0.25), bgcolor: alpha(theme.palette.primary.main, 0.06) }}
+          sx={{ 
+            borderColor: "rgba(44, 95, 125, 0.25)",
+            bgcolor: "rgba(44, 95, 125, 0.06)",
+            color: "#2C5F7D",
+            fontWeight: 500,
+            height: 32,
+            fontSize: "0.85rem",
+          }}
         />
         <Chip
           label="Clean, tidy finish"
           variant="outlined"
-          sx={{ borderColor: alpha(theme.palette.secondary.main, 0.35), bgcolor: alpha(theme.palette.secondary.main, 0.10) }}
+          sx={{ 
+            borderColor: "rgba(200, 157, 92, 0.30)",
+            bgcolor: "rgba(200, 157, 92, 0.08)",
+            color: "#8B6F47",
+            fontWeight: 500,
+            height: 32,
+            fontSize: "0.85rem",
+          }}
         />
         <Chip
           label="Straightforward pricing"
           variant="outlined"
-          sx={{ borderColor: alpha(theme.palette.primary.main, 0.20), bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+          sx={{ 
+            borderColor: "rgba(44, 95, 125, 0.20)",
+            bgcolor: "rgba(44, 95, 125, 0.04)",
+            color: "#2C5F7D",
+            fontWeight: 500,
+            height: 32,
+            fontSize: "0.85rem",
+          }}
         />
       </Stack>
     </Box>

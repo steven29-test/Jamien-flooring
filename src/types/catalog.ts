@@ -26,6 +26,7 @@ export type FloorItem = {
   subsubcategoryId?: string;
   name: string;
   subtitle?: string;
+  description?: string;
   priceHint?: string;
   specs?: string[];
   imageUrl?: string;

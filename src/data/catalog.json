@@ -37,96 +37,34 @@
         {
           "id": "eng_14mm",
           "name": "14mm",
-          "description": "Standard 14mm engineered timber",
+          "description": "14mm engineered timber",
           "subsubcategories": [
-            {
-              "id": "eng_14_preference",
-              "name": "Preference Floors",
-              "description": "Preference Floors 14mm collection"
-            },
-            {
-              "id": "eng_14_wonderwood",
-              "name": "Wonderwood",
-              "description": "Wonderwood 14mm collection"
-            },
-            {
-              "id": "eng_14_quickstep",
-              "name": "Quick-Step",
-              "description": "Quick-Step 14mm collection"
-            }
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "wonderwood", "name": "Wonderwood", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "godfrey_hirst", "name": "Godfrey Hirst", "description": "" }
           ]
         },
         {
           "id": "eng_15mm",
           "name": "15mm",
-          "description": "Premium 15mm engineered timber",
+          "description": "15mm engineered timber",
           "subsubcategories": [
-            {
-              "id": "eng_15_preference",
-              "name": "Preference Floors",
-              "description": "Preference Floors 15mm collection"
-            },
-            {
-              "id": "eng_15_wonderwood",
-              "name": "Wonderwood",
-              "description": "Wonderwood 15mm collection"
-            },
-            {
-              "id": "eng_15_godfrey",
-              "name": "Godfrey Hirst",
-              "description": "Godfrey Hirst 15mm collection"
-            }
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "wonderwood", "name": "Wonderwood", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "godfrey_hirst", "name": "Godfrey Hirst", "description": "" }
           ]
         },
         {
           "id": "eng_20mm",
           "name": "20mm",
-          "description": "Thick 20mm engineered timber",
+          "description": "20mm engineered timber",
           "subsubcategories": [
-            {
-              "id": "eng_20_wonderwood",
-              "name": "Wonderwood",
-              "description": "Wonderwood 20mm collection"
-            },
-            {
-              "id": "eng_20_premiumoak",
-              "name": "Premium Oak Co.",
-              "description": "Premium Oak Co. 20mm collection"
-            }
-          ]
-        },
-        {
-          "id": "eng_herringbone",
-          "name": "Herringbone",
-          "description": "Herringbone pattern engineered timber",
-          "subsubcategories": [
-            {
-              "id": "eng_hb_wonderwood",
-              "name": "Wonderwood",
-              "description": "Wonderwood Herringbone collection"
-            },
-            {
-              "id": "eng_hb_preference",
-              "name": "Preference Floors",
-              "description": "Preference Floors Herringbone collection"
-            }
-          ]
-        },
-        {
-          "id": "eng_chevron",
-          "name": "Chevron",
-          "description": "Chevron pattern engineered timber",
-          "subsubcategories": [
-            {
-              "id": "eng_cv_wonderwood",
-              "name": "Wonderwood",
-              "description": "Wonderwood Chevron collection"
-            },
-            {
-              "id": "eng_cv_quickstep",
-              "name": "Quick-Step",
-              "description": "Quick-Step Chevron collection"
-            }
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "wonderwood", "name": "Wonderwood", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "godfrey_hirst", "name": "Godfrey Hirst", "description": "" }
           ]
         }
       ]
@@ -142,16 +80,19 @@
           "name": "14mm",
           "description": "14mm hybrid flooring",
           "subsubcategories": [
-            {
-              "id": "hyb_14_preference",
-              "name": "Preference Floors",
-              "description": "Preference Floors hybrid"
-            },
-            {
-              "id": "hyb_14_quickstep",
-              "name": "Quick-Step",
-              "description": "Quick-Step hybrid"
-            }
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "godfrey_hirst", "name": "Godfrey Hirst", "description": "" }
+          ]
+        },
+        {
+          "id": "hyb_15mm",
+          "name": "15mm",
+          "description": "15mm hybrid flooring",
+          "subsubcategories": [
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "godfrey_hirst", "name": "Godfrey Hirst", "description": "" }
           ]
         }
       ]
@@ -165,13 +106,11 @@
         {
           "id": "lam_standard",
           "name": "Standard",
-          "description": "Standard laminate options",
+          "description": "Standard laminate",
           "subsubcategories": [
-            {
-              "id": "lam_std_preference",
-              "name": "Preference Floors",
-              "description": "Preference Floors laminate"
-            }
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "premium_oak", "name": "Premium Oak Co.", "description": "" }
           ]
         }
       ]
@@ -180,168 +119,461 @@
       "id": "vinyl",
       "name": "Vinyl",
       "description": "Comfortable underfoot, easy maintenance.",
-      "imageUrl": "images/vinyl-1.jpg"
+      "imageUrl": "images/vinyl-1.jpg",
+      "subcategories": [
+        {
+          "id": "vin_comfort",
+          "name": "Comfort",
+          "description": "Comfort vinyl flooring",
+          "subsubcategories": [
+            { "id": "pref_floors", "name": "Preference Floors", "description": "" },
+            { "id": "quick_step", "name": "Quick-Step", "description": "" },
+            { "id": "premium_oak", "name": "Premium Oak Co.", "description": "" },
+            { "id": "godfrey_hirst", "name": "Godfrey Hirst", "description": "" }
+          ]
+        }
+      ]
     }
   ],
   "items": [
     {
-      "id": "eng_14_preference_1",
-      "categoryId": "engineered",
-      "subcategoryId": "eng_14mm",
-      "subsubcategoryId": "eng_14_preference",
-      "name": "Preference Floors 14mm · Oak Light",
-      "subtitle": "Light oak finish",
-      "priceHint": "$89/m² from",
-      "specs": [
-        "14mm thickness",
-        "Plywood backing",
-        "Pre-finished",
-        "Free measure & quote (Sydney)"
-      ],
-      "imageUrl": "images/engineered-1.jpg",
-      "featured": true,
-      "images": ["images/engineered-1.jpg"],
-      "brand": "Preference Floors",
-      "isDeal": false
-    },
-    {
-      "id": "eng_14_wonderwood_1",
-      "categoryId": "engineered",
-      "subcategoryId": "eng_14mm",
-      "subsubcategoryId": "eng_14_wonderwood",
-      "name": "Wonderwood 14mm · Natural Oak",
-      "subtitle": "Natural oak tone",
-      "priceHint": "$99/m² from",
-      "specs": [
-        "14mm thickness",
-        "Plywood backing",
-        "Hand-scraped",
-        "Free measure & quote (Sydney)"
-      ],
-      "imageUrl": "images/engineered-2.jpg",
-      "featured": false,
-      "images": ["images/engineered-2.jpg"],
-      "brand": "Wonderwood",
-      "isDeal": false
-    },
-    {
-      "id": "eng_15_wonderwood_1",
-      "categoryId": "engineered",
-      "subcategoryId": "eng_15mm",
-      "subsubcategoryId": "eng_15_wonderwood",
-      "name": "Wonderwood 15mm · Premium Oak",
-      "subtitle": "Premium oak finish",
-      "priceHint": "$129/m² from",
-      "specs": [
-        "15mm thickness",
-        "Solid backing",
-        "Pre-finished",
-        "Free measure & quote (Sydney)"
-      ],
-      "imageUrl": "images/engineered-3.jpg",
-      "featured": true,
-      "images": ["images/engineered-3.jpg"],
-      "brand": "Wonderwood",
-      "isDeal": false
-    },
-    {
-      "id": "eng_20_wonderwood_1",
-      "categoryId": "engineered",
-      "subcategoryId": "eng_20mm",
-      "subsubcategoryId": "eng_20_wonderwood",
-      "name": "Wonderwood 20mm · Luxury Timber",
-      "subtitle": "Thick luxury timber",
-      "priceHint": "$159/m² from",
-      "specs": [
-        "20mm thickness",
-        "Solid backing",
-        "Premium finish",
-        "Free measure & quote (Sydney)"
-      ],
-      "imageUrl": "images/engineered-4.jpg",
-      "featured": false,
-      "images": ["images/engineered-4.jpg"],
-      "brand": "Wonderwood",
-      "isDeal": false
-    },
-    {
-      "id": "eng_hb_wonderwood_1",
-      "categoryId": "engineered",
-      "subcategoryId": "eng_herringbone",
-      "subsubcategoryId": "eng_hb_wonderwood",
-      "name": "Wonderwood Herringbone · Classic",
-      "subtitle": "Herringbone pattern",
-      "priceHint": "$179/m² from",
-      "specs": [
-        "Herringbone pattern",
-        "Solid backing",
-        "Premium grade",
-        "Free measure & quote (Sydney)"
-      ],
-      "imageUrl": "images/engineered-5.jpg",
-      "featured": false,
-      "images": ["images/engineered-5.jpg"],
-      "brand": "Wonderwood",
-      "isDeal": false
-    },
-    {
-      "id": "eng_cv_wonderwood_1",
-      "categoryId": "engineered",
-      "subcategoryId": "eng_chevron",
-      "subsubcategoryId": "eng_cv_wonderwood",
-      "name": "Wonderwood Chevron · Modern",
-      "subtitle": "Chevron pattern",
-      "priceHint": "$189/m² from",
-      "specs": [
-        "Chevron pattern",
-        "Solid backing",
-        "Contemporary style",
-        "Free measure & quote (Sydney)"
-      ],
-      "imageUrl": "images/engineered-1.jpg",
-      "featured": false,
-      "images": ["images/engineered-1.jpg"],
-      "brand": "Wonderwood",
-      "isDeal": false
-    },
-    {
-      "id": "hyb_14_preference_1",
+      "id": "hy1",
       "categoryId": "hybrid",
       "subcategoryId": "hyb_14mm",
-      "subsubcategoryId": "hyb_14_preference",
-      "name": "Preference Floors Hybrid · Ash Tone",
-      "subtitle": "Water-resistant ash",
+      "subsubcategoryId": "quick_step",
+      "name": "Hybrid Flooring · Option 1",
+      "subtitle": "Water-resistant",
+      "description": "Premium water-resistant hybrid flooring perfect for kitchens and moisture-prone areas. Advanced locking system ensures easy installation with superior stability and durability for active households.",
       "priceHint": "$45/m² from",
       "specs": [
-        "Water-resistant core",
-        "Ash color finish",
-        "Easy to clean",
-        "Free measure & quote (Sydney)"
+        "Water-resistant",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
       ],
       "imageUrl": "images/hybrid-1.jpg",
       "featured": true,
-      "images": ["images/hybrid-1.jpg"],
+      "images": [
+        "images/hybrid-1.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "hy2",
+      "categoryId": "hybrid",
+      "subcategoryId": "hyb_15mm",
+      "subsubcategoryId": "godfrey_hirst",
+      "name": "Hybrid Flooring · Option 2",
+      "subtitle": "Family friendly",
+      "description": "Designed for busy households with kids and pets. Combines durability with comfort underfoot, featuring scratch-resistant wear layer and easy maintenance. Forgiving to spills and everyday wear.",
+      "priceHint": "$49/m² from",
+      "specs": [
+        "Family friendly",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/hybrid-2.jpg",
+      "featured": false,
+      "images": [
+        "images/hybrid-2.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": true
+    },
+    {
+      "id": "hy3",
+      "categoryId": "hybrid",
+      "subcategoryId": "hyb_14mm",
+      "subsubcategoryId": "pref_floors",
+      "name": "Hybrid Flooring · Option 3",
+      "subtitle": "Scratch resistant",
+      "description": "Heavy-duty scratch-resistant hybrid engineered for high-traffic areas. Superior wear protection keeps your floors looking fresh for years. Maintains authentic wood appearance while providing superior protection.",
+      "priceHint": "$55/m² from",
+      "specs": [
+        "Scratch resistant",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/hybrid-3.jpg",
+      "featured": false,
+      "images": [
+        "images/hybrid-3.jpg"
+      ],
       "brand": "Preference Floors",
       "isDeal": false
     },
     {
-      "id": "lam_std_preference_1",
+      "id": "hy4",
+      "categoryId": "hybrid",
+      "subcategoryId": "hyb_15mm",
+      "subsubcategoryId": "premium_oak",
+      "name": "Hybrid Flooring · Option 4",
+      "subtitle": "Easy maintenance",
+      "description": "Low-maintenance hybrid flooring requiring only regular vacuuming and occasional damp mopping. Quick-dry surface means no puddles or water damage concerns. Perfect for busy homeowners wanting effortless floors.",
+      "priceHint": "$45/m² from",
+      "specs": [
+        "Easy maintenance",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/hybrid-4.jpg",
+      "featured": false,
+      "images": [
+        "images/hybrid-4.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": true
+    },
+    {
+      "id": "hy5",
+      "categoryId": "hybrid",
+      "subcategoryId": "hyb_14mm",
+      "subsubcategoryId": "quick_step",
+      "name": "Hybrid Flooring · Option 5",
+      "subtitle": "Great value",
+      "description": "Excellent value hybrid flooring delivering premium look and performance at an accessible price. Combines authentic timber aesthetic with modern durability, ideal for budget-conscious homeowners without compromising quality.",
+      "priceHint": "$49/m² from",
+      "specs": [
+        "Great value",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/hybrid-5.jpg",
+      "featured": false,
+      "images": [
+        "images/hybrid-5.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "en1",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_14mm",
+      "subsubcategoryId": "godfrey_hirst",
+      "name": "Engineered Timber · Option 1",
+      "subtitle": "Natural timber feel",
+      "description": "Premium engineered oak timber with authentic natural grain and warm tone. Features real timber veneer with stable core, perfect for climate-conscious Sydney homes. Delivers the elegance of solid hardwood with superior durability.",
+      "priceHint": "$119/m² from",
+      "specs": [
+        "Natural timber feel",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/engineered-1.jpg",
+      "featured": true,
+      "images": [
+        "images/engineered-1.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "en2",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_15mm",
+      "subsubcategoryId": "pref_floors",
+      "name": "Engineered Timber · Option 2",
+      "subtitle": "Stable performance",
+      "description": "Engineered timber with exceptional dimensional stability, designed to resist warping and movement in Sydney's variable climate. Multi-ply core construction ensures consistent performance across temperature and humidity changes.",
+      "priceHint": "$89/m² from",
+      "specs": [
+        "Stable performance",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/engineered-2.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-2.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": true
+    },
+    {
+      "id": "en3",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_20mm",
+      "subsubcategoryId": "premium_oak",
+      "name": "Engineered Timber · Option 3",
+      "subtitle": "Premium look",
+      "description": "High-end engineered timber with elegant European oak finish and hand-scraped details. Creates sophisticated, designer appearance with rich colour variation and character markings throughout.",
+      "priceHint": "$99/m² from",
+      "specs": [
+        "Premium look",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/engineered-3.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-3.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "en4",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_14mm",
+      "subsubcategoryId": "quick_step",
+      "name": "Engineered Timber · Option 4",
+      "subtitle": "Warm & timeless",
+      "description": "Classic engineered timber with warm honey-toned finish that complements any décor style. Timeless appeal ensures lasting beauty, while engineered construction provides modern performance and reliability.",
+      "priceHint": "$119/m² from",
+      "specs": [
+        "Warm & timeless",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/engineered-4.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-4.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "en5",
+      "categoryId": "engineered",
+      "subcategoryId": "eng_15mm",
+      "subsubcategoryId": "godfrey_hirst",
+      "name": "Engineered Timber · Option 5",
+      "subtitle": "Multiple finishes",
+      "description": "Versatile engineered timber available in matte, satin and gloss finishes to match your style. Choose from contemporary minimalist to rustic character looks. Engineered stability across all finish options ensures consistent performance.",
+      "priceHint": "$89/m² from",
+      "specs": [
+        "Multiple finishes",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/engineered-5.jpg",
+      "featured": false,
+      "images": [
+        "images/engineered-5.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": true
+    },
+    {
+      "id": "la1",
       "categoryId": "laminate",
       "subcategoryId": "lam_standard",
-      "subsubcategoryId": "lam_std_preference",
-      "name": "Preference Floors Laminate · Oak",
-      "subtitle": "Affordable oak laminate",
-      "priceHint": "$35/m² from",
+      "subsubcategoryId": "pref_floors",
+      "name": "Laminate · Option 1",
+      "subtitle": "Budget friendly",
+      "description": "Affordable laminate flooring delivering great looks at exceptional value. Perfect for rental properties and investment homes. Budget-conscious option without sacrificing appearance or basic durability requirements.",
+      "priceHint": "$49/m² from",
       "specs": [
-        "Laminate construction",
-        "Oak-look finish",
-        "Scratch-resistant",
-        "Free measure & quote (Sydney)"
+        "Budget friendly",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
       ],
       "imageUrl": "images/laminate-1.jpg",
       "featured": true,
-      "images": ["images/laminate-1.jpg"],
+      "images": [
+        "images/laminate-1.jpg"
+      ],
       "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "la2",
+      "categoryId": "laminate",
+      "subcategoryId": "lam_standard",
+      "subsubcategoryId": "premium_oak",
+      "name": "Laminate · Option 2",
+      "subtitle": "Tough wear layer",
+      "description": "Commercial-grade laminate with reinforced wear layer resisting scratches and stains from heavy foot traffic. Engineered for durability in high-use environments while maintaining attractive timber-look appearance.",
+      "priceHint": "$55/m² from",
+      "specs": [
+        "Tough wear layer",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/laminate-2.jpg",
+      "featured": false,
+      "images": [
+        "images/laminate-2.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "la3",
+      "categoryId": "laminate",
+      "subcategoryId": "lam_standard",
+      "subsubcategoryId": "quick_step",
+      "name": "Laminate · Option 3",
+      "subtitle": "Modern styles",
+      "description": "Contemporary laminate flooring in sleek modern tones and patterns. Perfect for contemporary homes seeking trendy aesthetic. Wide range of finishes from matte to embossed textures for modern interior design.",
+      "priceHint": "$45/m² from",
+      "specs": [
+        "Modern styles",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/laminate-3.jpg",
+      "featured": false,
+      "images": [
+        "images/laminate-3.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "la4",
+      "categoryId": "laminate",
+      "subcategoryId": "lam_standard",
+      "subsubcategoryId": "godfrey_hirst",
+      "name": "Laminate · Option 4",
+      "subtitle": "Quick installation",
+      "description": "Laminate with click-together locking system enabling fast installation without glue or nails. Reduces labour costs and installation time. Ideal for quick renovations and fast-track projects across Sydney.",
+      "priceHint": "$49/m² from",
+      "specs": [
+        "Quick installation",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/laminate-4.jpg",
+      "featured": false,
+      "images": [
+        "images/laminate-4.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "la5",
+      "categoryId": "laminate",
+      "subcategoryId": "lam_standard",
+      "subsubcategoryId": "pref_floors",
+      "name": "Laminate · Option 5",
+      "subtitle": "Easy care",
+      "description": "No-fuss laminate requiring simple vacuuming and occasional light damp mopping. Naturally resistant to staining and fading. Ideal for busy families wanting beautiful floors with minimal maintenance effort.",
+      "priceHint": "$55/m² from",
+      "specs": [
+        "Easy care",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/laminate-5.jpg",
+      "featured": false,
+      "images": [
+        "images/laminate-5.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "vi1",
+      "categoryId": "vinyl",
+      "subcategoryId": "vin_comfort",
+      "subsubcategoryId": "premium_oak",
+      "name": "Vinyl · Option 1",
+      "subtitle": "Soft underfoot",
+      "description": "Cushioned vinyl flooring offering exceptional comfort underfoot with warm, forgiving surface. Reduces fatigue in kitchens and high-traffic areas. Warm, soft feel combines comfort with practical water-resistance.",
+      "priceHint": "$45/m² from",
+      "specs": [
+        "Soft underfoot",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/vinyl-1.jpg",
+      "featured": true,
+      "images": [
+        "images/vinyl-1.jpg"
+      ],
+      "brand": "Premium Oak Co.",
+      "isDeal": false
+    },
+    {
+      "id": "vi2",
+      "categoryId": "vinyl",
+      "subcategoryId": "vin_comfort",
+      "subsubcategoryId": "quick_step",
+      "name": "Vinyl · Option 2",
+      "subtitle": "Quiet & comfy",
+      "description": "Thick vinyl with acoustic underlay dampens sound and impacts for quiet, peaceful homes. Combines comfort of plush feel with superior noise reduction. Perfect for apartments and lower-floor living spaces.",
+      "priceHint": "$49/m² from",
+      "specs": [
+        "Quiet & comfy",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/vinyl-2.jpg",
+      "featured": false,
+      "images": [
+        "images/vinyl-2.jpg"
+      ],
+      "brand": "Quick-Step",
+      "isDeal": false
+    },
+    {
+      "id": "vi3",
+      "categoryId": "vinyl",
+      "subcategoryId": "vin_comfort",
+      "subsubcategoryId": "godfrey_hirst",
+      "name": "Vinyl · Option 3",
+      "subtitle": "Water-resistant",
+      "description": "Fully water-resistant vinyl ideal for bathrooms, laundries and wet areas. Waterproof core prevents water penetration and swelling. Practical choice for moisture-prone spaces requiring durable, easy-clean flooring.",
+      "priceHint": "$55/m² from",
+      "specs": [
+        "Water-resistant",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/vinyl-3.jpg",
+      "featured": false,
+      "images": [
+        "images/vinyl-3.jpg"
+      ],
+      "brand": "Godfrey Hirst",
+      "isDeal": false
+    },
+    {
+      "id": "vi4",
+      "categoryId": "vinyl",
+      "subcategoryId": "vin_comfort",
+      "subsubcategoryId": "pref_floors",
+      "name": "Vinyl · Option 4",
+      "subtitle": "Easy cleaning",
+      "description": "Zero-maintenance vinyl flooring with sealed surface resisting dirt, stains and spills. Wipe clean with damp cloth for spotless results. Perfect for busy households seeking maximum convenience.",
+      "priceHint": "$45/m² from",
+      "specs": [
+        "Easy cleaning",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/vinyl-4.jpg",
+      "featured": false,
+      "images": [
+        "images/vinyl-4.jpg"
+      ],
+      "brand": "Preference Floors",
+      "isDeal": false
+    },
+    {
+      "id": "vi5",
+      "categoryId": "vinyl",
+      "subcategoryId": "vin_comfort",
+      "subsubcategoryId": "premium_oak",
+      "name": "Vinyl · Option 5",
+      "subtitle": "Great for units",
+      "description": "Ideal vinyl for unit and apartment living. Click-together installation reduces disturbance to neighbours. Quiet underfoot, easy to maintain, and stain-resistant for apartment durability requirements.",
+      "priceHint": "$49/m² from",
+      "specs": [
+        "Great for units",
+        "Free measure & quote (Sydney)",
+        "Ask for colour range & stock"
+      ],
+      "imageUrl": "images/vinyl-5.jpg",
+      "featured": false,
+      "images": [
+        "images/vinyl-5.jpg"
+      ],
+      "brand": "Premium Oak Co.",
       "isDeal": false
     }
   ],

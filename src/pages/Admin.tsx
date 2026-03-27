@@ -68,6 +68,19 @@ const ProductCard = memo(({ item, onUpdate, onDelete }: { item: FloorItem; onUpd
           </Button>
         </Grid>
 
+        <Grid item xs={12}>
+          <TextField
+            size="small"
+            fullWidth
+            label="Description"
+            value={item.description ?? ""}
+            onChange={(e) => onUpdate({ description: e.target.value })}
+            placeholder="Product description shown on detail page"
+            multiline
+            minRows={2}
+          />
+        </Grid>
+
         <Grid item xs={12} md={8}>
           <TextField
             size="small"
@@ -212,7 +225,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                   ...s,
                   subsubcategories: [
                     ...(s.subsubcategories ?? []),
-                    { id: uid("subsubcat"), name: "New Variant", description: "" },
+                    { id: uid("subsubcat"), name: "New Brand", description: "" },
                   ],
                 };
               }
@@ -287,6 +300,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
       categoryId: categoryId,
       name: "New Product",
       subtitle: "",
+      description: "",
       priceHint: "",
       specs: [],
       imageUrl: "",
@@ -302,6 +316,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
       subcategoryId: subcatId,
       name: "New Product",
       subtitle: "",
+      description: "",
       priceHint: "",
       specs: [],
       imageUrl: "",
@@ -318,6 +333,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
       subsubcategoryId: subsubcatId,
       name: "New Product",
       subtitle: "",
+      description: "",
       priceHint: "",
       specs: [],
       imageUrl: "",
@@ -368,7 +384,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
     return grouped;
   }, [catalog.items]);
 
-  const itemsByVariant = useMemo(() => {
+  const itemsByBrand = useMemo(() => {
     const grouped: Record<string, FloorItem[]> = {};
     catalog.items.forEach((i) => {
       if (i.subsubcategoryId) {
@@ -505,9 +521,9 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                         <Divider />
 
                         <Stack direction="row" justifyContent="space-between" alignItems="center">
-                          <Typography sx={{ fontWeight: 700 }}>📌 Variants</Typography>
+                          <Typography sx={{ fontWeight: 700 }}>📌 Brands</Typography>
                           <Button size="small" startIcon={<AddIcon />} variant="outlined" onClick={() => addSubsubcategory(category.id, type.id)} sx={{ fontWeight: 900 }}>
-                            Add variant
+                            Add brand
                           </Button>
                         </Stack>
 
@@ -526,7 +542,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                                   <TextField
                                     size="small"
                                     fullWidth
-                                    label="Variant ID"
+                                    label="Brand ID"
                                     value={variant.id}
                                     onChange={(e) => updateSubsubcategory(category.id, type.id, variant.id, { id: e.target.value })}
                                   />
@@ -535,7 +551,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                                   <TextField
                                     size="small"
                                     fullWidth
-                                    label="Variant Name"
+                                    label="Brand Name"
                                     value={variant.name}
                                     onChange={(e) => updateSubsubcategory(category.id, type.id, variant.id, { name: e.target.value })}
                                   />
@@ -548,7 +564,7 @@ export default function Admin({ baseCatalog, catalog, setCatalog }: Props) {
                                 </Button>
                               </Stack>
 
-                              {(itemsByVariant[`${category.id}|${type.id}|${variant.id}`] || []).map((item) => (
+                              {(itemsByBrand[`${category.id}|${type.id}|${variant.id}`] || []).map((item) => (
                                 <ProductCard
                                   key={item.id}
                                   item={item}

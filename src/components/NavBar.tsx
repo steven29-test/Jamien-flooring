@@ -19,7 +19,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import type { FloorCategory } from "../types/catalog";
@@ -110,11 +109,11 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                 py: 2.5,
                 cursor: "pointer",
                 backgroundColor: hoveredCategory === category.id ? "#fff" : "transparent",
-                borderLeft: hoveredCategory === category.id ? "4px solid #1976D2" : "4px solid transparent",
+                borderLeft: hoveredCategory === category.id ? "4px solid #2C5F7D" : "4px solid transparent",
                 transition: "all 0.2s ease",
                 "&:hover": {
                   backgroundColor: "#fff",
-                  borderLeftColor: "#1976D2",
+                  borderLeftColor: "#2C5F7D",
                 },
                 borderBottom: index < catItems.length - 1 ? "1px solid #eeeeee" : "none"
               }}
@@ -123,7 +122,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                 variant="body2" 
                 sx={{ 
                   fontWeight: hoveredCategory === category.id ? 600 : 500,
-                  color: hoveredCategory === category.id ? "#1976D2" : "#333",
+                  color: hoveredCategory === category.id ? "#2C5F7D" : "#333",
                   fontSize: "0.95rem"
                 }}
               >
@@ -154,7 +153,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                         mb: 1.5,
                         transition: "all 0.2s ease",
                         "&:hover": {
-                          color: "#1976D2"
+                          color: "#2C5F7D"
                         }
                       }}
                     >
@@ -162,7 +161,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                         variant="body2" 
                         sx={{ 
                           fontWeight: 600,
-                          color: "#1976D2",
+                          color: "#2C5F7D",
                           fontSize: "0.9rem",
                           textTransform: "uppercase",
                           letterSpacing: 0.5
@@ -316,7 +315,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
               >
                 <span>{category.name}</span>
                 {(category.subcategories ?? []).length > 0 && (
-                  <Box sx={{ display: "flex", color: "#1976D2" }}>
+                  <Box sx={{ display: "flex", color: "#2C5F7D" }}>
                     {expandedMobileCategory === category.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                   </Box>
                 )}
@@ -355,7 +354,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                       >
                         <span>{type.name}</span>
                         {(type.subsubcategories ?? []).length > 0 && (
-                          <Box sx={{ display: "flex", color: "#1976D2", fontSize: "1.2rem" }}>
+                          <Box sx={{ display: "flex", color: "#2C5F7D", fontSize: "1.2rem" }}>
                             {expandedMobileType === type.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
                           </Box>
                         )}
@@ -382,7 +381,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                                 transition: "all 0.2s ease",
                                 "&:hover": {
                                   backgroundColor: "#f9f9f9",
-                                  color: "#1976D2",
+                                  color: "#2C5F7D",
                                   fontWeight: 500
                                 }
                               }}
@@ -439,7 +438,7 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                 justifyContent: "flex-start",
                 py: 2.5,
                 px: 3,
-                color: "#1976D2",
+                color: "#2C5F7D",
                 textTransform: "none",
                 fontSize: "1rem",
                 fontWeight: 600,
@@ -503,12 +502,12 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                   textTransform: "none",
                   fontSize: "0.9rem",
                   fontWeight: pathname === "/" ? 600 : 500,
-                  color: pathname === "/" ? "#1976D2" : "#555",
+                  color: pathname === "/" ? "#2C5F7D" : "#555",
                   px: 2,
                   py: 1,
                   opacity: 1,
                   transition: "all 0.2s ease",
-                  "&:hover": { color: "#1976D2" }
+                  "&:hover": { color: "#2C5F7D" }
                 }}
               >
                 Home
@@ -522,12 +521,12 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                   textTransform: "none",
                   fontSize: "0.9rem",
                   fontWeight: pathname.startsWith("/catalog") ? 600 : 500,
-                  color: pathname.startsWith("/catalog") ? "#1976D2" : "#555",
+                  color: pathname.startsWith("/catalog") ? "#2C5F7D" : "#555",
                   px: 2,
                   py: 1,
                   opacity: 1,
                   transition: "all 0.2s ease",
-                  "&:hover": { color: "#1976D2" }
+                  "&:hover": { color: "#2C5F7D" }
                 }}
               >
                 Products
@@ -541,12 +540,12 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                   textTransform: "none",
                   fontSize: "0.9rem",
                   fontWeight: pathname === "/contact" ? 600 : 500,
-                  color: pathname === "/contact" ? "#1976D2" : "#555",
+                  color: pathname === "/contact" ? "#2C5F7D" : "#555",
                   px: 2,
                   py: 1,
                   opacity: 1,
                   transition: "all 0.2s ease",
-                  "&:hover": { color: "#1976D2" }
+                  "&:hover": { color: "#2C5F7D" }
                 }}
               >
                 Contact
@@ -564,12 +563,12 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                       fontWeight: 600, 
                       textTransform: "none", 
                       fontSize: "0.9rem",
-                      backgroundColor: "#1976D2",
+                      backgroundColor: "#2C5F7D",
                       color: "#fff",
                       px: 2,
                       py: 0.8,
                       transition: "all 0.2s ease",
-                      "&:hover": { backgroundColor: "#1565C0" }
+                      "&:hover": { backgroundColor: "#1F4A61" }
                     }}
                   >
                     Admin
