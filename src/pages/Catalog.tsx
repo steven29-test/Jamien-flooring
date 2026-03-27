@@ -3,7 +3,7 @@ import {
   Stack, TextField, Typography, Grid,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Section from "../components/Section";
 import type { CatalogData } from "../types/catalog";
 import { sortCategories } from "../utils/categoryOrder";
@@ -12,6 +12,7 @@ import { assetUrl } from "../utils/assetUrl";
 type Props = { catalog: CatalogData };
 
 export default function Catalog({ catalog }: Props) {
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const urlCat = params.get("category") ?? params.get("cat") ?? "all";
 
@@ -80,8 +81,20 @@ export default function Catalog({ catalog }: Props) {
         <Grid container spacing={2}>
           {filtered.map((i) => (
             <Grid item xs={12} sm={6} md={4} key={i.id}>
-              <Card sx={{ height: "100%", borderRadius: 4 }}>
-                {(i.images?.[0] ?? i.imageUrl) ? <CardMedia component="img" height="180" image={(i.images?.[0] ?? i.imageUrl) as string} alt={i.name} /> : <Box sx={{ height: 180, bgcolor: "grey.100" }} />}
+              <Card
+                onClick={() => navigate(`/product/${i.id}`)}
+                sx={{
+                  height: "100%",
+                  borderRadius: 4,
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  "&:hover": {
+                    boxShadow: 4,
+                    transform: "translateY(-4px)",
+                  },
+                }}
+              >
+                {(i.images?.[0] ?? i.imageUrl) ? <CardMedia component="img" height="180" image={assetUrl((i.images?.[0] ?? i.imageUrl) || "")} alt={i.name} /> : <Box sx={{ height: 180, bgcolor: "grey.100" }} />}
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 900 }}>{i.name}</Typography>
                   {i.subtitle && <Typography variant="body2" color="text.secondary">{i.subtitle}</Typography>}

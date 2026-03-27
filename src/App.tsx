@@ -7,6 +7,7 @@ import ChatWidget from "./components/ChatWidget";
 import { isAdminAuthorized } from "./utils/adminGate";
 import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
+import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Brands from "./pages/Brands";
@@ -63,6 +64,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home catalog={normalizedCatalog} />} />
           <Route path="/catalog" element={<Catalog catalog={normalizedCatalog} />} />
+          <Route path="/product/:itemId" element={<ProductDetail catalog={normalizedCatalog} />} />
           <Route path="/brands" element={<Brands catalog={normalizedCatalog} />} />
           <Route path="/deals" element={<Deals catalog={normalizedCatalog} />} />
           <Route path="/contact" element={<Contact />} />

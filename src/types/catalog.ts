@@ -10,6 +10,7 @@ export type FloorItem = {
   categoryId: string;
   name: string;
   subtitle?: string;
+  description?: string;
   priceHint?: string;
   specs?: string[];
   // Primary image (kept for backward compatibility)
