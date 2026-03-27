@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack, Toolbar, Typography, FormControl, InputLabel, Select, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -7,7 +7,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import GridOnIcon from "@mui/icons-material/GridOn";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import type { FloorCategory } from "../types/catalog";
 import { isAdminAuthorized } from "../utils/adminGate";
@@ -30,8 +30,16 @@ function categoryIcon(name: string) {
 
 export default function NavBar({ businessName, logoUrl, categories }: Props) {
   const { pathname } = useLocation();
+  const [params, setParams] = useSearchParams();
+  const urlCat = params.get("category") ?? params.get("cat") ?? "all";
+  const urlSubcat = params.get("subcategory") ?? "all";
+  const urlSubsubcat = params.get("subsubcategory") ?? "all";
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [categoryId, setCategoryId] = useState<string>(urlCat);
+  const [subcategoryId, setSubcategoryId] = useState<string>(urlSubcat);
+  const [subsubcategoryId, setSubsubcategoryId] = useState<string>(urlSubsubcat);
 
   const linkSx = (active: boolean) => ({
     fontWeight: 800,
@@ -39,6 +47,50 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
   });
 
   const catItems = useMemo(() => sortCategories(categories ?? []), [categories]);
+
+  const subcategories = useMemo(() => {
+    if (categoryId === "all") return [];
+    const cat = categories.find((c) => c.id === categoryId);
+    return cat?.subcategories ?? [];
+  }, [categories, categoryId]);
+
+  const subsubcategories = useMemo(() => {
+    if (subcategoryId === "all" || !subcategoryId) return [];
+    const cat = categories.find((c) => c.id === categoryId);
+    const subcat = cat?.subcategories?.find((s) => s.id === subcategoryId);
+    return subcat?.subsubcategories ?? [];
+  }, [categories, categoryId, subcategoryId]);
+
+  const handleCategoryClick = (catId: string) => {
+    setCategoryId(catId);
+    setSubcategoryId("all");
+    setSubsubcategoryId("all");
+    const nextParams = new URLSearchParams(params);
+    nextParams.delete("cat");
+    nextParams.delete("subcategory");
+    nextParams.delete("subsubcategory");
+    if (catId === "all") nextParams.delete("category");
+    else nextParams.set("category", catId);
+    setParams(nextParams, { replace: true });
+  };
+
+  const handleTypeChange = (typeId: string) => {
+    setSubcategoryId(typeId);
+    setSubsubcategoryId("all");
+    const nextParams = new URLSearchParams(params);
+    nextParams.delete("subsubcategory");
+    if (typeId === "all") nextParams.delete("subcategory");
+    else nextParams.set("subcategory", typeId);
+    setParams(nextParams, { replace: true });
+  };
+
+  const handleVariantChange = (variantId: string) => {
+    setSubsubcategoryId(variantId);
+    const nextParams = new URLSearchParams(params);
+    if (variantId === "all") nextParams.delete("subsubcategory");
+    else nextParams.set("subsubcategory", variantId);
+    setParams(nextParams, { replace: true });
+  };
 
   return (
     <AppBar position="sticky" color="inherit" elevation={0}>
@@ -82,21 +134,87 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
               onClose={() => setAnchorEl(null)}
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
-              PaperProps={{ sx: { borderRadius: 3, minWidth: 260 } }}
+              PaperProps={{ sx: { borderRadius: 3, minWidth: 380 } }}
             >
-              {catItems.map((c) => (
-                <MenuItem
-                  key={c.id}
-                  component={RouterLink}
-                  to={`/catalog?category=${encodeURIComponent(c.id)}`}
-                  onClick={() => setAnchorEl(null)}
-                >
-                  <ListItemIcon sx={{ minWidth: 34 }}>{categoryIcon(c.name)}</ListItemIcon>
-                  {c.name}
-                </MenuItem>
-              ))}
+              {/* Categories List */}
+              <Box sx={{ px: 1, py: 1 }}>
+                <Typography variant="caption" sx={{ fontWeight: 900, color: "text.secondary", display: "block", mb: 1 }}>
+                  📁 CATEGORIES
+                </Typography>
+                {catItems.map((c) => (
+                  <MenuItem
+                    key={c.id}
+                    onClick={() => {
+                      handleCategoryClick(c.id);
+                      setAnchorEl(null);
+                    }}
+                    sx={{ backgroundColor: categoryId === c.id ? "#E3F2FD" : "transparent" }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 34 }}>{categoryIcon(c.name)}</ListItemIcon>
+                    <Typography variant="body2" sx={{ fontWeight: categoryId === c.id ? 700 : 500 }}>
+                      {c.name}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Box>
 
-              <Box sx={{ my: 0.5 }} />
+              {/* Types Dropdown */}
+              {subcategories.length > 0 && (
+                <>
+                  <Divider sx={{ my: 1 }} />
+                  <Box sx={{ px: 2, py: 1 }}>
+                    <Typography variant="caption" sx={{ fontWeight: 900, color: "text.secondary", display: "block", mb: 1 }}>
+                      🟢 TYPES
+                    </Typography>
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="nav-type-label">Select Type</InputLabel>
+                      <Select
+                        labelId="nav-type-label"
+                        value={subcategoryId}
+                        label="Select Type"
+                        onChange={(e) => handleTypeChange(e.target.value)}
+                      >
+                        <MenuItem value="all">All types</MenuItem>
+                        {subcategories.map((s) => (
+                          <MenuItem key={s.id} value={s.id}>
+                            {s.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </>
+              )}
+
+              {/* Variants Dropdown */}
+              {subsubcategories.length > 0 && (
+                <>
+                  <Divider sx={{ my: 1 }} />
+                  <Box sx={{ px: 2, py: 1 }}>
+                    <Typography variant="caption" sx={{ fontWeight: 900, color: "text.secondary", display: "block", mb: 1 }}>
+                      🟠 VARIANTS
+                    </Typography>
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="nav-variant-label">Select Variant</InputLabel>
+                      <Select
+                        labelId="nav-variant-label"
+                        value={subsubcategoryId}
+                        label="Select Variant"
+                        onChange={(e) => handleVariantChange(e.target.value)}
+                      >
+                        <MenuItem value="all">All variants</MenuItem>
+                        {subsubcategories.map((ss) => (
+                          <MenuItem key={ss.id} value={ss.id}>
+                            {ss.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </>
+              )}
+
+              <Divider sx={{ my: 1 }} />
 
               <MenuItem component={RouterLink} to="/brands" onClick={() => setAnchorEl(null)}>
                 <ListItemIcon sx={{ minWidth: 34 }}>
