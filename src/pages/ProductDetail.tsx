@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, CardMedia, Chip, Divider, Stack, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Section from "../components/Section";
 import type { CatalogData, FloorItem } from "../types/catalog";
 import { assetUrl } from "../utils/assetUrl";
@@ -9,6 +9,7 @@ type Props = { catalog: CatalogData };
 export default function ProductDetail({ catalog }: Props) {
   const navigate = useNavigate();
   const { itemId } = useParams<{ itemId: string }>();
+  const [params] = useSearchParams();
 
   const item = catalog.items.find((i) => i.id === itemId);
 
@@ -28,12 +29,23 @@ export default function ProductDetail({ catalog }: Props) {
   }
 
   const categoryName = catalog.categories.find((c) => c.id === item.categoryId)?.name ?? item.categoryId;
+  const typeName = catalog.categories
+    .find((c) => c.id === item.categoryId)
+    ?.subcategories?.find((s) => s.id === item.subcategoryId)?.name ?? "";
+  const brandName = catalog.categories
+    .find((c) => c.id === item.categoryId)
+    ?.subcategories?.find((s) => s.id === item.subcategoryId)
+    ?.subsubcategories?.find((ss) => ss.id === item.subsubcategoryId)?.name ?? "";
+
   const imageUrl = (item.images?.[0] ?? item.imageUrl) as string;
 
   return (
     <Section>
       <Box sx={{ mb: 2 }}>
-        <Button onClick={() => navigate("/catalog")} sx={{ textTransform: "none" }}>
+        <Button
+          onClick={() => navigate(`/catalog?${params.toString()}`)}
+          sx={{ textTransform: "none" }}
+        >
           ← Back to Catalog
         </Button>
       </Box>
@@ -59,6 +71,8 @@ export default function ProductDetail({ catalog }: Props) {
             <Box>
               <Typography variant="overline" color="text.secondary">
                 {categoryName}
+                {typeName && ` > ${typeName}`}
+                {brandName && ` > ${brandName}`}
               </Typography>
               <Typography variant="h4" sx={{ fontWeight: 900, mt: 0.5 }}>
                 {item.name}

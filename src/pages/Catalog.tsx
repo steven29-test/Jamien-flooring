@@ -16,8 +16,12 @@ export default function Catalog({ catalog }: Props) {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const categoryId = params.get("category") ?? "all";
+  const subcategoryId = params.get("subcategory") ?? "all";
+  const subsubcategoryId = params.get("subsubcategory") ?? "all";
 
   const [catAnchor, setCatAnchor] = useState<null | HTMLElement>(null);
+  const [typeAnchor, setTypeAnchor] = useState<null | HTMLElement>(null);
+  const [brandAnchor, setBrandAnchor] = useState<null | HTMLElement>(null);
 
   const catItems = useMemo(() => sortCategories(catalog.categories ?? []), [catalog.categories]);
 
@@ -26,19 +30,68 @@ export default function Catalog({ catalog }: Props) {
     [catItems]
   );
 
+  const types = useMemo(() => {
+    if (categoryId === "all") return [];
+    const cat = catalog.categories.find((c) => c.id === categoryId);
+    return [{ id: "all", name: "All Types" }, ...(cat?.subcategories ?? [])];
+  }, [catalog.categories, categoryId]);
+
+  const brands = useMemo(() => {
+    if (subcategoryId === "all" || !subcategoryId) return [];
+    const cat = catalog.categories.find((c) => c.id === categoryId);
+    const type = cat?.subcategories?.find((s) => s.id === subcategoryId);
+    return [{ id: "all", name: "All Brands" }, ...(type?.subsubcategories ?? [])];
+  }, [catalog.categories, categoryId, subcategoryId]);
+
   const filtered = useMemo(() => {
     return catalog.items
-      .filter((i) => (categoryId === "all" ? true : i.categoryId === categoryId));
-  }, [catalog.items, categoryId]);
+      .filter((i) => (categoryId === "all" ? true : i.categoryId === categoryId))
+      .filter((i) => {
+        if (subcategoryId === "all" || !subcategoryId) return true;
+        return i.subcategoryId === subcategoryId;
+      })
+      .filter((i) => {
+        if (subsubcategoryId === "all" || !subsubcategoryId) return true;
+        return i.subsubcategoryId === subsubcategoryId;
+      });
+  }, [catalog.items, categoryId, subcategoryId, subsubcategoryId]);
 
   const catName = (id: string) => catalog.categories.find((c) => c.id === id)?.name ?? id;
+  const subcatName = (id: string) => {
+    const cat = catalog.categories.find((c) => c.id === categoryId);
+    return cat?.subcategories?.find((s) => s.id === id)?.name ?? id;
+  };
+  const subsubcatName = (id: string) => {
+    const cat = catalog.categories.find((c) => c.id === categoryId);
+    const subcat = cat?.subcategories?.find((s) => s.id === subcategoryId);
+    return subcat?.subsubcategories?.find((ss) => ss.id === id)?.name ?? id;
+  };
 
   const handleCategoryChange = (newCatId: string) => {
     const nextParams = new URLSearchParams(params);
+    nextParams.delete("subcategory");
+    nextParams.delete("subsubcategory");
     if (newCatId === "all") nextParams.delete("category");
     else nextParams.set("category", newCatId);
     setParams(nextParams, { replace: true });
     setCatAnchor(null);
+  };
+
+  const handleTypeChange = (newTypeId: string) => {
+    const nextParams = new URLSearchParams(params);
+    nextParams.delete("subsubcategory");
+    if (newTypeId === "all") nextParams.delete("subcategory");
+    else nextParams.set("subcategory", newTypeId);
+    setParams(nextParams, { replace: true });
+    setTypeAnchor(null);
+  };
+
+  const handleBrandChange = (newBrandId: string) => {
+    const nextParams = new URLSearchParams(params);
+    if (newBrandId === "all") nextParams.delete("subsubcategory");
+    else nextParams.set("subsubcategory", newBrandId);
+    setParams(nextParams, { replace: true });
+    setBrandAnchor(null);
   };
 
   return (
@@ -98,6 +151,94 @@ export default function Catalog({ catalog }: Props) {
                 ))}
               </Menu>
             </Box>
+
+            {/* Type Filter */}
+            {categoryId !== "all" && types.length > 0 && (
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="caption" sx={{ fontWeight: 700, color: "#999", textTransform: "uppercase", fontSize: "0.7rem", display: "block", mb: 0.8 }}>
+                  Type / Size
+                </Typography>
+                <Button
+                  onClick={(e) => setTypeAnchor(e.currentTarget)}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  sx={{
+                    width: "100%",
+                    justifyContent: "space-between",
+                    textTransform: "none",
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                    color: "#333",
+                    backgroundColor: "#fff",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: 1,
+                    px: 2,
+                    py: 1,
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      borderColor: "#1976D2"
+                    }
+                  }}
+                >
+                  {subcategoryId === "all" ? "All Types" : subcatName(subcategoryId)}
+                </Button>
+                <Menu anchorEl={typeAnchor} open={Boolean(typeAnchor)} onClose={() => setTypeAnchor(null)}>
+                  {types.map((type) => (
+                    <MenuItem 
+                      key={type.id} 
+                      onClick={() => handleTypeChange(type.id)}
+                      selected={type.id === subcategoryId}
+                    >
+                      {type.name}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            )}
+
+            {/* Brand Filter */}
+            {subcategoryId !== "all" && subcategoryId && brands.length > 0 && (
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="caption" sx={{ fontWeight: 700, color: "#999", textTransform: "uppercase", fontSize: "0.7rem", display: "block", mb: 0.8 }}>
+                  Brand
+                </Typography>
+                <Button
+                  onClick={(e) => setBrandAnchor(e.currentTarget)}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  sx={{
+                    width: "100%",
+                    justifyContent: "space-between",
+                    textTransform: "none",
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                    color: "#333",
+                    backgroundColor: "#fff",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: 1,
+                    px: 2,
+                    py: 1,
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      borderColor: "#1976D2"
+                    }
+                  }}
+                >
+                  {subsubcategoryId === "all" ? "All Brands" : subsubcatName(subsubcategoryId)}
+                </Button>
+                <Menu anchorEl={brandAnchor} open={Boolean(brandAnchor)} onClose={() => setBrandAnchor(null)}>
+                  {brands.map((brand) => (
+                    <MenuItem 
+                      key={brand.id} 
+                      onClick={() => handleBrandChange(brand.id)}
+                      selected={brand.id === subsubcategoryId}
+                    >
+                      {brand.name}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            )}
           </Stack>
 
           {/* Product Count */}
@@ -119,7 +260,7 @@ export default function Catalog({ catalog }: Props) {
               {filtered.map((item) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
                   <Card 
-                    onClick={() => navigate(`/product/${item.id}`)}
+                    onClick={() => navigate(`/product/${item.id}?${params.toString()}`)}
                     sx={{ 
                       height: "100%",
                       borderRadius: 0.5,
