@@ -13,21 +13,10 @@ import {
   useMediaQuery,
   useTheme,
   Collapse,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import StorefrontIcon from "@mui/icons-material/Storefront";
-import ForestIcon from "@mui/icons-material/Forest";
-import LayersIcon from "@mui/icons-material/Layers";
-import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import GridOnIcon from "@mui/icons-material/GridOn";
-import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
@@ -39,16 +28,6 @@ import { sortCategories } from "../utils/categoryOrder";
 type Props = { businessName: string; logoUrl?: string; categories: FloorCategory[] };
 
 const ADMIN_ENABLED = import.meta.env.VITE_ADMIN_ENABLED === "true";
-
-function categoryIcon(name: string) {
-  const n = name.toLowerCase();
-  if (n.includes("engineered")) return <ForestIcon />;
-  if (n.includes("hybrid") || n.includes("vinyl")) return <WaterDropIcon />;
-  if (n.includes("laminate")) return <LayersIcon />;
-  if (n.includes("solid")) return <ForestIcon />;
-  if (n.includes("herringbone") || n.includes("chevron")) return <GridOnIcon />;
-  return <ViewQuiltIcon />;
-}
 
 export default function NavBar({ businessName, logoUrl, categories }: Props) {
   const { pathname } = useLocation();
@@ -62,12 +41,6 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
   const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
   const [expandedMobileType, setExpandedMobileType] = useState<string | null>(null);
   const open = Boolean(anchorEl);
-
-  const linkSx = (active: boolean) => ({
-    fontWeight: 800,
-    opacity: active ? 1 : 0.86,
-    transition: "opacity 0.2s ease",
-  });
 
   const catItems = useMemo(() => sortCategories(categories ?? []), [categories]);
 
@@ -100,198 +73,123 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
       }}
       anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       transformOrigin={{ vertical: "top", horizontal: "left" }}
-      onMouseLeave={() => {
-        setHoveredCategory(null);
-      }}
+      onMouseLeave={() => setHoveredCategory(null)}
       PaperProps={{
         sx: {
-          borderRadius: 2,
+          borderRadius: 0,
           minWidth: "100vw",
-          maxWidth: 900,
-          boxShadow: "0 10px 40px rgba(0,0,0,0.1)",
-          mt: 0.5,
+          maxWidth: 1000,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+          mt: 0,
           overflow: "visible",
-          left: "0 !important"
+          left: "0 !important",
+          border: "1px solid #e5e5e5"
         }
       }}
       MenuListProps={{
-        onMouseLeave: () => {
-          setHoveredCategory(null);
-        }
+        onMouseLeave: () => setHoveredCategory(null),
+        sx: { p: 0 }
       }}
     >
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "220px 1fr" }, gap: 0, p: 0 }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 0, p: 0, minHeight: 400 }}>
         {/* Left Panel - Categories */}
-        <Box sx={{ borderRight: { xs: "none", md: "1px solid #e0e0e0" }, p: 2, backgroundColor: "#fafafa" }}>
-          <Typography 
-            variant="caption" 
-            sx={{ 
-              fontWeight: 900, 
-              color: "#666", 
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-              display: "block",
-              mb: 1.5,
-              fontSize: "0.7rem"
-            }}
-          >
-            Categories
-          </Typography>
-
-          <Stack spacing={0.5}>
-            {catItems.map((category) => (
-              <Box
-                key={category.id}
-                onMouseEnter={() => setHoveredCategory(category.id)}
-                onClick={() => handleCategoryClick(category.id)}
-                sx={{
-                  p: 1.5,
-                  borderRadius: 1,
-                  cursor: "pointer",
-                  backgroundColor: hoveredCategory === category.id ? "#E3F2FD" : "transparent",
-                  border: hoveredCategory === category.id ? "1px solid #2196F3" : "1px solid transparent",
-                  transition: "all 0.2s ease",
-                  "&:hover": {
-                    backgroundColor: "#E3F2FD",
-                    border: "1px solid #2196F3",
-                  },
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.5
+        <Box sx={{ 
+          borderRight: "1px solid #e5e5e5", 
+          p: 0,
+          backgroundColor: "#f8f9fa",
+          maxHeight: 600,
+          overflow: "auto"
+        }}>
+          {catItems.map((category, index) => (
+            <Box
+              key={category.id}
+              onMouseEnter={() => setHoveredCategory(category.id)}
+              onClick={() => handleCategoryClick(category.id)}
+              sx={{
+                px: 3,
+                py: 2.5,
+                cursor: "pointer",
+                backgroundColor: hoveredCategory === category.id ? "#fff" : "transparent",
+                borderLeft: hoveredCategory === category.id ? "4px solid #1976D2" : "4px solid transparent",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  borderLeftColor: "#1976D2",
+                },
+                borderBottom: index < catItems.length - 1 ? "1px solid #eeeeee" : "none"
+              }}
+            >
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  fontWeight: hoveredCategory === category.id ? 600 : 500,
+                  color: hoveredCategory === category.id ? "#1976D2" : "#333",
+                  fontSize: "0.95rem"
                 }}
               >
-                <Box sx={{ color: "#2196F3", display: "flex", fontSize: "1.4rem" }}>
-                  {categoryIcon(category.name)}
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
-                      fontWeight: hoveredCategory === category.id ? 700 : 600,
-                      color: hoveredCategory === category.id ? "#1976D2" : "#333",
-                      fontSize: "0.85rem"
-                    }}
-                  >
-                    {category.name}
-                  </Typography>
-                </Box>
-                {(category.subcategories ?? []).length > 0 && (
-                  <ChevronRightIcon sx={{ fontSize: "1.2rem", color: "#999" }} />
-                )}
-              </Box>
-            ))}
-          </Stack>
-
-          <Divider sx={{ my: 2 }} />
-
-          <Box
-            component={RouterLink}
-            to="/brands"
-            onClick={() => setAnchorEl(null)}
-            sx={{
-              p: 1.5,
-              borderRadius: 1,
-              cursor: "pointer",
-              backgroundColor: "transparent",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                backgroundColor: "#f5f5f5",
-              },
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              textDecoration: "none",
-              color: "inherit"
-            }}
-          >
-            <Box sx={{ color: "#FF9800", display: "flex", fontSize: "1.4rem" }}>
-              <StorefrontIcon />
+                {category.name}
+              </Typography>
             </Box>
-            <Typography variant="body2" sx={{ fontWeight: 600, color: "#333", fontSize: "0.85rem" }}>
-              Brands
-            </Typography>
-          </Box>
-
-          <Box
-            component={RouterLink}
-            to="/deals"
-            onClick={() => setAnchorEl(null)}
-            sx={{
-              p: 1.5,
-              borderRadius: 1,
-              cursor: "pointer",
-              backgroundColor: "transparent",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                backgroundColor: "#f5f5f5",
-              },
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              textDecoration: "none",
-              color: "inherit",
-              mt: 0.5
-            }}
-          >
-            <Box sx={{ color: "#E91E63", display: "flex", fontSize: "1.4rem" }}>
-              <LocalOfferIcon />
-            </Box>
-            <Typography variant="body2" sx={{ fontWeight: 600, color: "#333", fontSize: "0.85rem" }}>
-              Deals
-            </Typography>
-          </Box>
+          ))}
         </Box>
 
         {/* Right Panel - Types & Variants */}
-        {hoveredCategory && (
-          <Box sx={{ p: 2, backgroundColor: "#fff", display: { xs: "none", md: "block" } }}>
-            {catItems.find(c => c.id === hoveredCategory)?.subcategories && 
-              (catItems.find(c => c.id === hoveredCategory)?.subcategories?.length ?? 0) > 0 ? (
-              <Stack spacing={2}>
+        <Box sx={{ 
+          p: 3, 
+          backgroundColor: "#fff",
+          maxHeight: 600,
+          overflow: "auto"
+        }}>
+          {hoveredCategory ? (
+            catItems.find(c => c.id === hoveredCategory)?.subcategories && 
+            (catItems.find(c => c.id === hoveredCategory)?.subcategories?.length ?? 0) > 0 ? (
+              <Box>
                 {(catItems.find(c => c.id === hoveredCategory)?.subcategories ?? []).map((type) => (
-                  <Box key={type.id}>
+                  <Box key={type.id} sx={{ mb: 3, pb: 3, borderBottom: "1px solid #e5e5e5", "&:last-child": { borderBottom: "none", mb: 0, pb: 0 } }}>
+                    {/* Type Header */}
                     <Box
                       onClick={() => handleTypeClick(hoveredCategory, type.id)}
                       sx={{
                         cursor: "pointer",
-                        mb: 1,
-                        pb: 1,
-                        borderBottom: "2px solid #4CAF50",
+                        mb: 1.5,
                         transition: "all 0.2s ease",
                         "&:hover": {
-                          borderBottomColor: "#2E7D32",
+                          color: "#1976D2"
                         }
                       }}
                     >
                       <Typography 
                         variant="body2" 
                         sx={{ 
-                          fontWeight: 700,
-                          color: "#2E7D32",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 0.8
+                          fontWeight: 600,
+                          color: "#1976D2",
+                          fontSize: "0.9rem",
+                          textTransform: "uppercase",
+                          letterSpacing: 0.5
                         }}
                       >
-                        <span style={{ fontSize: "1rem" }}>🟢</span> {type.name}
+                        {type.name}
                       </Typography>
                     </Box>
 
+                    {/* Variants List */}
                     {(type.subsubcategories ?? []).length > 0 && (
-                      <Stack spacing={0.5}>
+                      <Stack spacing={1}>
                         {(type.subsubcategories ?? []).map((variant) => (
                           <Box
                             key={variant.id}
                             onClick={() => handleVariantClick(hoveredCategory, type.id, variant.id)}
                             sx={{
-                              p: 0.8,
-                              borderRadius: 0.8,
+                              px: 2,
+                              py: 1.2,
+                              borderRadius: 1,
                               cursor: "pointer",
                               backgroundColor: "transparent",
                               transition: "all 0.2s ease",
+                              border: "1px solid transparent",
                               "&:hover": {
-                                backgroundColor: "#FFF3E0",
-                                pl: 1
+                                backgroundColor: "#f5f5f5",
+                                border: "1px solid #e0e0e0"
                               }
                             }}
                           >
@@ -299,13 +197,11 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                               variant="caption" 
                               sx={{ 
                                 fontWeight: 500,
-                                color: "#E65100",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 0.6
+                                color: "#555",
+                                fontSize: "0.85rem"
                               }}
                             >
-                              <span style={{ fontSize: "0.9rem" }}>🟠</span> {variant.name}
+                              {variant.name}
                             </Typography>
                           </Box>
                         ))}
@@ -313,22 +209,18 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                     )}
                   </Box>
                 ))}
-              </Stack>
+              </Box>
             ) : (
-              <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 2 }}>
-                No types available
+              <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 8 }}>
+                No subcategories available
               </Typography>
-            )}
-          </Box>
-        )}
-
-        {!hoveredCategory && (
-          <Box sx={{ p: 2, backgroundColor: "#fff", display: { xs: "none", md: "flex" }, alignItems: "center", justifyContent: "center" }}>
-            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
-              Select a category
+            )
+          ) : (
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 8 }}>
+              Select a category to view types and brands
             </Typography>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </Menu>
   );
@@ -341,16 +233,53 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
       onClose={() => setMobileDrawerOpen(false)}
       PaperProps={{
         sx: {
-          maxHeight: "90vh",
-          overflow: "auto"
+          maxHeight: "100vh",
+          overflow: "auto",
+          backgroundColor: "#fff"
         }
       }}
     >
-      <Box sx={{ p: 2, pt: 1 }}>
+      <Box sx={{ 
+        p: 2,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderBottom: "1px solid #e5e5e5"
+      }}>
+        <Typography variant="h6" sx={{ fontWeight: 700 }}>Menu</Typography>
+        <IconButton onClick={() => setMobileDrawerOpen(false)}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
+
+      <Box sx={{ p: 2 }}>
         <Stack spacing={0}>
+          {/* Home Link */}
+          <Button
+            component={RouterLink}
+            to="/"
+            onClick={() => setMobileDrawerOpen(false)}
+            fullWidth
+            sx={{
+              textAlign: "left",
+              justifyContent: "flex-start",
+              py: 1.5,
+              px: 2,
+              color: "#333",
+              textTransform: "none",
+              fontSize: "0.95rem",
+              fontWeight: 500,
+              borderBottom: "1px solid #e5e5e5"
+            }}
+          >
+            Home
+          </Button>
+
+          {/* Categories */}
           {catItems.map((category) => (
             <Box key={category.id}>
-              <ListItemButton
+              <Button
+                fullWidth
                 onClick={() => {
                   if ((category.subcategories ?? []).length > 0) {
                     setExpandedMobileCategory(expandedMobileCategory === category.id ? null : category.id);
@@ -359,30 +288,34 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                   }
                 }}
                 sx={{
-                  backgroundColor: expandedMobileCategory === category.id ? "#E3F2FD" : "transparent",
-                  borderRadius: 1,
-                  mb: 0.5
+                  textAlign: "left",
+                  justifyContent: "space-between",
+                  py: 1.5,
+                  px: 2,
+                  color: "#333",
+                  textTransform: "none",
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                  backgroundColor: expandedMobileCategory === category.id ? "#f5f5f5" : "transparent",
+                  borderBottom: "1px solid #e5e5e5",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5"
+                  }
                 }}
               >
-                <Box sx={{ color: "#2196F3", display: "flex", mr: 1.5, fontSize: "1.2rem" }}>
-                  {categoryIcon(category.name)}
-                </Box>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {category.name}
-                </Typography>
+                <span>{category.name}</span>
                 {(category.subcategories ?? []).length > 0 && (
-                  <Box sx={{ ml: "auto" }}>
-                    {expandedMobileCategory === category.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                  </Box>
+                  expandedMobileCategory === category.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />
                 )}
-              </ListItemButton>
+              </Button>
 
               {/* Types */}
               <Collapse in={expandedMobileCategory === category.id} timeout="auto" unmountOnExit>
-                <Box sx={{ pl: 2, mt: 1 }}>
+                <Box sx={{ backgroundColor: "#fafafa", borderBottom: "1px solid #e5e5e5" }}>
                   {(category.subcategories ?? []).map((type) => (
                     <Box key={type.id}>
-                      <ListItemButton
+                      <Button
+                        fullWidth
                         onClick={() => {
                           if ((type.subsubcategories ?? []).length > 0) {
                             setExpandedMobileType(expandedMobileType === type.id ? null : type.id);
@@ -391,38 +324,52 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                           }
                         }}
                         sx={{
-                          backgroundColor: expandedMobileType === type.id ? "#E8F5E9" : "transparent",
-                          borderRadius: 1,
-                          mb: 0.5
+                          textAlign: "left",
+                          justifyContent: "space-between",
+                          py: 1.5,
+                          px: 4,
+                          color: "#555",
+                          textTransform: "none",
+                          fontSize: "0.9rem",
+                          fontWeight: 500,
+                          backgroundColor: expandedMobileType === type.id ? "#eeeeee" : "transparent",
+                          borderBottom: "1px solid #e5e5e5",
+                          "&:hover": {
+                            backgroundColor: "#eeeeee"
+                          }
                         }}
                       >
-                        <Typography variant="body2" sx={{ fontWeight: 500, color: "#2E7D32" }}>
-                          🟢 {type.name}
-                        </Typography>
+                        <span>{type.name}</span>
                         {(type.subsubcategories ?? []).length > 0 && (
-                          <Box sx={{ ml: "auto" }}>
-                            {expandedMobileType === type.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
-                          </Box>
+                          expandedMobileType === type.id ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />
                         )}
-                      </ListItemButton>
+                      </Button>
 
-                      {/* Variants */}
+                      {/* Variants/Brands */}
                       <Collapse in={expandedMobileType === type.id} timeout="auto" unmountOnExit>
-                        <Box sx={{ pl: 2, mt: 0.5 }}>
+                        <Box sx={{ backgroundColor: "#fff" }}>
                           {(type.subsubcategories ?? []).map((variant) => (
-                            <ListItemButton
+                            <Button
                               key={variant.id}
+                              fullWidth
                               onClick={() => handleVariantClick(category.id, type.id, variant.id)}
                               sx={{
-                                backgroundColor: "#FFF3E0",
-                                borderRadius: 1,
-                                mb: 0.5
+                                textAlign: "left",
+                                justifyContent: "flex-start",
+                                py: 1.2,
+                                px: 6,
+                                color: "#666",
+                                textTransform: "none",
+                                fontSize: "0.85rem",
+                                fontWeight: 400,
+                                borderBottom: "1px solid #e5e5e5",
+                                "&:hover": {
+                                  backgroundColor: "#f9f9f9"
+                                }
                               }}
                             >
-                              <Typography variant="caption" sx={{ fontWeight: 500, color: "#E65100" }}>
-                                🟠 {variant.name}
-                              </Typography>
-                            </ListItemButton>
+                              {variant.name}
+                            </Button>
                           ))}
                         </Box>
                       </Collapse>
@@ -433,39 +380,81 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
             </Box>
           ))}
 
-          <Divider sx={{ my: 2 }} />
+          {/* Contact Link */}
+          <Button
+            component={RouterLink}
+            to="/contact"
+            onClick={() => setMobileDrawerOpen(false)}
+            fullWidth
+            sx={{
+              textAlign: "left",
+              justifyContent: "flex-start",
+              py: 1.5,
+              px: 2,
+              color: "#333",
+              textTransform: "none",
+              fontSize: "0.95rem",
+              fontWeight: 500,
+              borderBottom: "1px solid #e5e5e5"
+            }}
+          >
+            Contact
+          </Button>
 
-          <ListItemButton component={RouterLink} to="/brands" onClick={() => setMobileDrawerOpen(false)}>
-            <StorefrontIcon sx={{ mr: 1.5, color: "#FF9800" }} />
-            <Typography variant="body2">Brands</Typography>
-          </ListItemButton>
-
-          <ListItemButton component={RouterLink} to="/deals" onClick={() => setMobileDrawerOpen(false)}>
-            <LocalOfferIcon sx={{ mr: 1.5, color: "#E91E63" }} />
-            <Typography variant="body2">Deals</Typography>
-          </ListItemButton>
+          {/* Admin Link */}
+          {ADMIN_ENABLED && isAdminAuthorized() && (
+            <Button
+              component={RouterLink}
+              to="/admin"
+              onClick={() => setMobileDrawerOpen(false)}
+              fullWidth
+              sx={{
+                textAlign: "left",
+                justifyContent: "flex-start",
+                py: 1.5,
+                px: 2,
+                color: "#1976D2",
+                textTransform: "none",
+                fontSize: "0.95rem",
+                fontWeight: 600,
+                borderBottom: "1px solid #e5e5e5"
+              }}
+            >
+              Admin
+            </Button>
+          )}
         </Stack>
       </Box>
     </Drawer>
   );
 
   return (
-    <AppBar position="sticky" color="inherit" elevation={0} sx={{ borderBottom: "1px solid #e0e0e0" }}>
+    <AppBar position="sticky" color="inherit" elevation={0} sx={{ borderBottom: "1px solid #e5e5e5", backgroundColor: "#fff" }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ py: 1 }}>
           {/* Logo & Brand */}
           <Stack
             direction="row"
-            spacing={1}
+            spacing={1.5}
             alignItems="center"
             component={RouterLink}
             to="/"
-            sx={{ textDecoration: "none", color: "text.primary" }}
+            sx={{ textDecoration: "none", color: "text.primary", minWidth: 0 }}
           >
             {logoUrl ? (
-              <Box component="img" src={logoUrl} alt={`${businessName} logo`} sx={{ width: 36, height: 36, objectFit: "contain" }} />
+              <Box component="img" src={logoUrl} alt={`${businessName} logo`} sx={{ width: 40, height: 40, objectFit: "contain", flexShrink: 0 }} />
             ) : null}
-            <Typography variant="h6" sx={{ fontWeight: 900, letterSpacing: 0.5, fontSize: { xs: "0.95rem", md: "1.1rem" } }}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                fontWeight: 700, 
+                letterSpacing: 0.3,
+                fontSize: { xs: "1rem", md: "1.1rem" },
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis"
+              }}
+            >
               {businessName}
             </Typography>
           </Stack>
@@ -474,16 +463,21 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
 
           {/* Desktop Navigation */}
           {!isMobile && (
-            <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
+            <Stack direction="row" spacing={0.5} alignItems="center">
               <Button 
                 component={RouterLink} 
                 to="/" 
                 color="inherit" 
                 sx={{
-                  ...linkSx(pathname === "/"),
                   textTransform: "none",
                   fontSize: "0.9rem",
-                  px: 1.5
+                  fontWeight: pathname === "/" ? 600 : 500,
+                  color: pathname === "/" ? "#1976D2" : "#555",
+                  px: 2,
+                  py: 1,
+                  opacity: 1,
+                  transition: "all 0.2s ease",
+                  "&:hover": { color: "#1976D2" }
                 }}
               >
                 Home
@@ -491,13 +485,18 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
 
               <Button
                 color="inherit"
-                endIcon={<KeyboardArrowDownIcon />}
+                endIcon={<KeyboardArrowDownIcon sx={{ fontSize: "1.2rem" }} />}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 sx={{
-                  ...linkSx(pathname.startsWith("/catalog")),
                   textTransform: "none",
                   fontSize: "0.9rem",
-                  px: 1.5
+                  fontWeight: pathname.startsWith("/catalog") ? 600 : 500,
+                  color: pathname.startsWith("/catalog") ? "#1976D2" : "#555",
+                  px: 2,
+                  py: 1,
+                  opacity: 1,
+                  transition: "all 0.2s ease",
+                  "&:hover": { color: "#1976D2" }
                 }}
               >
                 Products
@@ -508,35 +507,53 @@ export default function NavBar({ businessName, logoUrl, categories }: Props) {
                 to="/contact" 
                 color="inherit" 
                 sx={{
-                  ...linkSx(pathname === "/contact"),
                   textTransform: "none",
                   fontSize: "0.9rem",
-                  px: 1.5
+                  fontWeight: pathname === "/contact" ? 600 : 500,
+                  color: pathname === "/contact" ? "#1976D2" : "#555",
+                  px: 2,
+                  py: 1,
+                  opacity: 1,
+                  transition: "all 0.2s ease",
+                  "&:hover": { color: "#1976D2" }
                 }}
               >
                 Contact
               </Button>
 
-              {ADMIN_ENABLED && isAdminAuthorized() ? (
-                <Button 
-                  component={RouterLink} 
-                  to="/admin" 
-                  variant="contained" 
-                  disableElevation 
-                  sx={{ fontWeight: 900, textTransform: "none", fontSize: "0.9rem", ml: 0.5 }}
-                >
-                  Admin
-                </Button>
-              ) : null}
-            </Box>
+              {ADMIN_ENABLED && isAdminAuthorized() && (
+                <Box sx={{ ml: 1 }}>
+                  <Button 
+                    component={RouterLink} 
+                    to="/admin" 
+                    variant="contained" 
+                    disableElevation 
+                    size="small"
+                    sx={{ 
+                      fontWeight: 600, 
+                      textTransform: "none", 
+                      fontSize: "0.9rem",
+                      backgroundColor: "#1976D2",
+                      color: "#fff",
+                      px: 2,
+                      py: 0.8,
+                      transition: "all 0.2s ease",
+                      "&:hover": { backgroundColor: "#1565C0" }
+                    }}
+                  >
+                    Admin
+                  </Button>
+                </Box>
+              )}
+            </Stack>
           )}
 
           {/* Mobile Menu Button */}
           {isMobile && (
             <IconButton
               color="inherit"
-              onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
-              sx={{ ml: 1 }}
+              onClick={() => setMobileDrawerOpen(true)}
+              sx={{ ml: 1, color: "#555" }}
             >
               <MenuIcon />
             </IconButton>
